@@ -1,0 +1,58 @@
+    {% extends 'baseBack.html.twig' %}
+
+    {% block body %}
+        <main id="main" class="main">
+
+            <div class="pagetitle">
+                <h1>Formulaire Ajout Produit</h1>
+                <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                    <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
+                    <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+                    <li class="breadcrumb-item active">Formulaire d'ajout</li>
+                </ol>
+            </nav>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow p-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Ajouter Produit</h5>
+
+                            {{ form_start(f, { attr: { novalidate: 'novalidate', class: 'row g-3' } }) }}
+                            <div class="col-md-12">
+                                <label for="inputNom" class="form-label">Nom</label>
+                                {{ form_widget(f.nom, { attr: { class: 'form-control' } }) }}
+                                {{ form_errors(f.nom, { attr: { class: 'text-danger' } }) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputQuantite" class="form-label">Quantité</label>
+                                {{ form_widget(f.quantite, { attr: { class: 'form-control' } }) }}
+                                {{ form_errors(f.quantite, { attr: { class: 'text-danger' } }) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputPrix" class="form-label">Prix</label>
+                                {{ form_widget(f.prix, { attr: { class: 'form-control' } }) }}
+                                {{ form_errors(f.prix, { attr: { class: 'text-danger' } }) }}
+                            </div>
+                            
+                    
+                        <div class="col-md-12">
+                                <label for="inputProdId" class="form-label">ProdId</label>
+                                {{ form_widget(f.prodId, { attr: { class: 'form-control' } }) }}
+                                {{ form_errors(f.prodId, { attr: { class: 'text-danger' } }) }}
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                            {{ form_end(f) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    {% endblock %}

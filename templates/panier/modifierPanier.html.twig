@@ -1,0 +1,55 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block body %}
+    <main id="main" class="main mt-3"> {# Ajout de la marge en haut #}
+        <div class="pagetitle">
+            <h1>Formulaire Modifier Panier</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                    <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
+                    <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+                    <li class="breadcrumb-item active">Formulaire de modification</li>
+                </ol>
+            </nav>
+        </div><!-- Fin Titre de la page -->
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow p-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Modifier Panier</h5> {# Alignement au centre #}
+
+                        <!-- Éléments du formulaire -->
+                        {{ form_start(f, { attr: { class: 'needs-validation', novalidate: 'novalidate' } }) }}
+                        <div class="mb-3">
+                            <label for="inputQuantite" class="form-label">Quantité</label>
+                            {{ form_widget(f.quantite, { attr: { class: 'form-control', id: 'inputQuantite' } }) }}
+                            {{ form_errors(f.quantite, { attr: { class: 'text-danger' } }) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputNom" class="form-label">Nom</label>
+                            {{ form_widget(f.nom, { attr: { class: 'form-control', id: 'inputNom' } }) }}
+                            {{ form_errors(f.nom, { attr: { class: 'text-danger' } }) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputPrix" class="form-label">Prix</label>
+                            {{ form_widget(f.prix, { attr: { class: 'form-control', id: 'inputPrix' } }) }}
+                            {{ form_errors(f.prix, { attr: { class: 'text-danger' } }) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputProdid" class="form-label">prodid</label>
+                            {{ form_widget(f.prodId, { attr: { class: 'form-control', id: 'inputProdid' } }) }}
+                            {{ form_errors(f.prodId, { attr: { class: 'text-danger' } }) }}
+                        </div>
+
+                        <div class="text-center mt-3"> {# Ajout de la marge en haut du bouton #}
+                            <button type="submit" class="btn btn-primary">Mise à jour</button>
+                        </div>
+                        {{ form_end(f) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

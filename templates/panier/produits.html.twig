@@ -1,0 +1,48 @@
+{% extends 'basefront.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des Formations </h1>
+        
+       <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                    <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
+                    <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+                    
+                    
+                </ol>
+            </nav>
+        <div class="row">
+            {% for produit in produits %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ produit.Img }}" class="card-img-top" alt="Image produit">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ produit.typeF }}</h5>
+                            <p class="card-text">Prix : {{ produit.prix }}</p>
+                            <p class="card-text">Durée : {{ produit.duree }}</p>
+                            <form action="{{ path('ajouter_produit') }}" method="POST">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Quantité</span>
+                                        </div>
+                                        <input type="number" name="quantite" class="form-control" value="1" min="1">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idFormation" value="{{ produit.idFormation }}">
+                                <input type="hidden" name="typeF" value="{{ produit.typeF }}">
+                                <input type="hidden" name="prix" value="{{ produit.prix }}">
+                                <h1></h1>
+                                <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}

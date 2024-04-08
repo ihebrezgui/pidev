@@ -1,0 +1,85 @@
+{% extends 'baseBack.html.twig' %}
+
+
+{% block body %}
+    <main id="main" class="main">
+        <div class="container-fluid">
+            <div class="row">
+                
+                <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="pagetitle">
+                        <h1>Votre commande</h1>
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                                <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
+                                <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+                            </ol>
+                        </nav>
+            </nav>
+                    </div><!-- Fin du titre de la page -->
+                    <section class="section">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="card shadow-lg p-12">
+                                    <div class="card-body text-start"> <!-- Utilisation de text-start pour aligner le texte à gauche -->
+                                        {% for message in app.flashes('notice') %}
+                                            <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endfor %}
+                                        {% for message in app.flashes('noticedelete') %}
+                                            <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endfor %}
+                                        <h5 class="card-title"></h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Référence</th>
+                                                        <th scope="col">Nom</th>
+                                                        <th scope="col">Prénom</th>
+                                                        <th scope="col">Adresse Email</th>
+                                                        <th scope="col">Téléphone</th>
+                                                        <th scope="col">Adresse</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if commande | length == 0 %}
+                                                        <tr>
+                                                            <td colspan="9" class="text-center">Aucune commande trouvée.</td>
+                                                        </tr>
+                                                    {% else %}
+                                                        {% for commande in commande %}
+                                                            <tr>
+                                                                <td>{{ commande.idc }}</td>
+                                                                <td>{{ commande.nom }}</td>
+                                                                <td>{{ commande.prenom }}</td>
+                                                                <td>{{ commande.mail }}</td>    
+                                                                <td>{{ commande.tel }}</td>
+                                                                <td>{{ commande.address }}</td>
+                                                                <td class="d-flex align-items-center">
+                                                                    <a href="{{ path('modifier_commande',{idc:commande.idc}) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
+                                                                    <a href="#" onclick="if(confirm('Voulez-vous vraiment supprimer ?')) { window.location='{{ path('supprimerCommande', {'idc': commande.idc}) }}'; }" class="btn btn-sm btn-danger">Supprimer</a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
