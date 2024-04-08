@@ -1,7 +1,6 @@
 {% extends 'basefront.html.twig' %}
 
-
-{% block body %}
+{% block gestion %}
     <div class="container">
         <h1>Liste des Formations </h1>
         
@@ -10,13 +9,11 @@
                     <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
                     <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
                     <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
-                    
-                    
                 </ol>
-            </nav>
+       </nav>
         <div class="row">
             {% for produit in produits %}
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     <div class="card">
                         <img src="{{ produit.Img }}" class="card-img-top" alt="Image produit">
                         <div class="card-body">
@@ -44,5 +41,4 @@
             {% endfor %}
         </div>
     </div>
-    
 {% endblock %}
