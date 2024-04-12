@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
@@ -147,5 +148,31 @@ class PanierController extends AbstractController
        
     }  
    
-       
+   
+    
+    #[Route('/rechercherPanier', name: 'rechercher_panier')]
+    public function rechercherPanier(Request $request, PanierRepository $panierRepository)
+    {
+        $searchTerm = $request->query->get('q');
+        $panier = $panierRepository->searchByNom($searchTerm);
+    
+        // Vérifier si le résultat de la recherche est vide
+        if (empty($panier)) {
+            $this->addFlash('noticesearch', 'Aucun produit trouvé qui commence par "' . $searchTerm . '".');
+            // Charger tous les produits pour l'affichage
+            $panier = $panierRepository->findAll();
+        } else {
+            $this->addFlash('noticesearch1', 'Résultats pour les mots qui commence par "' . $searchTerm . '".');
+        }
+    
+        return $this->render('panier/index.html.twig', [
+            'panier' => $panier,
+            'searchTerm' => $searchTerm,
+        ]);
+    }
+    
+    
+    
+    
+ 
 }

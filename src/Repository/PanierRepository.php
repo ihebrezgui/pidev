@@ -16,11 +16,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PanierRepository extends ServiceEntityRepository
 {
+   
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Panier::class);
-        
     }
+
+    // Dans PanierRepository.php
+    public function searchByNom($searchTerm)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :term')
+            ->setParameter('term', $searchTerm.'%') // Ajoutez le % pour rechercher les termes commençant par la lettre entrée
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+    
   
     
 //    /**
