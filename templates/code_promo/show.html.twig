@@ -1,38 +1,50 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'baseBack.html.twig' %}
+{% block code%}
 {% block title %}CodePromo{% endblock %}
 
 {% block body %}
-    <h1>CodePromo</h1>
+<div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center mb-4">CodePromo Details</h1>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>IdPromo</th>
+                                    <td>{{ code_promo.idPromo }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Code</th>
+                                    <td>{{ code_promo.code }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date Expiration</th>
+                                    <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Active</th>
+                                    <td>{{ code_promo.active ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>User ID</th>
+                                    <td>{{ code_promo.iduser }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>IdPromo</th>
-                <td>{{ code_promo.idPromo }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ code_promo.code }}</td>
-            </tr>
-            <tr>
-                <th>DateExpiration</th>
-                <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Active</th>
-                <td>{{ code_promo.active }}</td>
-            </tr>
-            <tr>
-                <th>Iduser</th>
-                <td>{{ code_promo.iduser }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_code_promo_index') }}" class="btn btn-secondary">Back to List</a>
+                    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}" class="btn btn-primary">Edit</a>
+                </div>
 
-    <a href="{{ path('app_code_promo_index') }}">back to list</a>
-
-    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}">edit</a>
-
-    {{ include('code_promo/_delete_form.html.twig') }}
+                {{ include('code_promo/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
 {% endblock %}

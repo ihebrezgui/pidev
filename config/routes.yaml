@@ -33,3 +33,27 @@ app_logout:
     path: /logout
 security_login_check:
     path: /login
+app_code_promo_index:
+    path: /code/promo/
+    controller: App\Controller\CodePromoController::index
+    methods: GET
+
+app_code_promo_new:
+    path: /code/promo/new
+    controller: App\Controller\CodePromoController::new
+    methods: GET|POST
+
+app_code_promo_show:
+    path: /code/promo/{idPromo}
+    controller: App\Controller\CodePromoController::show
+    methods: GET
+
+app_code_promo_edit:
+    path: /code/promo/{idPromo}/edit
+    controller: App\Controller\CodePromoController::edit
+    methods: GET|POST
+
+app_code_promo_delete:
+    path: /code/promo/{idPromo}
+    controller: App\Controller\CodePromoController::delete
+    methods: POST

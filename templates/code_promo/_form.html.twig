@@ -1,4 +1,26 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'form'}}) }}
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <span style="font-weight: 500;">{{ form_label(form.code) }}</span>
+            {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Code'}}) }}
+        </div>
+        <div class="form-group col-md-6">
+            <span style="font-weight: 500;">{{ form_label(form.dateExpiration) }}</span>
+            {{ form_widget(form.dateExpiration, {'attr': {'class': 'form-control', 'placeholder': 'Expiration Date'}}) }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <span style="font-weight: 500;">{{ form_label(form.active) }}</span>
+            <div class="form-check">
+                {{ form_widget(form.active, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_label(form.active, 'Active', {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <span style="font-weight: 500;">{{ form_label(form.iduser) }}</span>
+            {{ form_widget(form.iduser, {'attr': {'class': 'form-control', 'placeholder': 'User ID'}}) }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
