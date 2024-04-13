@@ -34,7 +34,11 @@
                                             <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-primary">Login</a>
+                                        {% else %}
+                                        <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+                                        {% endif %}
                                         </div>
                                     </form>
                                 </div>
