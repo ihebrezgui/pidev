@@ -4,15 +4,13 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UtilisateurRepository;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserTrait;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ORM\Table(name: "utilisateur")]
-class Utilisateur 
+class Utilisateur implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
@@ -135,11 +133,6 @@ class Utilisateur
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
     public function setPassword(?string $password): self
     {
         $this->password = $password;
@@ -159,5 +152,33 @@ class Utilisateur
         return $this;
     }
 
+    public function getUsername(): string
+    {
+        return $this->email;
+    }
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
 
+    public function getRoles(): array
+    {
+        return [$this->role];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password ?? '';;
+    }
+
+    public function getSalt()
+    {
+        // You can ignore this method if you're not using bcrypt or another encryption method that requires a salt
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

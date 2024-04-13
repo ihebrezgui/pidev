@@ -43,7 +43,7 @@
                             <td>{{ utilisateur.email }}</td>
                             <td>{{ utilisateur.sexe }}</td>
                             <td>{{ utilisateur.role }}</td>
-                            <td>{{ utilisateur.password }}</td>
+                            <td>{{ utilisateur.password ?? 'N/A' }}</td> {# Display 'N/A' if password is null #}
                             <td>
                                 <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Show</a>
                                 <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Edit</a>
