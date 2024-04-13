@@ -1,0 +1,63 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block gestion %}
+    {% block title %}Les utilisateurs:{% endblock %}
+
+    {% block body %}
+        <h1>Les utilisateurs:</h1>
+        {# Search Form #}
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <form action="{{ path('app_utilisateur_index') }}" method="GET" class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search by email, nom, or prenom">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Date de Naissance</th>
+                    <th>Numéro de téléphone</th>
+                    <th>Email</th>
+                    <th>Sexe</th>
+                    <th>Rôle</th>
+                    <th>Mot de passe</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if utilisateurs is not empty %}
+                    {% for utilisateur in utilisateurs %}
+                        <tr>
+                            <td>{{ utilisateur.id }}</td>
+                            <td>{{ utilisateur.nom }}</td>
+                            <td>{{ utilisateur.prenom }}</td>
+                            <td>{{ utilisateur.dateNais ? utilisateur.dateNais|date('Y-m-d') : '' }}</td>
+                            <td>{{ utilisateur.numTel }}</td>
+                            <td>{{ utilisateur.email }}</td>
+                            <td>{{ utilisateur.sexe }}</td>
+                            <td>{{ utilisateur.role }}</td>
+                            <td>{{ utilisateur.password }}</td>
+                            <td>
+                                <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Show</a>
+                                <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="11">No records found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,35 @@
+app_utilisateur_index:
+    path: /utilisateur
+    controller: App\Controller\UtilisateurController::index
+    methods: ['GET']
+
+app_utilisateur_new:
+    path: /utilisateur/new
+    controller: App\Controller\UtilisateurController::new
+    methods: ['GET', 'POST']
+
+app_utilisateur_show:
+    path: /utilisateur/show/{id}
+    controller: App\Controller\UtilisateurController::show
+    methods: ['GET']
+
+app_utilisateur_edit:
+    path: /utilisateur/edit/{id}
+    controller: App\Controller\UtilisateurController::edit
+    methods: ['GET', 'POST']
+
+app_utilisateur_delete:
+    path: /utilisateur/delete/{id}
+    controller: App\Controller\UtilisateurController::delete
+    methods: ['POST']
+users_by_age_chart:
+    path: /utilisateur/age_stat
+    controller: App\Controller\UtilisateurController::usersByAgeChart
+    
+app_login:
+    path: /login
+    controller: App\Controller\LoginController::login
+app_logout:
+    path: /logout
+security_login_check:
+    path: /login

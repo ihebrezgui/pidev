@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CodePromo{% endblock %}
+
+{% block body %}
+    <h1>CodePromo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdPromo</th>
+                <td>{{ code_promo.idPromo }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ code_promo.code }}</td>
+            </tr>
+            <tr>
+                <th>DateExpiration</th>
+                <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ code_promo.active }}</td>
+            </tr>
+            <tr>
+                <th>Iduser</th>
+                <td>{{ code_promo.iduser }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_code_promo_index') }}">back to list</a>
+
+    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}">edit</a>
+
+    {{ include('code_promo/_delete_form.html.twig') }}
+{% endblock %}
