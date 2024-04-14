@@ -1,9 +1,8 @@
 {% extends 'baseBack.html.twig' %}
 {% block gestion%}
-{% block title %}Users by Age Chart{% endblock %}
 
 {% block body %}
-    <h1>Users by Age Chart</h1>
+    <h1>Graphique des utilisateurs par âge</h1>
 
     <canvas id="usersByAgeChart" width="400" height="400"></canvas>
 
@@ -15,7 +14,7 @@
             data: {
                 labels: {{ chartData.labels | json_encode | raw }},
                 datasets: [{
-                    label: 'Number of Users',
+                    label: 'Nombre dutilisateurs',
                     data: {{ chartData.data | json_encode | raw }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.5)',

@@ -35,9 +35,9 @@ class AuthAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-        $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
+        $utilisateur = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
 
-        if (!$user) {
+        if (!$utilisateur) {
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
@@ -58,7 +58,7 @@ class AuthAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // Redirect to home page
-        return new RedirectResponse($this->urlGenerator->generate('utilisateur'));
+        return new RedirectResponse($this->urlGenerator->generate('app_utlisateur_index'));
     }
 
     protected function getLoginUrl(Request $request): string
