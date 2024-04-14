@@ -171,8 +171,25 @@ class PanierController extends AbstractController
         ]);
     }
     
+    #[Route('/trier-par-prix', name: 'tri_par_prix')]
+    public function trierParPrix(PanierRepository $panierRepository): Response
+    {
+        $panier = $panierRepository->findByPrice(); // Tri par prix
     
+        return $this->render('panier/index.html.twig', [
+            'panier' => $panier
+        ]);
+    }
     
+    // Méthode pour trier par nom
+    #[Route('/trier-par-nom', name: 'tri_par_nom')]
+    public function trierParNom( PanierRepository $panierRepository): Response
+    {
+        $panier = $panierRepository->findByName(); // Tri par nom
     
- 
+        return $this->render('panier/index.html.twig', [
+            'panier' => $panier
+        ]);
+    }
+    
 }

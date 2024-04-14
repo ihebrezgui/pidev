@@ -31,7 +31,22 @@ class PanierRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+
+    public function findByPrice()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.prix', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByName()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     
   
