@@ -20,6 +20,19 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
+    public function searchByNom($searchTerm)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :term')
+            ->setParameter('term', $searchTerm.'%') // Ajoutez le % pour rechercher les termes commençant par la lettre entrée
+            ->getQuery()
+            ->getResult();
+    }
+
+ 
+
+ 
+
 
 //    /**
 //     * @return Commande[] Returns an array of Commande objects

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\CommandeType;
+use App\Repository\CommandeRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class CommandeController extends AbstractController
@@ -76,20 +77,54 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/supprimerCommande/{idc}', name: 'supprimerCommande')]
-    public function supprimerCommande(int $idc): Response // Utilisation de l'ID de panier au lieu de l'objet Panier//
+    public function supprimerCommande(int $idc): Response 
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $panier = $entityManager->getRepository(Commande::class)->find($idc);
+        $commande = $entityManager->getRepository(Commande::class)->find($idc);
 
-        if (!$panier) {
-            throw $this->createNotFoundException('Le panier avec l\'id ' . $idc . ' n\'existe pas.');
+        if (!$commande) {
+            throw $this->createNotFoundException('Le commande avec l\'id ' . $idc . ' n\'existe pas.');
         }
 
-        $entityManager->remove($panier);
+        $entityManager->remove($commande);
         $entityManager->flush(); // Commit des modifications
 
         $this->addFlash('noticedelete', 'Le commande a été supprimé avec succès.');
 
         return $this->redirectToRoute('app_commande');
     }
+
+    #[Route('/rechercherCommande', name: 'rechercher_commande')]
+    public function rechercherCommande(Request $request, CommandeRepository $commandeRepository)
+    {
+        $searchTerm = $request->query->get('q');
+        $commande = $commandeRepository->searchByNom($searchTerm);
+    
+        // Vérifier si le résultat de la recherche est vide
+        if (empty($commande)) {
+            $this->addFlash('noticesearch', 'Aucun utilisateur trouvé qui commence par "' . $searchTerm . '".');
+            // Charger tous les produits pour l'affichage
+            $commande = $commandeRepository->findAll();
+        } else {
+            $this->addFlash('noticesearch1', 'Résultats pour  "' . $searchTerm . '".');
+        }
+    
+        return $this->render('commande/index.html.twig', [
+            'commande' => $commande,
+            'searchTerm' => $searchTerm,
+        ]);
+    }
+    
+
+    // Méthode pour trier par nom
+    #[Route('/trier-par-nom', name: 'tri_par_nom')]
+    public function trierParNom( CommandeRepository $CommandeRepository): Response
+    {
+        $commande = $CommandeRepository->findByName(); // Tri par nom
+    
+        return $this->render('commande/index.html.twig', [
+            'commande' => $commande
+        ]);
+    }
+    
 }

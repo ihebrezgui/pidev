@@ -162,7 +162,7 @@ class PanierController extends AbstractController
             // Charger tous les produits pour l'affichage
             $panier = $panierRepository->findAll();
         } else {
-            $this->addFlash('noticesearch1', 'Résultats pour les mots qui commence par "' . $searchTerm . '".');
+            $this->addFlash('noticesearch1', 'Résultats pour  "' . $searchTerm . '".');
         }
     
         return $this->render('panier/index.html.twig', [
