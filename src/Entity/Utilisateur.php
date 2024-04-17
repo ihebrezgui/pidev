@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -18,15 +19,34 @@ class Utilisateur implements UserInterface
     private $id;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank(message: 'The name cannot be blank')]
+    #[Assert\Length(min: 3, minMessage: 'Le nom  doit comporter au moins {{ 3}} caractères.')]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'The name must contain only alphabetic characters'
+    )]
     private $nom;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank(message: 'Le nom de famille ne peut pas être vide')]
+    #[Assert\Length(min: 3, minMessage: 'Le nom  doit comporter au moins {{ 3}} caractères.')]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Le nom ne doit contenir que des caractères alphabétiques.
+        '
+    )]
     private $prenom;
 
     #[ORM\Column(type: "date", nullable: false)]
     private $dateNais;
 
     #[ORM\Column(type: "integer", nullable: false)]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]    
+    #[Assert\Regex(
+        pattern: '/^\d{8}$/',
+        message: 'Le numéro de téléphone doit contenir 8 chiffres
+        '
+    )]
     private $numTel;
 
     #[ORM\Column(type: "string", length: 50, nullable: false)]
@@ -39,6 +59,10 @@ class Utilisateur implements UserInterface
     private $role;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/',
+        message: 'Le mot de passe doit contenir au moins une lettre majuscule, un chiffre, un caractère spécial et au moins 8 caractères.'
+    )]
     private $password;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]

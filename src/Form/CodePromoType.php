@@ -16,22 +16,9 @@ class CodePromoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code', TextType::class, [
-                'label' => 'Code',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('dateExpiration', DateType::class, [
-                'html5' => true,
-                'widget' => 'single_text', // Use single text widget for date picker
-                'attr' => [
-                    'class' => 'form-control', // Add Bootstrap form control class
-                    'min' => '2024-04-17', // Set maximum date
-                ],
-            ])
-            ->add('active',TextType::class, [
-                'label' => '    ACTIVE',
-                'attr' => ['class' => 'form-control'],
-            ])
+            ->add('code', TextType::class)
+            ->add('dateExpiration', DateType::class)
+            ->add('active',TextType::class)
             ->add('iduser', TextType::class, [
                 'label' => 'User ID',
                 'attr' => ['class' => 'form-control'],
