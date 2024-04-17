@@ -1,0 +1,46 @@
+{% extends 'baseback.html.twig'%}
+{% block gestion %}
+{% block body %}
+    <h1>Faire une donation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id donateur</th>
+                <th>Statut du donateur</th>
+                <th>Montant</th>
+                <th>Date de naissance</th>
+                <th>E-mail</th>
+                <th>Numéro de téléphone</th>
+                <th>Profession</th>
+                <th>Méthode de paiement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for giveback in givebacks %}
+            <tr>
+                <td>{{ giveback.iddonateur }}</td>
+                <td>{{ giveback.statutDonateur }}</td>
+                <td>{{ giveback.montant }}</td>
+                <td>{{ giveback.dateDeNaissance ? giveback.dateDeNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ giveback.email }}</td>
+                <td>{{ giveback.getNumeroDeTelephone }}</td>
+                <td>{{ giveback.profession }}</td>
+                <td>{{ giveback.getMethodePaiement }}</td>
+               <td class="giveback-button">
+                   <a href="{{ path('app_giveback_show', {'iddonateur': giveback.iddonateur}) }}" style="background-color: #2980B9 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
+
+               </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% endblock %}

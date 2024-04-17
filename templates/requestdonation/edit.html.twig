@@ -1,0 +1,13 @@
+{%extends 'base.html.twig'%}
+{% block gestion%}
+
+{% block body %}
+    <h1>Modifier une demande donation</h1>
+
+    {{ include('requestdonation/_form.html.twig', {'button_label': 'Mettre à jour'} ) }}
+
+
+
+    {{ include('requestdonation/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}

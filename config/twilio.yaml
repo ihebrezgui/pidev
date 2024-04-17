@@ -1,0 +1,4 @@
+twilio:
+  account_sid:  "ACa5fd56712d5981cda406f5a426404bf9"
+  auth_token:   "[AuthToken]"
+  from_number:  "+13342491588"

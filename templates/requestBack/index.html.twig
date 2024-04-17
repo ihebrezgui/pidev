@@ -1,0 +1,44 @@
+{% extends 'baseBack.html.twig' %}
+{% block gestion %}
+
+{% block body %}
+ <h1> Demande d'une donation </h1>
+   <table class="table" ; border ="1">
+    <div style="display: flex; align-items:center; justify-content: ;center margin-top:205px" >
+
+        <thead>
+            <tr>
+                <th>Id request</th>
+                <th>Formation souhaitée</th>
+                <th>E-mail</th>
+                <th>Date limite</th>
+                <th>Lieu de résidence</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for requestback in requestbacks %}
+            <tr>
+                <td>{{ requestback.idrequest }}</td>
+                <td>{{ requestback.getFormationSouhaitee }}</td>
+                <td>{{ requestback.email }}</td>
+                <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
+                <td>{{ requestback.getLieuDeResidence }}</td>
+                <td>{{ requestback.description }}</td>
+                 <td class="requestback-button">
+
+                    <a href="{{ path('app_requestback_show', {'idrequest': requestback.idrequest}) }}"  style="background-color: #2980B9 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}
+{% endblock %}

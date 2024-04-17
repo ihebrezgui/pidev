@@ -1,0 +1,39 @@
+{%extends 'baseback.html.twig'%}
+{%block gestion%}
+{% block title %}Requestdonation{% endblock %}
+
+{% block body %}
+    <h1>Requestdonation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idrequest</th>
+                <td>{{ requestback.idrequest }}</td>
+            </tr>
+            <tr>
+                <th>FormationSouhaitée</th>
+                <td>{{ requestback.getFormationSouhaitee }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ requestback.email }}</td>
+            </tr>
+            <tr>
+                <th>DateLimite</th>
+                <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LieuDeRésidence</th>
+                <td>{{ requestback.getLieuDeResidence }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ requestback.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% endblock %}

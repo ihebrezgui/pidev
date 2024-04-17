@@ -1,0 +1,52 @@
+{% extends 'baseback.html.twig' %}
+{% block gestion %}
+{% block body %}
+    <h1>Afficher une donation </h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Iddonateur</th>
+                <td>{{ givedonation.iddonateur }}</td>
+            </tr>
+            <tr>
+                <th>StatutDonateur</th>
+                <td>{{ givedonation.statutDonateur }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ givedonation.montant }}</td>
+            </tr>
+            <tr>
+                <th>DateDeNaissance</th>
+                <td>{{ givedonation.dateDeNaissance ? givedonation.dateDeNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ givedonation.email }}</td>
+            </tr>
+            <tr>
+                <th>numeroDeTelephone</th>
+                <td>{{ givedonation.getNumeroDeTelephone }}</td>
+            </tr>
+            <tr>
+                <th>Profession</th>
+                <td>{{ givedonation.profession }}</td>
+            </tr>
+            <tr>
+                <th>methodePaiement</th>
+                <td>{{ givedonation.getMethodePaiement }}</td>
+            </tr>
+              <tr>
+             <th>idrequest</th>
+              <td>{{ givedonation.getIdrequest.idrequest }}</td>
+             </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+{% endblock %}
+{% endblock %}

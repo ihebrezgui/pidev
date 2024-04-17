@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block gestion %}
+
+{% block body %}
+ <h1> Demande d'une donation </h1>
+   <table class="table" ; border ="1">
+    <div style="display: flex; align-items:center; justify-content: ;center margin-top:205px" >
+
+        <thead>
+            <tr>
+                <th>Id request</th>
+                <th>Formation souhaitée</th>
+                <th>E-mail</th>
+                <th>Date limite</th>
+                <th>Lieu de résidence</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for requestdonation in requestdonations %}
+            <tr>
+                <td>{{ requestdonation.idrequest }}</td>
+                <td>{{ requestdonation.getFormationSouhaitee }}</td>
+                <td>{{ requestdonation.email }}</td>
+                <td>{{ requestdonation.dateLimite ? requestdonation.dateLimite|date('Y-m-d') : '' }}</td>
+                <td>{{ requestdonation.getLieuDeResidence }}</td>
+                <td>{{ requestdonation.description }}</td>
+
+
+                 <td class="requestdonation-button">
+
+                    <a href="{{ path('app_requestdonation_show', {'idrequest': requestdonation.idrequest}) }}"  style="background-color: #2980B9 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
+                    <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}" style="background-color: #FE9900 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+ <a href="{{ path('app_requestdonation_new') }}"
+       style="background-color: #2980B9 ; color: white; padding: 5px; border: none;
+              border-radius: 5px; text-decoration: none; cursor: pointer;
+              display: inline-block; width: fit-content;">Ajouter</a>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{%extends 'base.html.twig'%}
+{%block gestion%}
+{% block title %}Requestdonation{% endblock %}
+
+{% block body %}
+    <h1>Requestdonation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idrequest</th>
+                <td>{{ requestdonation.idrequest }}</td>
+            </tr>
+            <tr>
+                <th>FormationSouhaitée</th>
+                <td>{{ requestdonation.getFormationSouhaitee }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ requestdonation.email }}</td>
+            </tr>
+            <tr>
+                <th>DateLimite</th>
+                <td>{{ requestdonation.dateLimite ? requestdonation.dateLimite|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LieuDeRésidence</th>
+                <td>{{ requestdonation.getLieuDeResidence }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ requestdonation.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_requestdonation_index') }}" style="background-color: #2980B9 ; color: white; padding: 5px; border: none;
+                                                                                            border-radius: 5px; text-decoration: none; cursor: pointer;
+                                                                                            display: inline-block; width: fit-content; margin-bottom : 30px >Précédent</a>
+
+    <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}">Modifier</a>
+
+    {{ include('requestdonation/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}
