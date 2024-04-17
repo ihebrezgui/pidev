@@ -26,6 +26,9 @@ class UtilisateurType extends AbstractType
                     'message' => 'The name must contain only alphabetic characters.',
                 ]),
             ],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ])
         ->add('prenom', TextType::class, [
             'constraints' => [
@@ -35,13 +38,20 @@ class UtilisateurType extends AbstractType
                     'message' => 'The surname must contain only alphabetic characters.',
                 ]),
             ],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ])
         ->add('date_nais', DateType::class, [
             'html5' => true,
-            'widget' => 'single_text', // Use single text widget for date picker
+            'widget' => 'single_text', 
             'attr' => [
-                'max' => '2011-12-31', // Set maximum date
+                'max' => '2011-12-31',
+                'novalidate' => 'novalidate',
+
+            
             ],
+        
         ])
         ->add('num_tel', TextType::class, [
             'constraints' => [
@@ -50,6 +60,9 @@ class UtilisateurType extends AbstractType
                     'message' => 'The phone number must contain 8 digits.',
                 ]),
             ],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ])
         ->add('email', EmailType::class, [
             'constraints' => [
@@ -57,11 +70,17 @@ class UtilisateurType extends AbstractType
                     'message' => 'The email address "{{ value }}" is not valid.',
                 ]),
             ],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ])
         ->add('sexe', ChoiceType::class, [
             'choices' => [
                 'F' => 'F',
                 'M' => 'M',
+            ],
+            'attr' => [
+                'novalidate' => 'novalidate',
             ],
         ])
         ->add('role', ChoiceType::class, [
@@ -71,6 +90,9 @@ class UtilisateurType extends AbstractType
                 'RH' => 'RH',
                 'Admin' => 'Admin',
             ],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ])
         ->add('password', PasswordType::class, [
             'constraints' => [
@@ -79,6 +101,9 @@ class UtilisateurType extends AbstractType
                     'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/',
                     'message' => 'The password must contain at least one uppercase letter, one digit, one special character, and be at least 8 characters long.',
                 ]),
+            ],
+            'attr' => [
+                'novalidate' => 'novalidate',
             ],
         ])
         ;

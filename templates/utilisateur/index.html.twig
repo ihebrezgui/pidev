@@ -1,7 +1,6 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block gestion %}
-    {% block title %}Les utilisateurs:{% endblock %}
 
     {% block body %}
         <h1>Les utilisateurs:</h1>
@@ -36,19 +35,19 @@
                             <td>{{ utilisateur.role }}</td>
                             <td>{{ utilisateur.password ?? 'N/A' }}</td> {# Display 'N/A' if password is null #}
                             <td>
-                                <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Show</a>
-                                <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Edit</a>
+                                <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Afficher</a>
+                                <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier</a>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="11">No records found</td>
+                        <td colspan="11">pas d'utilisateurs trouvés</td>
                     </tr>
                 {% endif %}
             </tbody>
         </table>
 
-        <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+        <a href="{{ path('app_utilisateur_new') }}">Ajouter un nouveau utilisateur</a>
     {% endblock %}
 {% endblock %}

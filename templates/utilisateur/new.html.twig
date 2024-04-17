@@ -1,14 +1,13 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block gestion %}
-    {% block title %}New Utilisateur{% endblock %}
-
++
     {% block body %}
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Create New Utilisateur</div>
+                        <div class="card-header">Créer un nouvel utilisateur</div>
                         <div class="card-body">
                             <form method="post" action="{{ path('app_utilisateur_new') }}">
                                 {{ include('utilisateur/_form.html.twig') }}
@@ -16,7 +15,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary">
-                                            Cancel
+                                            Annuler
                                         </a>
                                     </div>
                                 </div>
