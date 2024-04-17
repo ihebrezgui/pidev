@@ -1,0 +1,13 @@
+{% extends 'baseBack.html.twig' %}
+{% block ENS %}
+
+{% block title %}New Enseignent{% endblock %}
+
+{% block body %}
+    <h1>Create new Enseignent</h1>
+
+    {{ include('enseignent/_form.html.twig') }}
+
+    <a href="{{ path('app_enseignent_index') }}">back to list</a>
+{% endblock %}
+{% endblock %}

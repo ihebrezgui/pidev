@@ -1,0 +1,36 @@
+{% extends 'baseBack.html.twig' %}
+{% block Par %}
+
+{% block title %}Partnership{% endblock %}
+
+{% block body %}
+    <h1>Partnership</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idp</th>
+                <td>{{ partnership.idp }}</td>
+            </tr>
+            <tr>
+                <th>NomP</th>
+                <td>{{ partnership.nomP }}</td>
+            </tr>
+            <tr>
+                <th>Domaine</th>
+                <td>{{ partnership.domaine }}</td>
+            </tr>
+            <tr>
+                <th>Choix</th>
+                <td>{{ partnership.choix }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_partnership_index') }}">back to list</a>
+
+    <a href="{{ path('app_partnership_edit', {'idp': partnership.idp}) }}">edit</a>
+
+    {{ include('partnership/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}

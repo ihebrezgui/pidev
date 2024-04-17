@@ -1,0 +1,53 @@
+{% extends 'baseBack.html.twig' %}
+{% block ENS %}
+
+{% block title %}Enseignent{% endblock %}
+
+{% block body %}
+    <h1>Enseignent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Ide</th>
+                <td>{{ enseignent.ide }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ enseignent.nome }}</td>
+            </tr>
+            <tr>
+                <th>Prenome</th>
+                <td>{{ enseignent.prenome }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ enseignent.email }}</td>
+            </tr>
+            <tr>
+                <th>Matier</th>
+                <td>{{ enseignent.matier }}</td>
+            </tr>
+            <tr>
+                <th>Comptence</th>
+                <td>{{ enseignent.comptence }}</td>
+            </tr>
+            <tr>
+                <th>Agee</th>
+                <td>{{ enseignent.agee }}</td>
+            </tr>
+            <tr>
+                <th>Langue</th>
+                <td>{{ enseignent.langue }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_enseignent_index') }}">back to list</a>
+
+    <a href="{{ path('app_enseignent_edit', {'ide': enseignent.ide}) }}">edit</a>
+
+    {{ include('enseignent/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}
+

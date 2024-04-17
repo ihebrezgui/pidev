@@ -1,0 +1,49 @@
+{% extends 'baseBack.html.twig' %}
+{% block ENS %}
+
+{% block title %}Enseignent index{% endblock %}
+
+{% block body %}
+    <h1>Enseignent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ide</th>
+                <th>Nome</th>
+                <th>Prenome</th>
+                <th>Email</th>
+                <th>Matier</th>
+                <th>Comptence</th>
+                <th>Agee</th>
+                <th>Langue</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for enseignent in enseignents %}
+            <tr>
+                <td>{{ enseignent.ide }}</td>
+                <td>{{ enseignent.nome }}</td>
+                <td>{{ enseignent.prenome }}</td>
+                <td>{{ enseignent.email }}</td>
+                <td>{{ enseignent.matier }}</td>
+                <td>{{ enseignent.comptence }}</td>
+                <td>{{ enseignent.agee }}</td>
+                <td>{{ enseignent.langue }}</td>
+                <td>
+                    <a href="{{ path('app_enseignent_show', {'ide': enseignent.ide}) }}">show</a>
+                    <a href="{{ path('app_enseignent_edit', {'ide': enseignent.ide}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_enseignent_new') }}">Create new</a>
+{% endblock %}
+{% endblock %}

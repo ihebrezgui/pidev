@@ -1,0 +1,65 @@
+# config/routes/routes.yaml
+
+app_enseignent_index:
+    path: /enseignent
+    controller: App\Controller\EnseignentController::index
+    methods: GET
+
+app_enseignent_new:
+    path: /enseignent/new
+    controller: App\Controller\EnseignentController::new
+    methods: [GET, POST]
+
+app_enseignent_show:
+    path: /enseignent/{ide}
+    controller: App\Controller\EnseignentController::show
+    methods: GET
+    requirements:
+        ide: '\d+'
+
+app_enseignent_edit:
+    path: /enseignent/{ide}/edit
+    controller: App\Controller\EnseignentController::edit
+    methods: [GET, POST]
+    requirements:
+        ide: '\d+'
+
+app_enseignent_delete:
+    path: /enseignent/{ide}
+    controller: App\Controller\EnseignentController::delete
+    methods: POST
+    requirements:
+        ide: '\d+'
+
+# config/routes/routes.yaml
+
+app_partnership_index:
+    path: /partnership
+    controller: App\Controller\PartnershipController::index
+    methods: GET
+
+app_partnership_new:
+    path: /partnership/new
+    controller: App\Controller\PartnershipController::new
+    methods: [GET, POST]
+
+app_partnership_show:
+    path: /partnership/{idp}
+    controller: App\Controller\PartnershipController::show
+    methods: GET
+    requirements:
+        idp: '\d+'
+
+app_partnership_edit:
+    path: /partnership/{idp}/edit
+    controller: App\Controller\PartnershipController::edit
+    methods: [GET, POST]
+    requirements:
+        idp: '\d+'
+
+app_partnership_delete:
+    path: /partnership/{idp}
+    controller: App\Controller\PartnershipController::delete
+    methods: POST
+    requirements:
+        idp: '\d+'
