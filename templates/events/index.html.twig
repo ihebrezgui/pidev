@@ -1,0 +1,42 @@
+{% extends 'baseBack.html.twig' %}
+{% block event %}
+{% block title %}Events index{% endblock %}
+
+{% block body %}
+    <h1>Events index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>DateEvent</th>
+                <th>NbrPlace</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+<td>{{ event.getId_event }}</td>
+                <td>{{ event.nom }}</td>
+                <td>{{ event.dateEvent ? event.dateEvent|date('Y-m-d') : '' }}</td>
+                <td>{{ event.nbrPlace }}</td>
+                <td>{{ event.description }}</td>
+                <td>
+                    <a href="{{ path('app_events_show', {'id': event.id_event}) }}">show</a>
+                    <a href="{{ path('app_events_edit', {'id': event.id_event}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_events_new') }}">Create new</a>
+{% endblock %}
+{% endblock %}

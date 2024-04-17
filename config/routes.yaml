@@ -1,0 +1,49 @@
+events_index:
+  path: /events
+  controller: 'App\Controller\EventsController::index'
+  methods: ['GET']
+
+app_events_new:
+  path: /events/new
+  controller: 'App\Controller\EventsController::new'
+  methods: ['GET', 'POST']
+
+app_events_show:
+  path: /events/{id}
+  controller: 'App\Controller\EventsController::show'
+  methods: ['GET']
+
+app_events_edit:
+  path: /events/{id}/edit
+  controller: 'App\Controller\EventsController::edit'
+  methods: ['GET', 'POST']
+
+app_events_delete:
+  path: /events/{id}
+  controller: 'App\Controller\EventsController::delete'
+  methods: ['POST']
+app_planning_index:
+    path: /planning/
+    controller: App\Controller\PlanningController::index
+    methods: ['GET']
+
+app_planning_new:
+    path: /planning/new
+    controller: App\Controller\PlanningController::new
+    methods: ['GET', 'POST']
+
+app_planning_show:
+    path: /planning/{idPlanning}
+    controller: App\Controller\PlanningController::show
+    methods: ['GET']
+
+app_planning_edit:
+    path: /planning/{idPlanning}/edit
+    controller: App\Controller\PlanningController::edit
+    methods: ['GET', 'POST']
+
+app_planning_delete:
+    path: /planning/{idPlanning}
+    controller: App\Controller\PlanningController::delete
+    methods: ['POST']
+   

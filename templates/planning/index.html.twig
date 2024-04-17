@@ -1,0 +1,39 @@
+{% extends 'baseBack.html.twig' %}
+{% block planning %}
+{% block title %}Planning index{% endblock %}
+
+{% block body %}
+    <h1>Planning index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdPlanning</th>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Approved</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+            <tr>
+                <td>{{ planning.idPlanning }}</td>
+                <td>{{ planning.titre }}</td>
+                <td>{{ planning.date ? planning.date|date('Y-m-d') : '' }}</td>
+                <td>{{ planning.approved ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_planning_show', {'idPlanning': planning.idPlanning}) }}">show</a>
+                    <a href="{{ path('app_planning_edit', {'idPlanning': planning.idPlanning}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_planning_new') }}">Create new</a>
+{% endblock %}
+{% endblock %}
