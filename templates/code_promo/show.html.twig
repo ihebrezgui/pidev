@@ -1,21 +1,17 @@
 {% extends 'baseBack.html.twig' %}
 {% block code%}
-{% block title %}CodePromo{% endblock %}
 
 {% block body %}
 <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center mb-4">CodePromo Details</h1>
+                <h1 class="text-center mb-4">Code promo détails</h1>
                 
                 <div class="card">
                     <div class="card-body">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <th>IdPromo</th>
-                                    <td>{{ code_promo.idPromo }}</td>
-                                </tr>
+                            
                                 <tr>
                                     <th>Code</th>
                                     <td>{{ code_promo.code }}</td>
@@ -38,7 +34,7 @@
                 </div>
 
                 <div class="mt-4 text-center">
-                    <a href="{{ path('app_code_promo_index') }}" class="btn btn-secondary">Back to List</a>
+                    <a href="{{ path('app_code_promo_index') }}" class="btn btn-secondary">Retour à la liste</a>
                     <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}" class="btn btn-primary">Edit</a>
                 </div>
 

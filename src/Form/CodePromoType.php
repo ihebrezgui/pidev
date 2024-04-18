@@ -17,14 +17,26 @@ class CodePromoType extends AbstractType
     {
         $builder
             ->add('code', TextType::class)
-            ->add('dateExpiration', DateType::class)
-            ->add('active',TextType::class)
+            ->add('dateExpiration', DateType::class, [
+                'html5' => true,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => (new \DateTime())->format('Y-m-d'), 
+                ],
+            ])            
+            ->add('active', CheckboxType::class, [
+                'label' => 'Active',
+                'required' => false,
+                'data' => true, 
+            ])
             ->add('iduser', TextType::class, [
                 'label' => 'User ID',
                 'attr' => ['class' => 'form-control'],
             ]);
            
     }
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {

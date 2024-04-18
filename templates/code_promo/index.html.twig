@@ -1,42 +1,39 @@
 {% extends 'baseBack.html.twig' %}
 {% block code%}
-{% block title %}CodePromo index{% endblock %}
 
 {% block body %}
-    <h1>CodePromo index</h1>
+    <h1>Les codes promos</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>IdPromo</th>
                 <th>Code</th>
-                <th>DateExpiration</th>
+                <th>Date d'expiration</th>
                 <th>Active</th>
-                <th>Iduser</th>
+                <th>ID utilisateur</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for code_promo in code_promos %}
             <tr>
-                <td>{{ code_promo.idPromo }}</td>
                 <td>{{ code_promo.code }}</td>
                 <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
                 <td>{{ code_promo.active }}</td>
                 <td>{{ code_promo.iduser }}</td>
                 <td>
-                    <a href="{{ path('app_code_promo_show', {'idPromo': code_promo.idPromo}) }}">show</a>
-                    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}">edit</a>
+                    <a href="{{ path('app_code_promo_show', {'idPromo': code_promo.idPromo}) }}">Afficher</a>
+                    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">pas des codes</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_code_promo_new') }}">Create new</a>
+    <a href="{{ path('app_code_promo_new') }}">Ajouter code</a>
 {% endblock %}
 {% endblock %}
