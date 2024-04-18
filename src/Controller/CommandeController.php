@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 class CommandeController extends AbstractController
 {
@@ -27,7 +30,6 @@ class CommandeController extends AbstractController
 
         $commande = new Commande();
         $form = $this->createForm(CommandeType::class, $commande);
-
         $form->handleRequest($request);
 
 
@@ -126,5 +128,49 @@ class CommandeController extends AbstractController
             'commande' => $commande
         ]);
     }
-    
+
+
+    #[Route('/{idc}/generate-pdf', name: 'contrat_generate_pdf')]
+public function generatePdf($idc): Response
+{
+    // Fetch the Commande entity by its ID
+    $entityManager = $this->getDoctrine()->getManager();
+    $commande = $entityManager->getRepository(Commande::class)->find($idc);
+
+    if (!$commande) {
+        throw $this->createNotFoundException('Commande not found for ID ' . $idc);
+    }
+
+    // Get the HTML content of the page you want to convert to PDF
+    $html = $this->renderView('commande/show_pdf.html.twig', [
+        'commande' => $commande,
+    ]);
+
+    // Configure Dompdf options
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+
+    // Instantiate Dompdf with the configured options
+    $dompdf = new Dompdf($options);
+
+    // Load HTML content into Dompdf
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Get the generated PDF content
+    $pdfOutput = $dompdf->output();
+
+    // Set response headers for PDF download
+    $response = new Response($pdfOutput);
+    $response->headers->set('Content-Type', 'application/pdf');
+    $response->headers->set('Content-Disposition', 'attachment; filename="commande.pdf"');
+
+    return $response;
+}
+
 }

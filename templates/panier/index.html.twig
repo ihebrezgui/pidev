@@ -1,155 +1,154 @@
-{% extends 'baseback.html.twig' %}
+ {% extends 'baseback.html.twig' %}
+ {% block body %}
+            <main id="main" class="main">
+                <div class="container-fluid">
+                    <div class="row">
+                         <div class="col-md-12">
+                           <div class="pagetitle mb-4">
+                                <h1>Votre panier</h1>
+                                <nav>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                                        <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
+                                        <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+                                    </ol>
+                                </nav>
+                            </div><!-- Fin du titre de la page -->
+                            <section class="section">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-12">
+                                        <div class="card shadow-lg ">
+                                            <div class="card-body">
+                                                {% for message in app.flashes('notice') %}
+                                                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                                                        {{ message }}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                {% endfor %}
+                                                {% for message in app.flashes('noticedelete') %}
+                                                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                                                        {{ message }}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                {% endfor %}
+                                                {% for message in app.flashes('noticesearch') %}
+                                                    <div class="alert alert-danger text-danger alert-dismissible fade show" role="alert">
+                                                        {{ message }}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                {% endfor %}
+                                                {% for message in app.flashes('noticesearch1') %}
+                                                    <div class="alert alert-success text-success alert-dismissible fade show" role="alert">
+                                                        {{ message }}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                {% endfor %}
 
-{% block body %}
-    <main id="main" class="main">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                    <div class="pagetitle">
-                        <h1>Votre panier</h1>
-                        <nav>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
-                                <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
-                                <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
-                            </ol>
-                        </nav>
-                    </div><!-- Fin du titre de la page -->
-                    <section class="section">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12">
-                                <div class="card shadow-lg p-3">
-                                    <div class="card-body">
-                                        {% for message in app.flashes('notice') %}
-                                            <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
-                                                {{ message }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        {% endfor %}
-                                        {% for message in app.flashes('noticedelete') %}
-                                            <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
-                                                {{ message }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        {% endfor %}
-                                        {% for message in app.flashes('noticesearch') %}
-                                            <div class="alert alert-danger text-danger alert-dismissible fade show" role="alert">
-                                                {{ message }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        {% endfor %}
-                                        {% for message in app.flashes('noticesearch1') %}
-                                            <div class="alert alert-success text-success alert-dismissible fade show" role="alert">
-                                                {{ message }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        {% endfor %}
+                                                <h5 class="card-title"></h5>
+                                                <div class="table-responsive">
 
-                                        <h5 class="card-title"></h5>
-                                        <div class="table-responsive">
-
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-sort-amount-up"></i> Trier par
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ path('tri_par_nom') }}">Nom</a></li>
-                                                <li><a class="dropdown-item" href="{{ path('tri_par_prix') }}">Prix</a></li>
-                                            </ul>
-                                        </div>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-sort-amount-up"></i> Trier par
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{ path('tri_par_nom') }}">Nom</a></li>
+                                                        <li><a class="dropdown-item" href="{{ path('tri_par_prix') }}">Prix</a></li>
+                                                    </ul>
+                                                </div>
 
 
-                                       <form action="{{ path('rechercher_panier') }}" method="GET">
                                             <form action="{{ path('rechercher_panier') }}" method="GET">
-                                            <div class="input-group mt-3" style="max-width: 320px; margin-left: auto;">
-                                                <input type="text" name="q" id="searchInput" class="form-control" placeholder="Rechercher dans le panier...">
-                                                <button type="submit" class="btn btn-primary">Rechercher</button>
-                                            </div>
-                                        </form>
+                                                    <form action="{{ path('rechercher_panier') }}" method="GET">
+                                                    <div class="input-group mt-3" style="max-width: 320px; margin-left: auto;">
+                                                        <input type="text" name="q" id="searchInput" class="form-control" placeholder="Rechercher dans le panier...">
+                                                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                                                    </div>
+                                                </form>
 
 
 
 
-                                    <h1></h1>
-                                            <table class="table table-striped table-bordered table-hover">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">ProdId</th>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Quantité</th>
-                                                        <th scope="col">Prix</th>
-                                                        <th scope="col">Total</th>
-                                                        <th scope="col">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% if panier | length == 0 %}
-                                                        <tr>
-                                                            <td colspan="6" class="text-center">Le panier est vide.</td>
-                                                        </tr>
-                                                    {% else %}
-                                                        {% set totalPrix = 0 %}
-                                                        {% for p in panier %}
+                                            <h1></h1>
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead class="thead-dark">
                                                             <tr>
-                                                                <td>{{ p.prodId }}</td>
-                                                                <td>{{ p.nom }}</td>
-                                                                <td>{{ p.quantite }}</td>
-                                                                <td>{{ p.prix }} DT</td>
-                                                                <td>{{ p.quantite * p.prix }} DT</td>
-                                                                <td class="d-flex align-items-center">
-                                                                    <a href="{{ path('modifier_panier',{idp:p.idp}) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
-                                                                    <a href="#" onclick="if(confirm('Voulez-vous vraiment supprimer ?')) { window.location='{{ path('supprimerPanier', {'idp': p.idp}) }}'; }" class="btn btn-sm btn-danger">Supprimer</a>
-                                                                </td>
+                                                                <th scope="col">ProdId</th>
+                                                                <th scope="col">Nom</th>
+                                                                <th scope="col">Quantité</th>
+                                                                <th scope="col">Prix</th>
+                                                                <th scope="col">Total</th>
+                                                                <th scope="col">Actions</th>
                                                             </tr>
-                                                            {% set totalPrix = totalPrix + (p.quantite * p.prix) %}
-                                                        {% endfor %}
+                                                        </thead>
+                                                        <tbody>
+                                                            {% if panier | length == 0 %}
+                                                                <tr>
+                                                                    <td colspan="6" class="text-center">Le panier est vide.</td>
+                                                                </tr>
+                                                            {% else %}
+                                                                {% set totalPrix = 0 %}
+                                                                {% for p in panier %}
+                                                                    <tr>
+                                                                        <td>{{ p.prodId }}</td>
+                                                                        <td>{{ p.nom }}</td>
+                                                                        <td>{{ p.quantite }}</td>
+                                                                        <td>{{ p.prix }} DT</td>
+                                                                        <td>{{ p.quantite * p.prix }} DT</td>
+                                                                        <td class="d-flex align-items-center">
+                                                                            <a href="{{ path('modifier_panier',{idp:p.idp}) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
+                                                                            <a href="#" onclick="if(confirm('Voulez-vous vraiment supprimer ?')) { window.location='{{ path('supprimerPanier', {'idp': p.idp}) }}'; }" class="btn btn-sm btn-danger">Supprimer</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% set totalPrix = totalPrix + (p.quantite * p.prix) %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="text-end mt-3">
+                                                    {% if panier | length == 0 %}
+                                                        <p>Total des prix :0 DT</p>
+                                                    {% else %}
+                                                        <p>Total des prix : {{ totalPrix }} DT</p>
                                                     {% endif %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="text-end mt-3">
-                                            {% if panier | length == 0 %}
-                                                <p>Total des prix :0 DT</p>
-                                            {% else %}
-                                                <p>Total des prix : {{ totalPrix }} DT</p>
-                                            {% endif %}
-                                            <a href="{{ path('liste_produits') }}" class="btn btn-outline-info me-2">Ajouter autre produits</a>
-                                            <a href="{{ path('ajouter_commande') }}" class="btn btn-outline-info">Passer votre commande</a>     
+                                                    <a href="{{ path('liste_produits') }}" class="btn btn-outline-info me-2">Ajouter autre produits</a>
+                                                    <a href="{{ path('ajouter_commande') }}" class="btn btn-outline-info">Passer votre commande</a>     
 
-                                        <div id="searchResults" class="mt-3">
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#searchInput').on('input', function() {
-                                                    var searchTerm = $(this).val();
-                                                    if (searchTerm.length >= 1) { // Vérifier si au moins une lettre est saisie
-                                                        $.ajax({
-                                                            url: "{{ path('rechercher_panier') }}",
-                                                            method: "GET",
-                                                            data: { q: searchTerm },
-                                                            success: function(response) {
-                                                                if (response.trim() === '') {
-                                                                    $('#searchResults').html('<p>Aucun résultat trouvé.</p>');
-                                                                } else {
-                                                                    $('#searchResults').html('<p>Résultats pour le mot "' + searchTerm + '" :</p>' + response);
-                                                                }
+                                                <div id="searchResults" class="mt-3">
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $('#searchInput').on('input', function() {
+                                                            var searchTerm = $(this).val();
+                                                            if (searchTerm.length >= 1) { // Vérifier si au moins une lettre est saisie
+                                                                $.ajax({
+                                                                    url: "{{ path('rechercher_panier') }}",
+                                                                    method: "GET",
+                                                                    data: { q: searchTerm },
+                                                                    success: function(response) {
+                                                                        if (response.trim() === '') {
+                                                                            $('#searchResults').html('<p>Aucun résultat trouvé.</p>');
+                                                                        } else {
+                                                                            $('#searchResults').html('<p>Résultats pour le mot "' + searchTerm + '" :</p>' + response);
+                                                                        }
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                $('#searchResults').html(''); // Effacer les résultats si aucun texte n'est saisi
                                                             }
                                                         });
-                                                    } else {
-                                                        $('#searchResults').html(''); // Effacer les résultats si aucun texte n'est saisi
-                                                    }
-                                                });
-                                            });
-                                        </script>
-                                     </div>
-                               </div>
-                              
-                            </div>
+                                                    });
+                                                </script>
+                                            </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </section>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
-{% endblock %}
+            </main>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+        {% endblock %}

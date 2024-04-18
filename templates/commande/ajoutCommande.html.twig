@@ -42,15 +42,16 @@
                             {{ form_widget(f.tel, { attr: { class: 'form-control' } }) }}
                             {{ form_errors(f.tel, { attr: { class: 'text-danger' } }) }}
                         </div>
-                        <div class="col-md-12">
-                            <label for="inputPanier" class="form-label">Panier</label>
-                            {{ form_widget(f.panier, { attr: { class: 'form-control' } }) }}
-                            {{ form_errors(f.panier, { attr: { class: 'text-danger' } }) }}
-                        </div>
+                       
                         <div class="col-md-12">
                             <label for="inputAddress" class="form-label">Adresse</label>
                             {{ form_widget(f.address, { attr: { class: 'form-control' } }) }}
                             {{ form_errors(f.address, { attr: { class: 'text-danger' } }) }}
+                        </div>
+                         <div class="col-md-12">
+                            <label for="inputPanier" class="form-label">Panier</label>
+                            {{ form_widget(f.panier, { attr: { class: 'form-control' } }) }}
+                            {{ form_errors(f.panier, { attr: { class: 'text-danger' } }) }}
                         </div>
                         <div class="text-center mt-3">
                             <button type="submit" class="btn btn-primary">Enregistrer</button>

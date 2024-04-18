@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande</title>
+    <style>
+        /* Styles for text fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        header, footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+        header img {
+            max-width: 150px;
+            height: auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .location-date {
+            text-align: right;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        td {
+            vertical-align: top;
+        }
+        .contract-info {
+            margin-bottom: 30px;
+        }
+        footer p {
+            font-size: 20px;
+        }
+
+        /* Media Query for small screens */
+        @media only screen and (max-width: 600px) {
+            .location-date {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+       
+      <img src="{{ asset('public\images\logo.png') }}" >
+
+
+                         
+     <h2>PaceLearning</h2>
+        <p> Ariana , Tunisie | Téléphone: +216 21069300| E-mail : pacelearning@gmail.com</p>
+    </header>
+
+    <div class="container">
+        <h1>Commande</h1>
+
+        <div class="location-date">
+            <p>Date: {{ "now"|date("d/m/Y") }}</p>
+            <p>Lieu: Ariana</p>
+        </div>
+
+        <div class="contract-info">
+            <p><strong>Détails du Commande:</strong></p>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ commande.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prénom</th>
+                        <td>{{ commande.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ commande.mail }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ commande.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Numéro du client</th>
+                        <td>{{ commande.tel }}</td>
+                    </tr>
+                    <tr>
+                        <th>Panier</th>
+                        <td>{{ commande.panier | json_encode }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {{ "now"|date("Y") }} PaceLearning. </p>
+    </footer>
+</body>
+</html>
