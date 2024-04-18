@@ -10,7 +10,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Date de Naissance</th>
@@ -18,14 +17,12 @@
                     <th>Email</th>
                     <th>Sexe</th>
                     <th>Rôle</th>
-                    <th>Mot de passe</th>
                 </tr>
             </thead>
             <tbody>
                 {% if utilisateurs is not empty %}
                     {% for utilisateur in utilisateurs %}
                         <tr>
-                            <td>{{ utilisateur.id }}</td>
                             <td>{{ utilisateur.nom }}</td>
                             <td>{{ utilisateur.prenom }}</td>
                             <td>{{ utilisateur.dateNais ? utilisateur.dateNais|date('Y-m-d') : '' }}</td>
@@ -33,7 +30,6 @@
                             <td>{{ utilisateur.email }}</td>
                             <td>{{ utilisateur.sexe }}</td>
                             <td>{{ utilisateur.role }}</td>
-                            <td>{{ utilisateur.password ?? 'N/A' }}</td> {# Display 'N/A' if password is null #}
                             <td>
                                 <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Afficher</a>
                                 <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier</a>

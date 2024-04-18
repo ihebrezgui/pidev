@@ -72,7 +72,6 @@ class UtilisateurController extends AbstractController
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    // Disable the password field
     $this->disablePasswordField($form);
 
     return $this->render('utilisateur/edit.html.twig', [
@@ -109,7 +108,6 @@ public function usersByAgeChart(UtilisateurRepository $utilisateurRepository)
         '51+' => 0,
     ];
 
-    // Count users in each age group
     foreach ($utilisateurs as $user) {
         $age = $this->calculateAge($user->getDateNais());
         if ($age <= 20) {
@@ -125,13 +123,11 @@ public function usersByAgeChart(UtilisateurRepository $utilisateurRepository)
         }
     }
 
-    // Convert data to format required by the charting library
     $chartData = [
         'labels' => array_keys($ageGroups),
         'data' => array_values($ageGroups),
     ];
 
-    // Render the chart view
     return $this->render('utilisateur/age_stat.html.twig', [
         'chartData' => $chartData,
     ]);

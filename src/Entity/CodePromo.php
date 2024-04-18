@@ -16,22 +16,26 @@ class CodePromo
     private $idPromo;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: "Code is required")]
+    #[Assert\Regex(
+        pattern: '/^\d{7}$/',
+        message: 'Le code doit contenir 8 chiffres
+        '
+    )]    #[Assert\NotBlank(message: "Le code est obligatoire")]
     private $code;
 
     #[ORM\Column(type: "date", nullable: false)]
-    #[Assert\NotBlank(message: "Expiration date is required")]
-    #[Assert\Type("\DateTime", message: "Expiration date must be a valid date")]
-    #[Assert\GreaterThan("today", message: "Expiration date must be in the future")]
+    #[Assert\NotBlank(message: "La date d'expiration est requise")]
+    #[Assert\Type("\DateTime", message: "La date d'expiration doit être une date valide")]
+    #[Assert\GreaterThan("today", message: "La date d'expiration doit se situer dans le futur")]
     private $dateExpiration;
 
     #[ORM\Column(type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Active status is required")]
-    #[Assert\Choice(choices: [0, 1], message: "Active status must be either 0 or 1")]
+    #[Assert\NotBlank(message: "Le statut actif est requis")]
+    #[Assert\Choice(choices: [0, 1], message: "L'état actif doit être 0 ou 1")]
     private $active;
 
     #[ORM\Column(type: "integer", nullable: false, name: "idUser")]
-    #[Assert\NotBlank(message: "User ID is required")]
+    #[Assert\NotBlank(message: "L'identifiant de l'utilisateur est requis")]
     private $iduser;
 
     public function getIdPromo(): ?int

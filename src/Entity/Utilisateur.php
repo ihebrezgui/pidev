@@ -19,7 +19,7 @@ class Utilisateur implements UserInterface
     private $id;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: 'The name cannot be blank')]
+    #[Assert\NotBlank(message: 'Le nom  ne peut pas être vide')]
     #[Assert\Length(min: 3, minMessage: 'Le nom  doit comporter au moins {{ 3}} caractères.')]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]+$/',
@@ -28,7 +28,7 @@ class Utilisateur implements UserInterface
     private $nom;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
-    #[Assert\NotBlank(message: 'Le nom de famille ne peut pas être vide')]
+    #[Assert\NotBlank(message: 'Le nom  ne peut pas être vide')]
     #[Assert\Length(min: 3, minMessage: 'Le nom  doit comporter au moins {{ 3}} caractères.')]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]+$/',
@@ -61,8 +61,7 @@ class Utilisateur implements UserInterface
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     #[Assert\Regex(
         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/',
-        message: 'Le mot de passe doit contenir au moins une lettre majuscule, un chiffre, un caractère spécial et au moins 8 caractères.'
-    )]
+        message: 'Le mot de passe doit contenir au moins une lettre majuscule, un chiffre, un caractère spécial et au moins 8 caractères.')]
     private $password;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]

@@ -1,4 +1,25 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+
+<div class="mb-3">
+    {{ form_label(form.code) }}
+    {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.dateExpiration) }}
+    {{ form_widget(form.dateExpiration, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3 form-check">
+    {{ form_label(form.active, 'Active', {'label_attr': {'class': 'form-check-label'}}) }}
+    {{ form_widget(form.active, {'attr': {'class': 'form-check-input'}}) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.iduser) }}
+    {{ form_widget(form.iduser, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<button class="btn">{{ button_label|default('Enregistrer') }}</button>
+
 {{ form_end(form) }}
