@@ -1,0 +1,41 @@
+{% extends 'baseB.html.twig' %}
+
+{% block title %}Formation Index{% endblock %}
+
+{% block body %}
+    <h1>Formations</h1>
+    {% if formations %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for formation in formations %}
+                <tr>
+                    <td>{{ formation.idFormation }}</td>
+                    <td>{{ formation.typeF }}</td>
+                    <td><img src="{{ asset(formation.img) }}" alt="..." style="width: 100px;"></td>
+                    <td>{{ formation.prix }}</td>
+                    <td>{{ formation.duree }}</td>
+                    <td>{{ formation.status }}</td>
+                    <td>
+                        <a href="{{ path('app_formation_show', {'idFormation': formation.idFormation}) }}">Show</a>
+                        <a href="{{ path('app_formation_edit', {'idFormation': formation.idFormation}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No formations found.</p>
+    {% endif %}
+    <a href="{{ path('app_formation_new') }}">Create New</a>
+{% endblock %}

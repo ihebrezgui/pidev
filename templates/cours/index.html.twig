@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours index{% endblock %}
+
+{% block body %}
+    <h1>Cours index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idcours</th>
+                <th>NomCours</th>
+                <th>Description</th>
+                <th>Categorie</th>
+                <th>Cours</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td>{{ cour.idcours }}</td>
+                <td>{{ cour.nomCours }}</td>
+                <td>{{ cour.description }}</td>
+                <td>{{ cour.categorie }}</td>
+                <td><img src="{{ asset('PaceLearning/pdf.png') }}" width="25" height="25">{{ cour.cours }}</td>
+                <td>
+                    <a href="{{ path('app_cours_show', {'idcours': cour.idcours}) }}">show</a>
+                    <a href="{{ path('app_cours_edit', {'idcours': cour.idcours}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cours_new') }}">Create new</a>
+{% endblock %}

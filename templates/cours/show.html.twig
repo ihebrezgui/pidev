@@ -1,0 +1,38 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block gestion %}
+    <h1>Cours</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idcours</th>
+                <td>{{ cour.idcours }}</td>
+            </tr>
+            <tr>
+                <th>NomCours</th>
+                <td>{{ cour.nomCours }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ cour.description }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ cour.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Cours</th>
+                <td>{{ cour.cours }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cours_index') }}">back to list</a>
+
+    <a href="{{ path('app_cours_edit', {'idcours': cour.idcours}) }}">edit</a>
+
+    {{ include('cours/_delete_form.html.twig') }}
+{% endblock %}
