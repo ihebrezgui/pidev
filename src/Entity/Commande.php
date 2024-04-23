@@ -28,10 +28,10 @@ class Commande
      * @ORM\Column(name="tel", type="integer", nullable=false)
      * @Assert\NotBlank(message="le champs tel ne doit pas etre vide")
      * @Assert\Positive(message="Le numéro de téléphone doit être positif.")
-     *  @Assert\Regex(
+     * @Assert\Regex(
      *     pattern="/^\d{8}$/",
-    *     message="Le numéro de téléphone doit être composé de 8 chiffres."
-    * )
+     *     message="Le numéro de téléphone doit être composé de 8 chiffres."
+     * )
      */
     private $tel;
 
@@ -41,9 +41,8 @@ class Commande
      * @ORM\Column(name="nom", type="string", length=100, nullable=false)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide.")
      * @Assert\Regex(
-     * pattern="/^[a-zA-ZÀ-ÿ\s]+$/",
-     * message="Le nom doit contenir uniquement des lettres."
-     * 
+     *     pattern="/^[a-zA-ZÀ-ÿ\s]+$/",
+     *     message="Le nom doit contenir uniquement des lettres."
      * )
      */
     private $nom;
@@ -54,8 +53,8 @@ class Commande
      * @ORM\Column(name="prenom", type="string", length=100, nullable=false)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide.")
      * @Assert\Regex(
-     * pattern="/^[a-zA-ZÀ-ÿ\s]+$/",
-     * message="Le nom doit contenir uniquement des lettres."
+     *     pattern="/^[a-zA-ZÀ-ÿ\s]+$/",
+     *     message="Le nom doit contenir uniquement des lettres."
      * )
      */
     private $prenom;
@@ -70,9 +69,9 @@ class Commande
     private $mail;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="panier", type="string", length=100, nullable=false)
+     * @ORM\Column(name="panier", type="json", nullable=false)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide.")
      */
     private $panier;
@@ -138,12 +137,12 @@ class Commande
         return $this;
     }
 
-    public function getPanier(): ?string
+    public function getPanier(): ?array
     {
         return $this->panier;
     }
 
-    public function setPanier(?string $panier): self
+    public function setPanier(?array $panier): self
     {
         $this->panier = $panier;
 
@@ -161,6 +160,4 @@ class Commande
 
         return $this;
     }
-
-
 }

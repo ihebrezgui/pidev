@@ -1,47 +1,41 @@
-    {% extends 'basefront.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
-    {% block gestion %}
-        <div class="container">
-            <h1>Liste des Formations </h1>
-            
+{% block gestion %}
+    <div class="container">
+        <h1>Liste des Formations</h1>
         <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
-                        <li class="breadcrumb-item active"><a href="panier">Panier</a></li>
-                        <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
-                    </ol>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                <li class="breadcrumb-item active"><a href="cart">Panier</a></li>
+                <li class="breadcrumb-item active"><a href="commande">Commande</a></li>
+            </ol>
         </nav>
-            <div class="row">
-                {% for produit in produits %}
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                               <td><img src="{{ asset('images/'~ produit.img) }}" width="250" height="150"></td>
-                            
-                            <div class="card-body">
-                                <h5 class="card-title">{{ produit.typeF }}</h5>
-                                <p class="card-text">Prix : {{ produit.prix }}</p>
-                                <p class="card-text">Durée : {{ produit.duree }}</p>
-                                <form action="{{ path('ajouter_produit') }}" method="POST">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Quantité</span>
-                                            </div>
-                                            <input type="number" name="quantite" class="form-control" value="1" min="1">
+        <div class="row">
+            {% for produit in produits %}
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/'~ produit.img) }}" width="250" height="150">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ produit.typeF }}</h5>
+                            <p class="card-text">Prix : {{ produit.prix }}</p>
+                            <p class="card-text">Durée : {{ produit.duree }}</p>
+                            <form action="{{ path('cart_add', {'id': produit.idFormation}) }}" method="POST">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Quantité</span>
                                         </div>
+                                        <input type="number" name="quantite" class="form-control" value="1" min="1">
                                     </div>
-                                    <input type="hidden" name="idFormation" value="{{ produit.idFormation }}">
-                                    <input type="hidden" name="typeF" value="{{ produit.typeF }}">
-                                    <input type="hidden" name="prix" value="{{ produit.prix }}">
-                                    <h1></h1>
-                                    <h1></h1>
-                                    <button type="submit" class="btn btn-primary">Ajouter au Panier</button>
-                                    <h1></h1>
-                                </form>
-                            </div>
+                                </div>
+                                <input type="hidden" name="typeF" value="{{ produit.typeF }}">
+                                <input type="hidden" name="prix" value="{{ produit.prix }}">
+                                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                            </form>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

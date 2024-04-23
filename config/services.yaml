@@ -20,6 +20,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+
+# Définition du service SmsGenerator
+    App\Service\SmsGenerator:
+        # Configuration spécifique pour ce service
+        # Si le service a des arguments de constructeur, vous pouvez les spécifier ici
+        # par exemple:
+        # arguments:
+        #     $someParameter: '%app.some_parameter%'
+   
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 

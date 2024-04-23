@@ -58,7 +58,8 @@
                                                         <th scope="col">Adresse Email</th>
                                                         <th scope="col">Téléphone</th>
                                                         <th scope="col">Adresse</th>
-                                                        <th scope="col">Actions</th>
+                                                         <th scope="col">Actions</th>
+                                                    
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -75,6 +76,8 @@
                                                                 <td>{{ commande.mail }}</td>    
                                                                 <td>{{ commande.tel }}</td>
                                                                 <td>{{ commande.address }}</td>
+                                                              
+                                                                
                                                                 <td class="d-flex align-items-center">
                                                                     <a href="{{ path('modifier_commande',{idc:commande.idc}) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
                                                                     <a href="#" onclick="if(confirm('Voulez-vous vraiment supprimer ?')) { window.location='{{ path('supprimerCommande', {'idc': commande.idc}) }}'; }" class="btn btn-sm btn-danger">Supprimer</a>

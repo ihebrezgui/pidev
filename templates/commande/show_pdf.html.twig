@@ -137,7 +137,16 @@
                     </tr>
                     <tr>
                         <th>Panier</th>
-                        <td>{{ commande.panier | json_encode }}</td>
+                        <td>
+        {% for item in commande.panier %}
+            <div style="margin-bottom: 10px;">
+                <strong>Nom du Produit:</strong> {{ item.name }} <br>
+                <strong>Prix:</strong> {{ item.price }} <br>
+                <strong>Quantité:</strong> {{ item.quantity }} <br>
+                <strong>Total:</strong> {{ item.quantity * item.price }} <br>
+            </div>
+        {% endfor %}
+    </td>
                     </tr>
                 </tbody>
             </table>

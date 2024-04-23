@@ -29,10 +29,11 @@ class SmsController extends AbstractController
 
         $text=$request->request->get('text');
 
-        $number_test=$_ENV['+15076985148'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
+        $number_test=$_ENV['twilio_to_number'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
+    
 
-        //Appel du service
-        $smsGenerator->sendSms($number_test ,$name,$text);
+    //Appel du service
+    $smsGenerator->sendSms($number_test ,$name,$text);
 
         return $this->render('sms/index.html.twig', ['smsSent'=>true]);
     }
