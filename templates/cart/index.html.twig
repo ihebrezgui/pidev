@@ -1,15 +1,21 @@
-{% extends 'baseback.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
 {% block title %}Votre panier{% endblock %}
 
-{% block body %}
+{% block gestion %}
     <main id="main" class="main">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="pagetitle mb-4">
                         <h1>Votre panier</h1>
-                        
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="liste-produits">Accueil</a></li>
+                                <li class="breadcrumb-item active"><a href="cart">Panier</a></li>
+                                
+                            </ol>
+                        </nav>
                         
                     </div><!-- Fin du titre de la page -->
                     <section class="section">
@@ -17,7 +23,7 @@
                             <div class="col-lg-12">
                                 <div class="card shadow-lg ">
                                     <div class="card-body">
-                                        
+                                       
                                         {% for message in app.flashes('notice') %}
                                                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
                                                         {{ message }}
@@ -52,8 +58,9 @@
                                                             <td>{{ elements.total }}</td>
                                                             <td>
                                                                 <a href="{{ path('cart_remove', {'id': elements.id}) }}" class="btn btn-danger">Supprimer</a>
-                                                               <a href="{{ path ('create_order') }}" class="btn btn-success">Ajouter</a>
+                                                               
                                                             </td>
+                                                            
                                                         </tr>
                                                     {% else %}
                                                         <tr>
@@ -71,6 +78,8 @@
                                                 </a>
                                             {% endif %}
                                         </div>
+                                        <a href="{{ path ('create_order') }}" class="btn btn-success">Passer votre commande</a>
+                                        <a href="{{ path('liste_produits') }}" class="btn btn-outline-info me-2">Ajouter autre produits</a>
                                     </div>
                                 </div>
                             </div>

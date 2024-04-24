@@ -109,18 +109,28 @@ class CartController extends AbstractController
     public function createOrder(Request $request, EntityManagerInterface $entityManager,SmsGenerator $smsGenerator): Response
     {
         $cart = $request->getSession()->get('cart', []);
+         // Vérifier si le panier est vide
+    if (empty($cart)) {
+        $this->addFlash('noticedelete', 'Votre panier est vide. Ajoutez des produits avant de passer une commande.');
+        return $this->redirectToRoute('app_cart');}
+        
+        // Sérialiser le panier en JSON si c'est un tableau
+        $panier = $cart ? json_encode($cart) : null;
+
+        
+        
         // Récupérer les informations de l'utilisateur depuis le formulaire (nom, prénom, email)
         $nom =('iheb');
         $prenom = ('rezgui');
         $email =('iheb@gmail.com');
-        $panier= $cart;
+        //$panier= $cart;
         $tel =21069300; 
-        $number=21069300;
+        $number='+21621069300';
         $addr =('tunise');
         $text=  ('Votre commande a étè bien passer !!');
         $name= 'PaceLearning';
 
-
+        
         $commande = new Commande();
         $commande->setNom($nom);
         $commande->setPrenom($prenom);
@@ -132,9 +142,15 @@ class CartController extends AbstractController
         $entityManager->persist($commande);
         $entityManager->flush();
 
-        $number_test=$_ENV['twilio_to_number'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
+
+         // Définir twilio_to_number avec la valeur de $number
+           //  putenv("twilio_to_number=$number");
+
+            //$number_test = $_ENV['twilio_to_number']; // Numéro vérifié par Twilio. Un seul numéro autorisé pour la version de test.
+
+
                 //Appel du service
-        $smsGenerator->sendSms($number_test ,$name,$text);  
+        $smsGenerator->sendSms($number ,$name,$text);  
 
         $request->getSession()->set('cart', []);
         $request->getSession()->set('totalCart', 0);

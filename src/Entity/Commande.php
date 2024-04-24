@@ -69,9 +69,9 @@ class Commande
     private $mail;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="panier", type="json", nullable=false)
+     * @ORM\Column(name="panier", type="string", nullable=false)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide.")
      */
     private $panier;
@@ -137,12 +137,12 @@ class Commande
         return $this;
     }
 
-    public function getPanier(): ?array
+    public function getPanier(): ?string
     {
         return $this->panier;
     }
 
-    public function setPanier(?array $panier): self
+    public function setPanier(?string $panier): self
     {
         $this->panier = $panier;
 

@@ -129,7 +129,7 @@ class CommandeController extends AbstractController
         ]);
     }
 
-
+   
     #[Route('/{idc}/generate-pdf', name: 'contrat_generate_pdf')]
 public function generatePdf($idc): Response
 {

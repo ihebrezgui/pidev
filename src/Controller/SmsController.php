@@ -22,7 +22,7 @@ class SmsController extends AbstractController
     #[Route('/sendSms', name: 'send_sms', methods:'POST')]
     public function sendSms(Request $request, SmsGenerator $smsGenerator): Response
     {
-       
+     /*  
         $number=$request->request->get('number');
 
         $name=$request->request->get('name');
@@ -34,7 +34,7 @@ class SmsController extends AbstractController
 
     //Appel du service
     $smsGenerator->sendSms($number_test ,$name,$text);
-
+*/
         return $this->render('sms/index.html.twig', ['smsSent'=>true]);
     }
 }

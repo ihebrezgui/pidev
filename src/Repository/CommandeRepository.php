@@ -28,6 +28,13 @@ class CommandeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findByName()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
  
 
