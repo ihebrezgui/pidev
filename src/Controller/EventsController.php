@@ -10,17 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 #[Route('/events')]
 class EventsController extends AbstractController
 {
     #[Route('/', name: 'app_events_index', methods: ['GET'])]
-    public function index(EventsRepository $eventsRepository): Response
+    public function index(Request $request, EventsRepository $eventsRepository): Response
     {
-        return $this->render('events/index.html.twig', [
-            'events' => $eventsRepository->findAll(),
-        ]);
+        $searchQuery = $request->query->get('search');
+
+        if ($searchQuery !== null) {
+            $events = $eventsRepository->findBySearchQuery($searchQuery);
+        } else {
+            $events = $eventsRepository->findAllOrderedByDate();
     }
+
+       
+
+    return $this->render('events/index.html.twig', [
+        'events' => $events,
+    ]);
+}
 
     #[Route('/new', name: 'app_events_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -71,7 +83,7 @@ class EventsController extends AbstractController
     #[Route('/{id}', name: 'app_events_delete', methods: ['POST'])]
     public function delete(Request $request, Events $event, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$event->getId_event(), $request->request->get('_token'))) {
             $entityManager->remove($event);
             $entityManager->flush();
         }

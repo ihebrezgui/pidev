@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EventsRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
 #[ORM\Table(name: "events")]
@@ -17,25 +17,27 @@ class Events
     private $id_event;
 
     #[ORM\Column(type: "string", length: 50, nullable: false)]
+    #[Assert\NotBlank(message: "Nom cannot be blank")]
+    #[Assert\Length(max: 50, maxMessage: "Nom must be less than {{ limit }} characters")]
     private $nom;
 
     #[ORM\Column(type: "date", nullable: false)]
-    #[Assert\NotBlank(message: "Date cannot be blank")]
-    #[Assert\Type("\DateTime", message: "Date must be a valid date")]
-    #[Assert\GreaterThan("2023-12-31", message: "Date must start from 2024")]
+    #[Assert\NotBlank(message: "DateEvent cannot be blank")]
+    #[Assert\Type("\DateTime", message: "DateEvent must be a valid date")]
+    #[Assert\GreaterThan("2023-12-31", message: "DateEvent must start from 2024")]
     private $dateEvent;
 
-
     #[ORM\Column(type: "integer", nullable: false)]
-    #[Assert\NotBlank(message: "Number of places cannot be blank")]
-    #[Assert\Regex(pattern: "/^\d{1,3}$/", message: "Number of places must be digits with a maximum of 3 digits")]
+    #[Assert\NotBlank(message: "NbrPlace cannot be blank")]
+    #[Assert\Regex(pattern: "/^\d{1,3}$/", message: "NbrPlace must be digits with a maximum of 3 digits")]
     private $nbrPlace;
-
 
     #[ORM\Column(type: "string", length: 200, nullable: false)]
     #[Assert\NotBlank(message: "Description cannot be blank")]
     #[Assert\Length(max: 200, maxMessage: "Description must be less than {{ limit }} characters")]
     private $description;
+
+    
 
     public function getId_event(): ?int
     {
