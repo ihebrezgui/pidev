@@ -14,13 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/enseignent')]
 class EnseignentController extends AbstractController
 {
-    #[Route('/', name: 'app_enseignent_index', methods: ['GET'])]
-    public function index(EnseignentRepository $enseignentRepository): Response
-    {
-        return $this->render('enseignent/index.html.twig', [
-            'enseignents' => $enseignentRepository->findAll(),
-        ]);
-    }
+   #[Route('/', name: 'app_enseignent_index', methods: ['GET'])]
+public function index(Request $request, EnseignentRepository $enseignentRepository): Response
+{
+    $search = $request->query->get('search', ''); // Get the search term from the query string
+    $enseignents = $enseignentRepository->findBySearchTerm($search);
+
+    return $this->render('enseignent/index.html.twig', [
+        'enseignents' => $enseignents,
+    ]);
+}
 
     #[Route('/new', name: 'app_enseignent_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -78,4 +81,17 @@ class EnseignentController extends AbstractController
 
         return $this->redirectToRoute('app_enseignent_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/age-statistics', name: 'app_enseignent_age_statistics')]
+    public function showAgeStatistics(EnseignentRepository $enseignentRepository): Response
+{
+    $ageCounts = $enseignentRepository->countByAge();
+    $averageAge = $enseignentRepository->averageAge();
+
+    return $this->render('enseignent/age_statistics.html.twig', [
+        'ageCounts' => $ageCounts,
+        'averageAge' => $averageAge,
+    ]);
+}
+
 }

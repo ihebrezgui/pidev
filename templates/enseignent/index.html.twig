@@ -45,5 +45,16 @@
     </table>
 
     <a href="{{ path('app_enseignent_new') }}">Create new</a>
+
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="get" action="{{ path('app_enseignent_index') }}">
+                    <div class="input-group">
+
+    <input class="form-control" type="text" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+    <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+
+</form>
+
+
 {% endblock %}
 {% endblock %}
