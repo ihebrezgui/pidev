@@ -112,14 +112,14 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Dashboard</h1>
-                       <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+                         <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
                             <a href="{{ path('app_formation_new') }}" class="btn btn-success">Create New Formation</a>
                          </div>
                             <ol class="breadcrumb mb-4">
                                <li class="breadcrumb-item active">Dashboard</li>
                              </ol>
-                         <div class="row">
-                               <style>
+                        <div class="row">
+                                     <style>
                                       /* You can add this style block in your CSS file */
                                        .card-custom {
                                        margin-bottom: 1rem;
@@ -135,7 +135,7 @@
                                     .card-body-custom {
                                         font-size: 1rem;
                                     }
-                                </style>
+                                    </style>
                                     {% for type, count in typeCounts %}
                                      {% set bg_color = loop.index0 % 3 == 0 ? 'bg-danger' : (loop.index0 % 3 == 1 ? 'bg-warning' : 'bg-primary') %}
                                         <div class="col-md-4">
@@ -152,7 +152,6 @@
                                         </div>
                                     {% endfor %}    
                                 </div>
-                          </div>
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
@@ -165,11 +164,13 @@
                             </div>
                             <!-- Example of integrating dynamic stats in your HTML using Twig -->
                           {% if totalFormations is defined %}
-                           <div class="stats">
-                              <h3>Total Formations: {{ totalFormations }}</h3>
-                               <h3>Average Price: {{ averagePrice | number_format(2) }} USD</h3>
-                          </div>
-                         {% endif %}
+    <div class="stats">
+        <h3>Total Formations: {{ totalFormations }}</h3>
+        <h3>Average Price: {{ averagePrice | number_format(2) }} USD</h3>
+    </div>
+{% endif %}
+
+
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
