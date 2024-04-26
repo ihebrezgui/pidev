@@ -35,6 +35,16 @@ class FormationRepository extends ServiceEntityRepository
         ->getQuery()
         ->getSingleScalarResult();
     }
+    // src/Repository/FormationRepository.php
+
+public function search($keyword)
+{
+    return $this->createQueryBuilder('f')
+        ->andWhere('f.name LIKE :val OR f.description LIKE :val')
+        ->setParameter('val', '%' . $keyword . '%')
+        ->getQuery()
+        ->getResult();
+}
 
 
 //    /**

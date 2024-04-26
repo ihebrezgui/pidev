@@ -8,7 +8,6 @@ use App\Repository\FormationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Cours; 
-
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 #[ORM\Table(name: 'formation')]
 class Formation
@@ -23,9 +22,12 @@ class Formation
     #[Assert\Choice(choices: ['Devops', 'Mobile', 'GL', 'Santé', 'Math et logique', 'Développement Personnel', 'Data Science', 'Culture générale', 'Finance'], message: "Veuillez sélectionner un type de formation valide.")]
     private string $typeF;
 
-    #[ORM\Column(name: 'Img', type: 'string', length: 100)]
-    #[Assert\NotBlank(message: "Le champ img ne doit pas être vide.")]
-    private string $img;
+   /* #[Vich\UploadableField(mapping: 'formation_images', fileNameProperty: 'img')]
+    private ?UploadedFile $imageFile = null;*/
+
+
+    #[ORM\Column(name: 'img', type: 'string', length: 255, nullable: true)]
+    private ?string $img = null;
 
     #[ORM\Column(name: 'prix', type: 'float')]
     #[Assert\NotBlank(message: "Le champ prix ne doit pas être vide.")]
@@ -45,6 +47,30 @@ class Formation
     #[ORM\OneToMany(mappedBy: 'formation', targetEntity: Cours::class)]
     private Collection $courses;
     
+    /*#[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;*/
+
+    // Getter and Setter
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setImageFile(?UploadedFile $imageFile = null): void
+     {
+    if ($imageFile !== null) {
+        $this->imageFile = $imageFile;
+        
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+    }
+
+    public function getImageFile(): ?UploadedFile {
+        return $this->imageFile;
+    }
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -55,10 +81,11 @@ class Formation
         return $this->idFormation;
     }
 
-    public function getTypeF(): string
-    {
-        return $this->typeF;
-    }
+    public function getTypeF(): ?string
+{
+    return $this->typeF;
+}
+
 
     public function setTypeF(string $typeF): self
     {
@@ -67,17 +94,16 @@ class Formation
         return $this;
     }
 
-    public function getImg(): string
-    {
-        return $this->img;
-    }
-
-    public function setImg(string $img): self
-    {
+    public function setImg(?string $img): self {
         $this->img = $img;
-
         return $this;
     }
+    
+public function getImg(): ?string
+{
+    return $this->img;
+}
+
 
     public function getPrix(): float
     {
@@ -124,7 +150,7 @@ class Formation
     {
         if (!$this->courses->contains($course)) {
             $this->courses[] = $course;
-            $course->setIdFormation($this); // Make sure to pass an instance of Formation entity
+            $course->setIdFormation($this);
         }
     
         return $this;
@@ -140,5 +166,19 @@ class Formation
     public function __toString() {
         return $this->typeF;
     }
+    public static function statTypeF(Collection $formations): array
+{
+    $typeCounts = [];
+
+    foreach ($formations as $formation) {
+        $typeF = $formation->getTypeF();
+        if (!array_key_exists($typeF, $typeCounts)) {
+            $typeCounts[$typeF] = 0;
+        }
+        $typeCounts[$typeF]++;
+    }
+
+    return $typeCounts;
+}
 
 }

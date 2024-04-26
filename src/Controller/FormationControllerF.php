@@ -15,9 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormationControllerF extends AbstractController
 {
     #[Route('/', name: 'app_formation_index', methods: ['GET'])]
-    public function index(FormationRepository $formationRepository): Response
+    public function index(FormationRepository $formationRepository, Request $request): Response
     {
         $formations = $formationRepository->findAll();
+        $search = $request->query->get('search', ''); // Default to empty string if not set
+    
+        
+        $formations = $search ? $formationRepository->search($search) : $formationRepository->findAll();
+        
         if (empty($formations)) {
             $this->addFlash('warning', 'No formations found.');
         }
@@ -26,10 +31,23 @@ class FormationControllerF extends AbstractController
         ]);
     }
     #[Route('/{idFormation}', name: 'app_formation_show', methods: ['GET'])]
-    public function show(Formation $formation): Response
-    {
-        return $this->render('formationFront/show.html.twig', [
-            'formation' => $formation,
-        ]);
+public function show(FormationRepository $formationRepository, int $idFormation): Response
+{
+    // Fetch the formation using the repository
+    $formation = $formationRepository->find($idFormation);
+
+    // Check if the formation exists
+    if (!$formation) {
+        throw $this->createNotFoundException('No formation found for id ' . $idFormation);
     }
+
+    // Render the template and pass the formation and its courses
+    return $this->render('formationFront/show.html.twig', [
+        'formation' => $formation,
+        'courses' => $formation->getCourses()
+    ]);
+}
+
+    
+    
 }

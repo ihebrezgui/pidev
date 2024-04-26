@@ -1,37 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formation{% endblock %}
+{% block title %}Formation Details{% endblock %}
 
 {% block gestion %}
-    <h1>Formation</h1>
+    <h1>Formation Details</h1>
 
+    <img src="{{ asset('PaceLearning/' ~ formation.img) }}" alt="Image" style="width: 150px;">
+    
     <table class="table">
-        <tbody>
-            <tr>
-                <th>IdFormation</th>
-                <td>{{ formation.idFormation }}</td>
-            </tr>
-            <tr>
-                <th>TypeF</th>
-                <td>{{ formation.typeF }}</td>
-            </tr>
-            <tr>
-                <th>Img</th>
-                <td>{{ formation.img }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ formation.prix }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ formation.duree }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ formation.status }}</td>
-            </tr>
-        </tbody>
+        <tr>
+            <th>Type</th>
+            <td>{{ formation.typeF }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ formation.prix }} TND</td>
+        </tr>
+        <tr>
+            <th>Durée</th>
+            <td>{{ formation.duree }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ formation.status }}</td>
+        </tr>
     </table>
-    <a href="{{ path('app_formation_index') }}">back to list</a>
+
+    <h2>Courses</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in formation.courses %}
+                    <tr>
+                        <td>{{ course.nomCours }}</td>
+                        <td>{{ course.description }}</td>
+                        <td>{{ course.categorie }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    <a href="{{ path('app_formation_index') }}" class="btn btn-primary">Back to list</a>
 {% endblock %}

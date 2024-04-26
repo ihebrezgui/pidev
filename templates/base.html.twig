@@ -231,6 +231,7 @@ https://templatemo.com/tm-586-scholar
       </ul>
       <div class="row event_box">
                         {% block content %}
+                        {% if formations is defined %}
                 <div class="row event_box">
                     {% for formation in formations %}
                         <div class="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 design">
@@ -258,9 +259,28 @@ https://templatemo.com/tm-586-scholar
                             </div>
                         </div>
                     {% endfor %}
-                    {% endblock  %}
+                    {% endif %}
                 </div>
             </div>
+            <div class="row">
+            {%   for cours in courss  %}
+                <div class="col-12 mb-4">
+                    <div class="events_item">
+                      <h4>{{ cours.nomcours }}</h4>
+                      <h5>{{  cours.description }}</h5>
+                        <div class="thumb">
+                            <span class="category">{{ cours.categorie }}</span>
+                        </div>
+                        <div class="down-content">
+                            <div class="main-button">
+                                <a href="{{ path('app_cours_show', {'idcours': cours.idcours}) }}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endblock %}
+        </div>
       </div>
     </div>
   </section>
