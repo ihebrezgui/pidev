@@ -2,6 +2,9 @@ app_utilisateur_index:
     path: /utilisateur
     controller: App\Controller\UtilisateurController::index
     methods: ['GET']
+app_index:
+    path: /
+    controller: App\Controller\UtilisateurController::index
 
 app_utilisateur_new:
     path: /utilisateur/new
@@ -35,6 +38,10 @@ app_myprofile:
     path: /utilisateur/MonProfile
     controller: App\Controller\UtilisateurController::Myprofile
     methods: ['GET']
+utilisateur_reset_password_submit:
+    path: /utilisateur/reset-password/submitted
+    methods: [POST]
+    controller: App\Controller\UtilisateurController::resetPasswordSubmitted
 
 app_edit_profile:
     path: /utilisateur/modifier-profil
@@ -56,10 +63,9 @@ reset_password:
     controller: App\Controller\UtilisateurController::resetPassword
     methods: ['GET']
 
-verify_reset_code:
-    path: /utilisateur/verify-reset-code/{resetCode}
+utilisateur_verify_reset_code:
+    path: /utilisateur/verify-reset-code/{restToken}
     controller: App\Controller\UtilisateurController::verifyResetCode
-    methods: ['GET', 'POST']
 
 reset_password_profil:
     path: /utilisateur/resetPassword/profil

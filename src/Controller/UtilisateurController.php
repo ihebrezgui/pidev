@@ -207,8 +207,56 @@ public function editProfile(Request $request,UtilisateurRepository $userReposito
     ]);
 }
 
+#[Route('/EditProfilePassword', name: 'app_edit_profile_password', methods: ['GET', 'POST'])]
+public function EditProfilePassword(Request $request,UserPasswordHasherInterface $userPasswordHasher,UtilisateurRepository $userRepository): Response
+{
 
+    $user = $this->getUser();
+    if($request->get("newpass")=="" && $request->get("confirmpass")=="")
+    {
+        $this->addFlash(
+            'info-warning',
+            'Password empty.'
+        );
+        return $this->render('index/profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    else
+    {
+        if($request->get("newpass")==$request->get("confirmpass"))
+        {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $request->get("newpass")
+                )
+            );
 
+            $userRepository->updateUserPassword($user, true);
+            $this->addFlash(
+                'info-success',
+                'Password changed with success.'
+            );
+
+            return $this->render('index/profile.html.twig', [
+                'user' => $user,
+            ]);
+        }
+        else
+        {
+            $this->addFlash(
+                'info-warning',
+                'Password dont match.'
+            );
+        }
+
+        return $this->render('index/profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+}
 
 
 #[Route('/reset-password/submitted', name: 'app_reset_password_submited')]
@@ -221,7 +269,7 @@ public function resetPasswordSubmitted(Request $request, EntityManagerInterface 
     if ($user) {
         // Generate and save the reset code
         $resetCode = $this->generateResetCode();
-        $user->setResetCode($resetCode);
+        $user->setResttoken($resetCode);
         $entityManager->flush();
 
         // Send the reset code to the user's email (you need to implement this)
@@ -231,7 +279,7 @@ public function resetPasswordSubmitted(Request $request, EntityManagerInterface 
                     <body>
                         <p>Bonjour utilisateur,</p>
                         <p>Quelqu\'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire via le lien ci-dessous.</p>
-                        <p><a href="http://127.0.0.1:8000/user/verify-reset-code/'.$resetCode.'">Changer mon mot de passe</a></p>
+                        <p><a href="http://127.0.0.1:8000/utilisateur/verify-reset-code/'.$resetCode.'">Changer mon mot de passe</a></p>
                         <p>Si vous n\'avez pas effectué cette demande, veuillez ignorer cet e-mail.</p>
                         <p>Votre mot de passe ne sera pas modifié tant que vous n\'aurez pas accédé au lien ci-dessus et créé un nouveau.</p>
                     </body>
@@ -264,11 +312,11 @@ public function resetPassword(Request $request, EntityManagerInterface $entityMa
 }
 
 
-#[Route('/verify-reset-code/{resetCode}', name: 'verify_reset_code')]
-public function verifyResetCode(Request $request, $resetCode, EntityManagerInterface $entityManager ,UserPasswordHasherInterface $userPasswordHasher)
+#[Route('/verify-reset-code/{restToken}', name: 'verify_reset_code')]
+public function verifyResetCode(Request $request, $restToken, EntityManagerInterface $entityManager ,UserPasswordHasherInterface $userPasswordHasher)
 {
     // Find the user by the reset code
-    $user = $entityManager->getRepository(Utilisateur::class)->getUserByResetCode(['resetCode' => $resetCode]);
+    $user = $entityManager->getRepository(Utilisateur::class)->getUserByResetCode(['resetCode' => $restToken]);
     if (!$user) {
         return $this->redirectToRoute('app_login');
     }

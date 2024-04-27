@@ -9,7 +9,7 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="" class="nav-item nav-link active">Home</a>
                 {% if app.user %}
-                    {% if app.user.roles[1]=="ROLE_USER" %}
+                    {% if app.user.roles == "Etudiant" %}
                         <a href="{{ path('app_myprofile') }}" class="nav-item nav-link">Mon compte</a>
                     {% endif %}
                 {% endif %}
