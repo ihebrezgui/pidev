@@ -60,7 +60,7 @@ class CartController extends AbstractController
         $request->getSession()->set('cart', $cart);
         $request->getSession()->set('totalCart', $totalCart);
 
-        foreach ($cart as $productId => $item) {
+        foreach ($cart as  $item) {
             $panier = new Panier();
             $panier->setProdId($item['id']);
             $panier->setNom($item['name']);
@@ -88,6 +88,7 @@ class CartController extends AbstractController
             throw $this->createNotFoundException('Product not found');
         }
     
+
         $cart = $request->getSession()->get('cart', []);
     
         if (isset($cart[$id])) {
@@ -117,19 +118,20 @@ class CartController extends AbstractController
         // Sérialiser le panier en JSON si c'est un tableau
         $panier = $cart ? json_encode($cart) : null;
 
-        
+       
         
         // Récupérer les informations de l'utilisateur depuis le formulaire (nom, prénom, email)
         $nom =('iheb');
         $prenom = ('rezgui');
         $email =('iheb@gmail.com');
-        //$panier= $cart;
+        // $panier= $cart;
         $tel =21069300; 
         $number='+21621069300';
         $addr =('tunise');
         $text=  ('Votre commande a étè bien passer !!');
         $name= 'PaceLearning';
 
+        
         
         $commande = new Commande();
         $commande->setNom($nom);

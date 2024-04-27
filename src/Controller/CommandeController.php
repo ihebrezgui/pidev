@@ -10,19 +10,29 @@ use App\Repository\CommandeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CommandeController extends AbstractController
 {
     #[Route('/commande', name: 'app_commande')]
-   
-    public function affichageCommande(): Response
+    public function affichageCommande(Request $request, PaginatorInterface $paginator): Response
     {
-        $em = $this->getDoctrine()->getManager()->getRepository(Commande::class);
-
-        $commande = $em->findAll();
-        return $this->render('commande/index.html.twig', ['commande' => $commande]);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository(Commande::class)->createQueryBuilder('c')->getQuery();
+    
+        // Paginate the results
+        $commande = $paginator->paginate(
+            $query, // Instead of findAll(), use your custom query
+            $request->query->getInt('page', 1), // Page number
+            3// Items per page
+        );
+    
+        return $this->render('commande/index.html.twig', [
+            'commande' => $commande
+        ]);
     }
+    
 
     #[Route('/ajoutCommande', name: 'ajouter_commande')]
     public function ajoutCommande(Request $request): Response
@@ -97,11 +107,16 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/rechercherCommande', name: 'rechercher_commande')]
-    public function rechercherCommande(Request $request, CommandeRepository $commandeRepository)
+    public function rechercherCommande(Request $request, CommandeRepository $commandeRepository,PaginatorInterface $paginator)
     {
         $searchTerm = $request->query->get('q');
+        
         $commande = $commandeRepository->searchByNom($searchTerm);
-    
+        $commande = $paginator->paginate(
+            $commande,
+            $request->query->getInt('page', 1),
+            10 // Nombre d'éléments par page
+        );
         // Vérifier si le résultat de la recherche est vide
         if (empty($commande)) {
             $this->addFlash('noticesearch', 'Aucun utilisateur trouvé qui commence par "' . $searchTerm . '".');
@@ -141,21 +156,28 @@ public function generatePdf($idc): Response
         throw $this->createNotFoundException('Commande not found for ID ' . $idc);
     }
 
+    
+
     // Get the HTML content of the page you want to convert to PDF
     $html = $this->renderView('commande/show_pdf.html.twig', [
-        'commande' => $commande,
+         'commande' => $commande,
+         
+
     ]);
 
     // Configure Dompdf options
     $options = new Options();
     $options->set('isHtml5ParserEnabled', true);
+    $options->setIsRemoteEnabled(true);
+    $options->setIsRemoteEnabled(true);
 
     // Instantiate Dompdf with the configured options
     $dompdf = new Dompdf($options);
 
     // Load HTML content into Dompdf
     $dompdf->loadHtml($html);
-
+    
+   
     // Set paper size and orientation
     $dompdf->setPaper('A4', 'portrait');
 
@@ -164,13 +186,15 @@ public function generatePdf($idc): Response
 
     // Get the generated PDF content
     $pdfOutput = $dompdf->output();
+   
 
     // Set response headers for PDF download
     $response = new Response($pdfOutput);
     $response->headers->set('Content-Type', 'application/pdf');
-    $response->headers->set('Content-Disposition', 'attachment; filename="commande.pdf"');
+    $response->headers->set('Content-Disposition', 'attachment; filename="Commande.pdf"');
 
     return $response;
 }
+
 
 }
