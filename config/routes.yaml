@@ -25,35 +25,48 @@ app_utilisateur_delete:
 users_by_age_chart:
     path: /utilisateur/age_stat
     controller: App\Controller\UtilisateurController::usersByAgeChart
-    
-app_login:
-    path: /login
-    controller: App\Controller\LoginController::login
-app_logout:
-    path: /logout
-security_login_check:
-    path: /login
-app_code_promo_index:
-    path: /code/promo/
-    controller: App\Controller\CodePromoController::index
-    methods: GET
 
-app_code_promo_new:
-    path: /code/promo/new
-    controller: App\Controller\CodePromoController::new
-    methods: GET|POST
+app_register:
+    path: /utilisateur/register
+    controller: App\Controller\UtilisateurController::register
+    methods: ['GET', 'POST']
 
-app_code_promo_show:
-    path: /code/promo/{idPromo}
-    controller: App\Controller\CodePromoController::show
-    methods: GET
+app_myprofile:
+    path: /utilisateur/MonProfile
+    controller: App\Controller\UtilisateurController::Myprofile
+    methods: ['GET']
 
-app_code_promo_edit:
-    path: /code/promo/{idPromo}/edit
-    controller: App\Controller\CodePromoController::edit
-    methods: GET|POST
+app_edit_profile:
+    path: /utilisateur/modifier-profil
+    controller: App\Controller\UtilisateurController::editProfile
+    methods: ['GET', 'POST']
 
-app_code_promo_delete:
-    path: /code/promo/{idPromo}
-    controller: App\Controller\CodePromoController::delete
-    methods: POST
+app_edit_profile_password:
+    path: /utilisateur/EditProfilePassword
+    controller: App\Controller\UtilisateurController::EditProfilePassword
+    methods: ['GET', 'POST']
+
+app_reset_password_submited:
+    path: /utilisateur/reset-password/submitted
+    controller: App\Controller\UtilisateurController::resetPasswordSubmitted
+    methods: ['GET']
+
+reset_password:
+    path: /utilisateur/reset-password
+    controller: App\Controller\UtilisateurController::resetPassword
+    methods: ['GET']
+
+verify_reset_code:
+    path: /utilisateur/verify-reset-code/{resetCode}
+    controller: App\Controller\UtilisateurController::verifyResetCode
+    methods: ['GET', 'POST']
+
+reset_password_profil:
+    path: /utilisateur/resetPassword/profil
+    controller: App\Controller\UtilisateurController::resetPasswordProfile
+    methods: ['GET', 'POST']
+
+reset_password_profil_admin:
+    path: /utilisateur/admin/resetPassword/profil
+    controller: App\Controller\UtilisateurController::resetPasswordProfileAdmin
+    methods: ['GET', 'POST']

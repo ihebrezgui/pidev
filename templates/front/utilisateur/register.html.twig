@@ -1,0 +1,42 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    {% if registrationForm.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            {% for error in registrationForm.vars.errors %}
+                {{ error.message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {# Render the form #}
+    {{ form_start(registrationForm) }}
+    <div class="form-group">
+        {{ form_row(registrationForm.nom, {'label': 'Nom'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.prenom, {'label': 'Prénom'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.date_nais, {'label': 'Date de naissance'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.num_tel, {'label': 'Numéro de téléphone'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.email, {'label': 'Email'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.sexe, {'label': 'Sexe'}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.password, {'label': 'Mot de passe'}) }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

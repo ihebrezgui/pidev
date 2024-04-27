@@ -196,12 +196,10 @@ class Utilisateur implements UserInterface
 
     public function getSalt()
     {
-        // You can ignore this method if you're not using bcrypt or another encryption method that requires a salt
     }
 
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+     
     }
 }

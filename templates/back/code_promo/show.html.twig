@@ -1,0 +1,46 @@
+{% extends 'baseBack.html.twig' %}
+{% block code%}
+
+{% block body %}
+<div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center mb-4">Code promo détails</h1>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            
+                                <tr>
+                                    <th>Code</th>
+                                    <td>{{ code_promo.code }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date Expiration</th>
+                                    <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Active</th>
+                                    <td>{{ code_promo.active ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>User ID</th>
+                                    <td>{{ code_promo.iduser }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_code_promo_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                    <a href="{{ path('app_code_promo_edit', {'idPromo': code_promo.idPromo}) }}" class="btn btn-primary">Edit</a>
+                </div>
+
+                {{ include('back/code_promo/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% endblock %}

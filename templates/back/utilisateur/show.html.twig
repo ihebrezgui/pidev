@@ -1,0 +1,43 @@
+{% extends 'baseBack.html.twig' %}
+{% block gestion %}
+
+    <div class="container">
+        <h1 class="mt-4">Utilisateur</h1>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    
+                    <dt class="col-sm-4">Nom:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.nom }}</dd>
+
+                    <dt class="col-sm-4">Prenom:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.prenom }}</dd>
+
+                    <dt class="col-sm-4">Date de Naissance:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.dateNais ? utilisateur.dateNais|date('Y-m-d') : '' }}</dd>
+
+                    <dt class="col-sm-4">Numéro de Téléphone:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.numTel }}</dd>
+
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.email }}</dd>
+
+                    <dt class="col-sm-4">Sexe:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.sexe }}</dd>
+
+                    <dt class="col-sm-4">Rôle:</dt>
+                    <dd class="col-sm-8">{{ utilisateur.role }}</dd>
+
+                </dl>
+            </div>
+        </div>
+
+        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-primary">Retour à la liste</a>
+
+        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning">Modifier</a>
+
+        {{ include('back/utilisateur/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

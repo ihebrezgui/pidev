@@ -1,0 +1,20 @@
+{% extends 'baseBack.html.twig' %}
+{% block code%}
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Ajouter code</h3></div>
+                    <div class="card-body">
+                        {{ include('back/code_promo/_form.html.twig') }}
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <a href="{{ path('app_code_promo_index') }}" class="btn btn-secondary">Retourne à la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% endblock %}

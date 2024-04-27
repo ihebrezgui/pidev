@@ -19,7 +19,7 @@ class CodePromoController extends AbstractController
     #[Route('/', name: 'app_code_promo_index', methods: ['GET'])]
     public function index(CodePromoRepository $codePromoRepository): Response
     {
-        return $this->render('code_promo/index.html.twig', [
+        return $this->render('back/code_promo/index.html.twig', [
             'code_promos' => $codePromoRepository->findAll(),
         ]);
     }
@@ -38,7 +38,7 @@ class CodePromoController extends AbstractController
             return $this->redirectToRoute('app_code_promo_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('code_promo/new.html.twig', [
+        return $this->renderForm('back/code_promo/new.html.twig', [
             'code_promo' => $codePromo,
             'form' => $form,
         ]);
@@ -64,7 +64,7 @@ class CodePromoController extends AbstractController
             return $this->redirectToRoute('app_code_promo_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('code_promo/edit.html.twig', [
+        return $this->renderForm('back/code_promo/edit.html.twig', [
             'code_promo' => $codePromo,
             'form' => $form,
         ]);
