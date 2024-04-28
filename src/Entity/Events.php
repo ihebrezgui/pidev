@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EventsRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
+
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
 #[ORM\Table(name: "events")]
 class Events
@@ -95,4 +97,6 @@ class Events
 
         return $this;
     }
+
+    
 }

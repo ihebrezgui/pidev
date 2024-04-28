@@ -27,4 +27,16 @@ class EventsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+   
+    public function countEventsByMonth(): array
+    {
+        $events = $this->createQueryBuilder('e')
+            ->select('SUBSTRING(e.dateEvent, 6, 2) AS month, COUNT(e.id_event) AS eventCount')
+            ->groupBy('month')
+            ->orderBy('month', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $events;
+    }
 }
