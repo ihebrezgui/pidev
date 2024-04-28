@@ -1,0 +1,16 @@
+{# templates/formation/quiz.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz for {{ formation.typeF }}{% endblock %}
+
+{% block gestion %}
+<h1>Quiz for {{ formation.typeF }}</h1>
+<div class="quiz">
+    <p>Please answer the following questions:</p>
+    <div class="quiz-content">
+        {{ quiz|raw }}
+    </div>
+</div>
+
+{% endblock %}
