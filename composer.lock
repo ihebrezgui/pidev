@@ -515,16 +515,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.8.3",
+            "version": "3.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "db922ba9436b7b18a23d1653a0b41ff2369ca41c"
+                "reference": "b05e48a745f722801f55408d0dbd8003b403dbbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/db922ba9436b7b18a23d1653a0b41ff2369ca41c",
-                "reference": "db922ba9436b7b18a23d1653a0b41ff2369ca41c",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/b05e48a745f722801f55408d0dbd8003b403dbbd",
+                "reference": "b05e48a745f722801f55408d0dbd8003b403dbbd",
                 "shasum": ""
             },
             "require": {
@@ -608,7 +608,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.8.3"
+                "source": "https://github.com/doctrine/dbal/tree/3.8.4"
             },
             "funding": [
                 {
@@ -624,7 +624,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-03T15:55:06+00:00"
+            "time": "2024-04-25T07:04:44+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -8539,26 +8539,26 @@
         },
         {
             "name": "victor-prdh/recaptcha-bundle",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/victor-prdh/recaptcha-bundle.git",
-                "reference": "e7a308a241605329768fc7cc596fee8a066cbfb9"
+                "reference": "22f68b93140df94e4ef90922a601b87506ee5f6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/victor-prdh/recaptcha-bundle/zipball/e7a308a241605329768fc7cc596fee8a066cbfb9",
-                "reference": "e7a308a241605329768fc7cc596fee8a066cbfb9",
+                "url": "https://api.github.com/repos/victor-prdh/recaptcha-bundle/zipball/22f68b93140df94e4ef90922a601b87506ee5f6a",
+                "reference": "22f68b93140df94e4ef90922a601b87506ee5f6a",
                 "shasum": ""
             },
             "require": {
                 "google/recaptcha": "^1.2",
                 "php": ">=7.2.5",
-                "symfony/form": "^5.4|^6.0",
-                "symfony/framework-bundle": "^5.4|^6.0",
-                "symfony/translation": "^5.4|^6.0",
+                "symfony/form": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/translation": "^5.4|^6.0|^7.0",
                 "symfony/twig-pack": "^1.0",
-                "symfony/validator": "^5.4|^6.0"
+                "symfony/validator": "^5.4|^6.0|^7.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -8584,9 +8584,9 @@
             "description": "Use Google Recaptcha v2/v3 as form type with Symfony 5.4+",
             "support": {
                 "issues": "https://github.com/victor-prdh/recaptcha-bundle/issues",
-                "source": "https://github.com/victor-prdh/recaptcha-bundle/tree/1.8.0"
+                "source": "https://github.com/victor-prdh/recaptcha-bundle/tree/1.9.0"
             },
-            "time": "2024-01-28T17:05:13+00:00"
+            "time": "2024-04-28T08:51:45+00:00"
         },
         {
             "name": "webmozart/assert",

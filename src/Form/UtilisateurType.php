@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
+
 
 class UtilisateurType extends AbstractType
 {
@@ -47,6 +49,10 @@ class UtilisateurType extends AbstractType
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
+            ])
+            ->add('recaptcha', ReCaptchaType::class, [
+                'mapped' => false,
+                'label' => 'Captcha',
             ]);
     }
 
