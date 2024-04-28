@@ -40,7 +40,37 @@ figure, header, nav, section, article, aside, footer, figcaption {
   border: 0;
   outline: 0;
 }
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 
+.form-control:focus {
+  border-color: #28a745; /* Green outline on focus */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Adjust for submit button (optional) */
+.btn-primary {
+  background-color: #2980B9; /* Adjust the blue color as needed */
+  border-color: #2980B9; /* Adjust the blue color as needed */
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+}
 .clearfix:after {
   content: ".";
   display: block;
