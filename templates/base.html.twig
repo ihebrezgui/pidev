@@ -229,60 +229,128 @@ https://templatemo.com/tm-586-scholar
           <a href="#!" data-filter=".wordpress">Wordpress</a>
         </li>
       </ul>
-      <div class="row event_box">
-                        {% block content %}
-                        {% if formations is defined %}
-                <div class="row event_box">
-                    {% for formation in formations %}
-                        <div class="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 design">
-                            <div class="events_item">
-                                <div class="thumb">
-                                    <a href="#"><img src="{{ asset('PaceLearning/'~ formation.img) }}" alt=""></a>
-                                    <span class="category">{{ formation.typeF }}</span>
-                                    <span class="price">
-                                        <h6>
-                                            <em>TND</em>{{ formation.prix }}</h6>
-                                    </span>
-                                </div>
-                                <div class="down-content">
-                                    <span class="author">Duration</span>
-                                    <h4>{{ formation.duree }}</h4>
-                                </div>
-                                 <div class="main-button">
-                                 <a href="{{ path('app_formation_show', {'idFormation': formation.idFormation}) }}" class="btn btn-primary">View Details</a>
-                                    {% block edit %}
-                                 <a href="{{ path('app_formation_edit', {'idFormation': formation.idFormation}) }}" class="btn btn-primary">Edit</a>
-                                    {% endblock %} 
-								<a href="{{ path('app_formation_delete', {'idFormation': formation.idFormation}) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this formation?')">Delete</a>
-                                </div>
-						    </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% endif %}
+      <div class="container mt-4">
+      <style>body .search-input {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px; /* Adds space below the search input */
+}
+
+<style>
+/* Previous styles for the search input */
+body .search-input {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px; /* Adds space below the search input */
+}
+
+body .search-input input {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    color :#6610f2;
+}
+
+body .search-input i.fa-search {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6f42c1;
+    cursor: pointer;
+}
+
+body .search-input input:focus {
+    border-color: #6f42c1; /* Border color on focus */
+}
+
+body .search-input input::placeholder {
+    color: #999;
+}
+
+.card .btn-primary {
+    background-color: #6f42c1; /* Background color for buttons */
+    border-color: #6f42c1; /* Border color for buttons */
+}
+
+.card .btn-primary:hover {
+    background-color: #5a349a; /* Darker purple when hovered */
+    border-color: #5a349a; /* Border color on hover */
+}
+
+/* Ensuring button text remains white */
+.card .btn-primary {
+    color: #fff;
+}
+.primary-button {
+    background-color:#6f42c1; /* Red shade from your styling */
+    color: #ffffff; /* White text */
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s;
+    text-decoration: none; /* Removes underline from links */
+}
+</style>
+    <h1 class="mb-4">Available Formations</h1>
+    <div class="search-input">
+                      <form id="search" action="#">
+                        <input type="text" placeholder="Type Something" id='searchBox' onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+      </div>
+      <br></br>
+    <div class="row">
+       <div class="row">
+    {% for formation in formations %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="{{ asset('formations_imgs/' ~ formation.img) }}" alt="Formation Image">
+            <div class="card-body">
+                <h5 class="card-title">{{ formation.typeF }}</h5>
+                <p class="card-text">{{ formation.duree|default('No description available.') }}</p>
+                 <span class="text-muted">{{ formation.prix }} TND</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_formation_show', {'id': formation.idFormation}) }}" class="btn btn-primary">View Details</a>
+                  <a href="{{ path('formation_generate_quiz', {'id': formation.idFormation}) }}">Take Quiz</a>
+
                 </div>
             </div>
-            <div class="row">
-            {%   for cours in courss  %}
-                <div class="col-12 mb-4">
-                    <div class="events_item">
-                      <h4>{{ cours.nomcours }}</h4>
-                      <h5>{{  cours.description }}</h5>
-                        <div class="thumb">
-                            <span class="category">{{ cours.categorie }}</span>
-                        </div>
-                        <div class="down-content">
-                            <div class="main-button">
-                                <a href="{{ path('app_cours_show', {'idcours': cours.idcours}) }}" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% endblock %}
         </div>
-      </div>
     </div>
+    {% endfor %}
+</div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+</div>
+<script>
+document.getElementById('searchBox').addEventListener('input', function() {
+    var searchQuery = this.value.toLowerCase();
+    document.querySelectorAll('.col-md-4.mb-4').forEach(function(column) {
+        const card = column.querySelector('.card');
+        // Extracting text content from different parts of the card
+        const type = card.querySelector('.card-title').textContent.toLowerCase();
+        const description = card.querySelector('.card-text').textContent.toLowerCase();
+        const price = card.querySelector('.text-muted').textContent.toLowerCase();
+        // Check if the search query is in any of the text contents
+        const visible = type.includes(searchQuery) || description.includes(searchQuery) || price.includes(searchQuery);
+        column.style.display = visible ? '' : 'none'; // Hide/show the column
+    });
+});
+</script>
   </section>
 
   <div class="section fun-facts">

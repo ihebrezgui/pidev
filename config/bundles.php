@@ -14,4 +14,6 @@ return [
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
+    Symfony\UX\React\ReactBundle::class => ['all' => true],
+    OpenAI\Symfony\OpenAIBundle::class => ['all' => true],
 ];

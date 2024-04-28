@@ -37,7 +37,7 @@ class Cours
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'idFormation', referencedColumnName: 'idFormation', nullable: false)]
-    private Formation $idformation;
+    private Formation $formation;
 
     public function getIdcours(): int
     {
@@ -101,12 +101,12 @@ class Cours
 
     public function getIdformation(): Formation
     {
-        return $this->idformation;
+        return $this->formation;
     }
 
-    public function setIdformation(Formation $idformation): self
+    public function setIdformation(Formation $formation): self
     {
-        $this->idformation = $idformation;
+        $this->formation = $formation;
 
         return $this;
     }

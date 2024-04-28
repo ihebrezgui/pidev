@@ -22,9 +22,6 @@ class Formation
     #[Assert\Choice(choices: ['Devops', 'Mobile', 'GL', 'Santé', 'Math et logique', 'Développement Personnel', 'Data Science', 'Culture générale', 'Finance'], message: "Veuillez sélectionner un type de formation valide.")]
     private string $typeF;
 
-   /* #[Vich\UploadableField(mapping: 'formation_images', fileNameProperty: 'img')]
-    private ?UploadedFile $imageFile = null;*/
-
 
     #[ORM\Column(name: 'img', type: 'string', length: 255, nullable: true)]
     private ?string $img = null;
@@ -47,33 +44,13 @@ class Formation
     #[ORM\OneToMany(mappedBy: 'formation', targetEntity: Cours::class)]
     private Collection $courses;
     
-    /*#[ORM\Column(type: 'datetime', nullable: true)]
-    private $updatedAt;*/
-
-    // Getter and Setter
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setImageFile(?UploadedFile $imageFile = null): void
-     {
-    if ($imageFile !== null) {
-        $this->imageFile = $imageFile;
-        
-        if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-    }
-
-    public function getImageFile(): ?UploadedFile {
-        return $this->imageFile;
-    }
+    #[ORM\OneToMany(mappedBy: 'formation', targetEntity: 'Quiz')]
+    private Collection $quizzes;
 
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getIdFormation(): int
@@ -166,19 +143,5 @@ public function getImg(): ?string
     public function __toString() {
         return $this->typeF;
     }
-    public static function statTypeF(Collection $formations): array
-{
-    $typeCounts = [];
-
-    foreach ($formations as $formation) {
-        $typeF = $formation->getTypeF();
-        if (!array_key_exists($typeF, $typeCounts)) {
-            $typeCounts[$typeF] = 0;
-        }
-        $typeCounts[$typeF]++;
-    }
-
-    return $typeCounts;
-}
 
 }

@@ -8,16 +8,15 @@
     <table class="table">
         <tbody>
             <tr>
+                <td><img src="{{asset('formations_imgs/'~ formation.img) }}" style="max-width: 200px;" alt=""></td>
+            </tr>
+            <tr>
                 <th>IdFormation</th>
                 <td>{{ formation.idFormation }}</td>
             </tr>
             <tr>
                 <th>TypeF</th>
                 <td>{{ formation.typeF }}</td>
-            </tr>
-            <tr>
-                <th>Img</th>
-                <td>{{ formation.img }}</td>
             </tr>
             <tr>
                 <th>Prix</th>
@@ -33,9 +32,35 @@
             </tr>
         </tbody>
     </table>
+      <h1>Cours</h1>
+
+     <table class="table">
+        {% for course in formation.courses %}
+        <tr>
+            <th>Nom</th>
+            <td>{{ course.nomCours }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ course.description }}</td>
+        </tr>
+        <tr>
+            <th>Categorie</th>
+            <td>{{ course.categorie }}</td>
+        </tr>
+        <tr>
+            <th>Cours</th>
+            <td>
+                            <a href="{{ asset('formations_imgs/' ~ course.cours) }}" target="_blank">
+                               <img src="{{ asset('formations_imgs/pdf.png') }}" alt="PDF icon" style="width: 16px; height: 16px; vertical-align: middle;"> View PDF
+                            </a>
+                </td>
+        </tr>
+        {% endfor %}
+    </table>
     <a href="{{ path('app_formation_index_back') }}">back to list</a>
 
-    <a href="{{ path('app_formationB_edit', {'idFormation': formation.idFormation}) }}">edit</a>
+    <a href="{{ path('app_formationB_edit', {'idFormation': formation.idFormation}) }}" >edit</a>
 
     {{ include('formationBack/_delete_form.html.twig') }}
 {% endblock %}

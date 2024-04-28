@@ -5,7 +5,7 @@
 {% block gestion %}
     <h1>Formation Details</h1>
 
-    <img src="{{ asset('PaceLearning/' ~ formation.img) }}" alt="Image" style="width: 150px;">
+    <img src="{{ asset('formations_imgs/' ~ formation.img) }}" alt="Image" style="width: 150px;">
     
     <table class="table">
         <tr>
@@ -27,24 +27,35 @@
     </table>
 
     <h2>Courses</h2>
-        <table class="table">
+            {% if formation.courses is not empty %}
+             <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Category</th>
+                    <th>Cours</th>
                 </tr>
             </thead>
             <tbody>
                 {% for course in formation.courses %}
+        
                     <tr>
                         <td>{{ course.nomCours }}</td>
                         <td>{{ course.description }}</td>
                         <td>{{ course.categorie }}</td>
+                       <td>
+                            <a href="{{ asset('formations_imgs/' ~ course.cours) }}" target="_blank">
+                               <img src="{{ asset('formations_imgs/pdf.png') }}" alt="PDF icon" style="width: 16px; height: 16px; vertical-align: middle;"> View PDF
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+       {% else %}  
+         <p>No courses available.</p>
+       {% endif %}
 
     <a href="{{ path('app_formation_index') }}" class="btn btn-primary">Back to list</a>
 {% endblock %}

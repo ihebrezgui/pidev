@@ -11,13 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Validator\Constraints\File as FileConstraint;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\FormEvents;
+
 
 class FormationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {   
         $builder
         ->add('typeF', ChoiceType::class, [
             'choices' => [
@@ -31,17 +31,16 @@ class FormationType extends AbstractType
                 'Culture générale' => 'Culture générale',
                 'Finance' => 'Finance',
             ],  ]) 
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Image',
-                'required' => false,
-                'allow_delete' => true,  // Allows the deletion of the file
-                'download_uri' => false,  // Do not generate a download URI
-                'image_uri' => true,      // Optionally set to false if you handle image display differently
+            ->add('img', FileType::class, [
                 'label' => 'Image (PNG, JPEG)',
+                'multiple' => false,
+                'mapped' => true,
+                'required' => false,
+                'data_class' => null, 
             ])    
             ->add('prix')
             ->add('duree')
-            ->add('status')
+            ->add('status')  
         ;
     }
 
