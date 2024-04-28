@@ -317,7 +317,7 @@ body .search-input input::placeholder {
                  <span class="text-muted">{{ formation.prix }} TND</span>
                 <div class="d-flex justify-content-between align-items-center">
                     <a href="{{ path('app_formation_show', {'id': formation.idFormation}) }}" class="btn btn-primary">View Details</a>
-                  <a href="{{ path('formation_generate_quiz', {'id': formation.idFormation}) }}">Take Quiz</a>
+                  <a href="{{ path('app_formation_generate_quiz', {'id': formation.idFormation}) }}">Take Quiz</a>
 
                 </div>
             </div>

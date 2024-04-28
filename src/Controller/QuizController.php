@@ -3,94 +3,126 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
-use App\Service\QuizResultService;
-use App\Service\QuizService;
-use OpenAI\Client;
+use App\Entity\Formation;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\FormationRepository;
+use App\Repository\QuizRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class QuizController extends AbstractController
 {
-    public function __construct(
-        private readonly QuizService $quizService,
-        private readonly QuizResultService $quizResultService
-    )
-    {
-    }
+    private EntityManagerInterface $entityManager;
 
-    #[Route('/quizzes/{id}', name: 'app_quiz_show', methods: ['GET', 'POST'])]
-    public function show(?Quiz $quiz, Request $request): Response
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        if (!$quiz) {
-            return $this->redirectToRoute('app_home');
+        $this->entityManager = $entityManager;
+    }
+/*
+    #[Route('formation/generate/quiz/{id}', name: 'app_formation_generate_quiz', methods: ['GET'])]
+    public function generateQuizForType(int $id,FormationRepository $formationRepository,QuizRepository $quizRepository): Response
+    {
+        $formationRepository = $this->getDoctrine()->getRepository(Formation::class);
+        $formation = $formationRepository->find($id);
+
+        if (!$formation) {
+            $this->addFlash('warning', "No formation found with ID '{$id}'.");
+            return $this->redirectToRoute('app_formation_index');
         }
 
-        if($request->isXmlHttpRequest() && $request->isMethod(Request::METHOD_POST)) {
-            $body = json_decode($request->getContent(), true);
+        $quizzes = $quizRepository->findBy(
+            ['idFormation' => $id],       // Criteria
+            ['idFormation' => 'ASC'],       // Order by (change 'fieldName' to your actual field and 'ASC' to 'ASC' or 'DESC')
+        );
+        
+        // Optionally, render a view to display these quizzes
+        return $this->render('quiz/quiz.html.twig', [
+            'quizzes' => $quizzes, // Assuming only one quiz is generated
+            'type' => $formation->getTypeF()
+        ]);
+    }
 
-            if(!isset($body['quizResult'])) {
-                return $this->json([
-                    'error' => 'Missing quizResult'
+
+#[Route('formation/api/quiz', name: 'app_api_generate_quiz', methods: ['GET'])]
+public function getQuizzes(QuizRepository $quizRepository): JsonResponse
+{
+    $quizzes = $quizRepository->findAll();  // Or any other method to get specific quizzes
+    $quizData = [];
+
+    foreach ($quizzes as $quiz) {
+        $quizData[] = [
+            'question' => $quiz->getQuestions(),
+            'optionA' => $quiz->getAnswer1(),
+            'optionB' => $quiz->getAnswer2(),
+            'optionC' => $quiz->getAnswer3(),
+            'correctOption' => $quiz->getCorrectAnswer()
+        ];
+    }
+
+    return new JsonResponse($quizData);
+}
+*/
+
+#[Route('formation/quiz/{idFormation}', name: 'handle_quiz')]
+    public function handleQuiz(int $idFormation, Request $request, FormationRepository $formationRepository, QuizRepository $quizRepository): Response
+    {
+        if ($request->isMethod('GET')) {
+            $formation = $formationRepository->find($idFormation);
+            if (!$formation) {
+                $this->addFlash('warning', "No formation found with ID '{$idFormation}'.");
+                return $this->redirectToRoute('app_formation_index');
+            }
+
+            $quizzes = $quizRepository->findBy(
+                ['idFormation' => $idFormation],       // Criteria
+                ['idFormation' => 'ASC'],       // Order by (change 'fieldName' to your actual field and 'ASC' to 'ASC' or 'DESC')
+            );
+             if (empty($quizzes)) {
+                $this->addFlash('warning', 'No quizzes found for the selected formation.');
+                return $this->redirectToRoute('app_formation_index');
+            }
+
+            $this->session->start();
+            shuffle($quizzes);
+            $this->session->set('quizzes', $quizzes);
+            $this->session->set('index', 0);
+            $this->session->set('score', 0);
+
+            $index = $this->session->get('index');
+            $question = $quizzes[$index];
+            return $this->render('quiz/quiz.html.twig', [
+                'question' => $question,
+                'index' => $index,
+            ]);
+        }
+
+        if ($request->isMethod('POST')) {
+            $index = $this->session->get('index');
+            $quizzes = $this->session->get('quizzes');
+
+            if ($index >= count($quizzes)) {
+                $score = $this->session->get('score');
+                $this->session->clear();
+                return $this->render('quiz/result.html.twig', [
+                    'score' => $score,
                 ]);
             }
 
-            $quizResult = $this->quizResultService->add($quiz, $body['quizResult']);
+            $question = $quizzes[$index];
+            $userAnswer = $request->request->get('answer');
+            $correctAnswer = $question->getCorrectAnswer();
 
-            return $this->json([
-                'quizResult' => [
-                    'id' => $quizResult->getId()
-                ]
-            ]);
+            if ($userAnswer === $correctAnswer) {
+                $score = $this->session->get('score');
+                $score++;
+                $this->session->set('score', $score);
+            }
+
+            $this->session->set('index', $index + 1);
+            return $this->redirectToRoute('handle_quiz', ['idFormation' => $idFormation]);
         }
-
-        return $this->render('quiz/index.html.twig', [
-            'quiz' => $quiz,
-        ]);
-    }
-
-    #[Route('/quizzes', name: 'app_quiz_add', methods: ['POST','GET'])]
-    public function add(Client $client, Request $request): Response
-    {
-
-        dump($request->getContent());
-        
-       /* if (!$request->isXmlHttpRequest()) {
-            return $this->json([
-                'error' => 'Method not allowed'
-            ]);
-        }
-    
-        $body = json_decode($request->getContent(), true);
-
-        if (!isset($body['content'])) {
-            return $this->json([
-                'error' => 'Missing content'
-            ]);
-        }
-
-        $content = "Rédige un quiz de 5 questions avec un titre et 3 réponses par questions portant sur le sujet '{$body['content']}' au format JSON.  
-        Les propriétés utilisées sont 'answer', 'answers' et 'question'.";
-
-        $content = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                [
-                    'content' => $content,
-                    'role' => 'user'
-                ]
-            ]
-        ])['choices'][0]['message']['content'];
-
-        $quizData = json_decode($content, true);
-
-        $quiz = $this->quizService->add($quizData);
-*/
-        return $this->json([
-            'quiz' => [
-                'id' => "x"
-            ]
-        ]);
     }
 }

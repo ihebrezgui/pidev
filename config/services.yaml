@@ -11,11 +11,6 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: true
-        bind:
-            $apiKey: '%env(OPENAI_API_KEY)%'
-
-    App\Service\OpenAIService: ~
 
 
     # makes classes in src/ available to be used as services

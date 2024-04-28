@@ -38,6 +38,39 @@ class QuizRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findByFormationType(string $type,int $id): array
+    {
+        // Retrieves quizzes linked to formations of a specific type using the idFormation field
+        return $this->createQueryBuilder('q')
+            ->join('App\Entity\Formation', 'f', 'WITH', 'q.idFormation = f.id')
+            ->where('f.typeF = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+    public function generateOrFetchQuiz(Formation $formation): Quiz
+    {
+        // Check if the formation already has quizzes
+        $quizzes = $formation->getQuizzes();
+        if (!$quizzes->isEmpty()) {
+            // Return the first quiz as an example
+            return $quizzes->first();
+        }
+
+        // If no quizzes are associated, create a new quiz
+        $quiz = new Quiz();
+        $quiz->setFormation($formation);
+        $quiz->setTitle("New Quiz for " . $formation->getTypeF());
+        $quiz->setDescription("Generated quiz based on the formation's type.");
+
+        // Persist the new quiz in the database
+        $this->entityManager->persist($quiz);
+        $this->entityManager->flush();
+
+        return $quiz;
+    }
 
 //    /**
 //     * @return Quiz[] Returns an array of Quiz objects

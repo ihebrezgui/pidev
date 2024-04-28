@@ -143,5 +143,19 @@ public function getImg(): ?string
     public function __toString() {
         return $this->typeF;
     }
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setFormation($this);
+        }
+
+        return $this;
+    }
 
 }
