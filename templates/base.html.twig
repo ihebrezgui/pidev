@@ -9,16 +9,18 @@
 
     <title>Scholar - Online School HTML5 Template</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
+<!-- Bootstrap core CSS -->
+        <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{asset('assets/css/templatemo.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/fontawesome.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/templatemo-scholar.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/owl.css')}}">
     <link rel="stylesheet" href="{{asset ('assets/css/animate.css')}}">
     <link rel="stylesheet"href="{{asset('https://unpkg.com/swiper@7/swiper-bundle.min.css')}}" />
+
+
+
 <!--
 
 TemplateMo 586 Scholar
@@ -64,8 +66,57 @@ https://templatemo.com/tm-586-scholar
                     <!-- ***** Serach Start ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
+
                       <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                      <li class="scroll-to-section"><a href="#donations">Donations</a></li>
+<li class="scroll-to-section dropdown">
+  <a href="#" id="donationLink">Donations</a> <ul class="dropdown-content">
+    <li><a href="#donations">Demander une donation</a></li>
+    <li><a href="#givedonation/index.html.twig">Faire une donation</a></li>
+  </ul>
+</li>
+
+<body>
+  <script>
+    const donationLink = document.getElementById('donationLink');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    donationLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      dropdownContent.classList.toggle('show');
+    });
+  </script>
+</body>
+<head>
+  <style>
+.dropdown {
+  position: relative; /* Allows positioning of dropdown content */
+}
+
+.dropdown-content {
+  display: none; /* Hide the content initially */
+  position: absolute; /* Position the content relative to the parent */
+  background-color: #6d33bd; /* Set background color to purple */
+  min-width: 300px; /* Set minimum width for the content */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add a shadow */
+  z-index: 1; /* Ensure the content is on top of other elements */
+  border-radius: 15px; /* Add rounded corners */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block; /* Show the content on hover */
+}
+
+/* Added styles for individual list items */
+.dropdown-content li {
+  list-style: none; /* Remove default bullet points */
+  padding: 5px 10px; /* Add padding for better spacing */
+}
+.dropdown-content li a {
+  color : white;
+}
+  </style>
+</head>
+
                       <li class="scroll-to-section"><a href="#courses">Courses</a></li>
                       <li class="scroll-to-section"><a href="#team">Team</a></li>
                       <li class="scroll-to-section"><a href="#events">Events</a></li>
@@ -83,10 +134,10 @@ https://templatemo.com/tm-586-scholar
 
   <!-- ***** Header Area End ***** -->
 
-  <div class="main-banner" id="top">
-  </div>
-  <div class="donations section" id="donations">
 
+<div class="main-banner" id="top">
+</div>
+<div class="donations section" id="donations">
 {% block gestion %}
  <div class="container">
       <div class="row">
@@ -616,7 +667,6 @@ https://templatemo.com/tm-586-scholar
     <div class="container">
       <div class="col-lg-12">
         <p>Copyright © 2036 Scholar Organization. All rights reserved. &nbsp;&nbsp;&nbsp; Design: <a href="{{asset('https://templatemo.com" rel="nofollow')}}" target="_blank">TemplateMo</a></p>
-      </div>
     </div>
   </footer>
 

@@ -1,5 +1,103 @@
 {{ form_start(form,  {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn" style="background-color: #2980B9 ; color: white; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;
-                                                                                                               display: inline-block; width: fit-content; margin-bottom: 30px;">{{ button_label|default('Enregistrer') }} </button>
+
+ <div class="card">
+   <div class="card-header">
+     Nouveau Don
+   </div>
+   <div class="card-body">
+
+   {{ form_start(form,  {'attr': {'novalidate': 'novalidate'}}) }}
+
+     <div class="form-group">
+       {{ form_label(form.statutDonateur) }}
+       {{ form_widget(form.statutDonateur, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.statutDonateur) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.montant) }}
+       {{ form_widget(form.montant, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.montant) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.dateDeNaissance) }}
+       {{ form_widget(form.dateDeNaissance, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.dateDeNaissance) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.email) }}
+       {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.email) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.numeroDeTelephone) }}
+       {{ form_widget(form.numeroDeTelephone, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.numeroDeTelephone) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.profession) }}
+       {{ form_widget(form.profession, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.profession) }}
+     </div>
+
+     <div class="form-group">
+       {{ form_label(form.methodePaiement) }}
+       {{ form_widget(form.methodePaiement, {'attr': {'class': 'form-control'}}) }}
+       {{ form_errors(form.methodePaiement) }}
+     </div>
+
+     <button class="btn btn-primary" type="submit">{{ button_label|default('Enregistrer') }}</button>
+
+   {{ form_end(form) }}
+
+   </div>
+ </div>
+
+  <head>
+  <style>
+  .card {
+    max-width: 1000px; /* Adjust as needed */
+    background-color: #F0F2F5;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    padding: 20px;
+  }
+
+  .form-row {
+    margin-bottom: 15px;
+  }
+
+  .form-row label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="date"] {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    background-color: #2980B9;
+    border-color: #2980B9;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    float: right; /* Or adjust position as needed */
+  }
+    </style>
+  </head>
 {{ form_end(form) }}

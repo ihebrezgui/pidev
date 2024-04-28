@@ -1,44 +1,92 @@
 {% extends 'baseBack.html.twig' %}
+
 {% block gestion %}
 
 {% block body %}
- <h1> Demande d'une donation </h1>
-   <table class="table" ; border ="1">
-    <div style="display: flex; align-items:center; justify-content: ;center margin-top:205px" >
 
-        <thead>
-            <tr>
-                <th>Id request</th>
-                <th>Formation souhaitée</th>
-                <th>E-mail</th>
-                <th>Date limite</th>
-                <th>Lieu de résidence</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="card">
+  <div class="card-header">
+  Les demandes de donation
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Id Request</th>
+          <th>Formation Souhaitée</th>
+          <th>E-mail</th>
+          <th>Date Limite</th>
+          <th>Lieu de Résidence</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for requestback in requestbacks %}
-            <tr>
-                <td>{{ requestback.idrequest }}</td>
-                <td>{{ requestback.getFormationSouhaitee }}</td>
-                <td>{{ requestback.email }}</td>
-                <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
-                <td>{{ requestback.getLieuDeResidence }}</td>
-                <td>{{ requestback.description }}</td>
-                 <td class="requestback-button">
-
-                    <a href="{{ path('app_requestback_show', {'idrequest': requestback.idrequest}) }}"  style="background-color: #2980B9 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
-                </td>
-            </tr>
+        <tr>
+          <td>{{ requestback.idrequest }}</td>
+          <td>{{ requestback.getFormationSouhaitee }}</td>
+          <td>{{ requestback.email }}</td>
+          <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
+          <td>{{ requestback.getLieuDeResidence }}</td>
+          <td>{{ requestback.description }}</td>
+          <td class="requestback-button">
+            <a href="{{ path('app_requestback_show', {'idrequest': requestback.idrequest}) }}" style="background-color: #2980B9; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
+          </td>
+        </tr>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+        <tr>
+          <td colspan="7">Aucun enregistrement trouvé</td>
+        </tr>
         {% endfor %}
-        </tbody>
-
+      </tbody>
     </table>
+  </div>
+</div>
+<head>
 
+<style>
+  /* Responsive card styles */
+  .card {
+    width: auto; /* Allow card to adjust width based on content */
+    max-width: 1000px; /* Set a maximum width */
+    margin: 0 auto; /* Center the card horizontally */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Add some padding inside the card */
+  }
+
+  /* Zoom effect (optional) */
+  .card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+  }
+  table {
+      width: auto; /* Make the table fill the card container */
+      border-collapse: collapse; /* Collapse table borders */
+    }
+
+    th, td {
+      padding: 10px; /* Add padding to table cells */
+      border: 1px solid #ddd; /* Add a thin border to table cells */
+      text-align: left; /* Left-align table cell content */
+    }
+
+    th {
+      background-color: #f2f2f2; /* Add a light gray background to table headers */
+      font-weight: bold; /* Bold text for table headers */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Add a lighter background color to even rows */
+    }
+
+    /* Add styling for the amount due column */
+    .amount-due {
+      text-align: right; /* Right-align the amount due column */
+    }
+</style>
+</head>
 {% endblock %}
 {% endblock %}

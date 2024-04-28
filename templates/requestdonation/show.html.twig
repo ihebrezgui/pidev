@@ -1,45 +1,70 @@
 {%extends 'base.html.twig'%}
 {%block gestion%}
-{% block title %}Requestdonation{% endblock %}
 
 {% block body %}
-    <h1>Requestdonation</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Idrequest</th>
-                <td>{{ requestdonation.idrequest }}</td>
-            </tr>
-            <tr>
-                <th>FormationSouhaitée</th>
-                <td>{{ requestdonation.getFormationSouhaitee }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ requestdonation.email }}</td>
-            </tr>
-            <tr>
-                <th>DateLimite</th>
-                <td>{{ requestdonation.dateLimite ? requestdonation.dateLimite|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LieuDeRésidence</th>
-                <td>{{ requestdonation.getLieuDeResidence }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ requestdonation.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+   <div class="card">
+     <div class="card-body">
+          <h1>Demande donation</h1>
 
-    <a href="{{ path('app_requestdonation_index') }}" style="background-color: #2980B9 ; color: white; padding: 5px; border: none;
-                                                                                            border-radius: 5px; text-decoration: none; cursor: pointer;
-                                                                                            display: inline-block; width: fit-content; margin-bottom : 30px >Précédent</a>
+       <table class="table">
+         <tbody>
+           <tr>
+             <th>Idrequest</th>
+             <td>{{ requestdonation.idrequest }}</td>
+           </tr>
+           <tr>
+             <th>FormationSouhaitée</th>
+             <td>{{ requestdonation.getFormationSouhaitee }}</td>
+           </tr>
+           <tr>
+             <th>Email</th>
+             <td>{{ requestdonation.email }}</td>
+           </tr>
+           <tr>
+             <th>DateLimite</th>
+             <td>{{ requestdonation.dateLimite ? requestdonation.dateLimite|date('Y-m-d') : '' }}</td>
+           </tr>
+           <tr>
+             <th>LieuDeRésidence</th>
+             <td>{{ requestdonation.getLieuDeResidence }}</td>
+           </tr>
+           <tr>
+             <th>Description</th>
+             <td>{{ requestdonation.description }}</td>
+           </tr>
+         </tbody>
+       </table>
 
-    <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}">Modifier</a>
+       <a href="{{ path('app_requestdonation_index') }}" style="background-color: #2980B9 ; color: white; padding: 5px; border: none;
+                                                                                               border-radius: 5px; text-decoration: none; cursor: pointer;
+                                                                                               display: inline-block; width: fit-content; margin-bottom : 30px >Précédent</a>
 
-    {{ include('requestdonation/_delete_form.html.twig') }}
+       <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}">Modifier</a>
+     </div>
+   </div>
+<head>
+
+<style>
+  /* Responsive card styles */
+  .card {
+    width: auto; /* Allow card to adjust width based on content */
+    max-width: 1000px; /* Set a maximum width */
+    margin: 0 auto; /* Center the card horizontally */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Add some padding inside the card */
+  }
+
+  /* Zoom effect (optional) */
+  .card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+  }
+
+  </style>
+    </head>
+
 {% endblock %}
 {% endblock %}

@@ -25,6 +25,7 @@ class GivedonationType extends AbstractType
             ->add('profession')
             ->add('methodePaiement')
 
+
         ;
     }
 

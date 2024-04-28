@@ -13,8 +13,6 @@ class Requestdonation
 {
     #[ORM\Column(name: "idRequest", type: "integer", nullable: false)]
     #[ORM\Id]
-    #[Assert\NotBlank(message: "Insérer un ID")]
-    #[Assert\Type(type:"integer", message:"L'ID doit être un entier")]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     private int $idrequest;
 

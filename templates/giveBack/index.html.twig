@@ -1,46 +1,96 @@
-{% extends 'baseback.html.twig'%}
+{% extends 'baseback.html.twig' %}
 {% block gestion %}
 {% block body %}
-    <h1>Faire une donation</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id donateur</th>
-                <th>Statut du donateur</th>
-                <th>Montant</th>
-                <th>Date de naissance</th>
-                <th>E-mail</th>
-                <th>Numéro de téléphone</th>
-                <th>Profession</th>
-                <th>Méthode de paiement</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="card">
+  <div class="card-header">
+    Liste des Dons
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Id Donateur</th>
+          <th>Statut du Donateur</th>
+          <th>Montant</th>
+          <th>Date de Naissance</th>
+          <th>E-mail</th>
+          <th>Numéro de Téléphone</th>
+          <th>Profession</th>
+          <th>Méthode de Paiement</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for giveback in givebacks %}
-            <tr>
-                <td>{{ giveback.iddonateur }}</td>
-                <td>{{ giveback.statutDonateur }}</td>
-                <td>{{ giveback.montant }}</td>
-                <td>{{ giveback.dateDeNaissance ? giveback.dateDeNaissance|date('Y-m-d') : '' }}</td>
-                <td>{{ giveback.email }}</td>
-                <td>{{ giveback.getNumeroDeTelephone }}</td>
-                <td>{{ giveback.profession }}</td>
-                <td>{{ giveback.getMethodePaiement }}</td>
-               <td class="giveback-button">
-                   <a href="{{ path('app_giveback_show', {'iddonateur': giveback.iddonateur}) }}" style="background-color: #2980B9 ; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Afficher</a>
-
-               </td>
-            </tr>
+          <tr>
+            <td>{{ giveback.iddonateur }}</td>
+            <td>{{ giveback.statutDonateur }}</td>
+            <td>{{ giveback.montant }}</td>
+            <td>{{ giveback.dateDeNaissance ? giveback.dateDeNaissance|date('Y-m-d') : '' }}</td>
+            <td>{{ giveback.email }}</td>
+            <td>{{ giveback.getNumeroDeTelephone }}</td>
+            <td>{{ giveback.profession }}</td>
+            <td>{{ giveback.getMethodePaiement }}</td>
+            <td class="giveback-button">
+              <a href="{{ path('app_giveback_show', {'iddonateur': giveback.iddonateur}) }}">
+                <i class="fas fa-eye"></i> </a>
+            </td>
+          </tr>
         {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+          <tr>
+            <td colspan="9">Aucun don trouvé</td>
+          </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
+  </div>
+</div>
+<head>
 
+<style>
+  /* Responsive card styles */
+  .card {
+    width: auto; /* Allow card to adjust width based on content */
+    max-width: 1500px; /* Set a maximum width */
+    margin: 0 auto; /* Center the card horizontally */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Add some padding inside the card */
+  }
+
+  /* Zoom effect (optional) */
+  .card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+  }
+  table {
+      width: 100%; /* Make the table fill the card container */
+      border-collapse: collapse; /* Collapse table borders */
+    }
+
+    th, td {
+      padding: 10px; /* Add padding to table cells */
+      border: 1px solid #ddd; /* Add a thin border to table cells */
+      text-align: left; /* Left-align table cell content */
+    }
+
+    th {
+      background-color: #f2f2f2; /* Add a light gray background to table headers */
+      font-weight: bold; /* Bold text for table headers */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Add a lighter background color to even rows */
+    }
+
+    /* Add styling for the amount due column */
+    .amount-due {
+      text-align: right; /* Right-align the amount due column */
+    }
+</style>
+</head>
 
 {% endblock %}
 {% endblock %}

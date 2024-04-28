@@ -10,10 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
 
 #[Route('/requestdonation')]
 class RequestdonationController extends AbstractController
 {
+
     #[Route('/', name: 'app_requestdonation_index', methods: ['GET'])]
     public function index(RequestRepository $requestRepository): Response
     {
@@ -33,6 +35,8 @@ class RequestdonationController extends AbstractController
             $entityManager->persist($requestdonation);
             $entityManager->flush();
 
+            $this->sendSMS(); // Call the sendSMS function
+
             return $this->redirectToRoute('app_requestdonation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -41,6 +45,8 @@ class RequestdonationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{idrequest}', name: 'app_requestdonation_show', methods: ['GET'])]
     public function show(Requestdonation $requestdonation): Response
@@ -77,5 +83,35 @@ class RequestdonationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_requestdonation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function sendSMS(): Response
+    {
+        $message = "Votre demande a été effectuée avec succées";
+        $recipient = "+21629762616"; // Replace with recipient phone number
+
+        $accountSid = 'ACa5fd56712d5981cda406f5a426404bf9';
+        $authToken = '6627d083b893f14cb1844fd172da2853';
+
+        try {
+            $twilio = new Client($accountSid, $authToken);
+            $sms = $twilio->messages->create(
+                $recipient,
+                [
+                    'from' => '+13342491588',
+                    'body' => $message,
+                ]
+            );
+
+            if ($sms->status === 'sent') {
+                $this->addFlash('success', 'SMS sent successfully!');
+            } else {
+                $this->addFlash('error', 'Error sending SMS: ' . $sms->status);
+            }
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred: ' . $e->getMessage());
+        }
+
+        return $this->redirectToRoute('app_requestdonation_index');
     }
 }

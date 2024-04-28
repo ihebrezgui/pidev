@@ -1,51 +1,98 @@
 {% extends 'base.html.twig' %}
 {% block gestion %}
 {% block body %}
-    <h1>Afficher une donation </h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Iddonateur</th>
-                <td>{{ givedonation.iddonateur }}</td>
-            </tr>
-            <tr>
-                <th>StatutDonateur</th>
-                <td>{{ givedonation.statutDonateur }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ givedonation.montant }}</td>
-            </tr>
-            <tr>
-                <th>DateDeNaissance</th>
-                <td>{{ givedonation.dateDeNaissance ? givedonation.dateDeNaissance|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ givedonation.email }}</td>
-            </tr>
-            <tr>
-                <th>numeroDeTelephone</th>
-                <td>{{ givedonation.getNumeroDeTelephone }}</td>
-            </tr>
-            <tr>
-                <th>Profession</th>
-                <td>{{ givedonation.profession }}</td>
-            </tr>
-            <tr>
-                <th>methodePaiement</th>
-                <td>{{ givedonation.getMethodePaiement }}</td>
-            </tr>
-              <tr>
-             <th>idrequest</th>
-              <td>{{ givedonation.getIdrequest.idrequest }}</td>
-             </tr>
-        </tbody>
+<div class="card">
+  <div class="card-header">
+    Détails d'un don ({{ givedonation.iddonateur }})
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Id Donateur</th>
+          <td>{{ givedonation.iddonateur }}</td>
+        </tr>
+        <tr>
+          <th>Statut Donateur</th>
+          <td>{{ givedonation.statutDonateur }}</td>
+        </tr>
+        <tr>
+          <th>Montant</th>
+          <td>{{ givedonation.montant }}</td>
+        </tr>
+        <tr>
+          <th>Date de Naissance</th>
+          <td>{{ givedonation.dateDeNaissance ? givedonation.dateDeNaissance|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ givedonation.email }}</td>
+        </tr>
+        <tr>
+          <th>Numéro de Téléphone</th>
+          <td>{{ givedonation.getNumeroDeTelephone }}</td>
+        </tr>
+        <tr>
+          <th>Profession</th>
+          <td>{{ givedonation.profession }}</td>
+        </tr>
+        <tr>
+          <th>Méthode de Paiement</th>
+          <td>{{ givedonation.getMethodePaiement }}</td>
+        </tr>
+
+      </tbody>
     </table>
 
-
-
     {{ include('givedonation/_delete_form.html.twig') }}
+  </div>
+</div>
+<head>
+
+<style>
+  /* Responsive card styles */
+  .card {
+    width: auto; /* Allow card to adjust width based on content */
+    max-width: 1500px; /* Set a maximum width */
+    margin: 0 auto; /* Center the card horizontally */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Add some padding inside the card */
+  }
+
+  /* Zoom effect (optional) */
+  .card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+  }
+  table {
+      width: 100%; /* Make the table fill the card container */
+      border-collapse: collapse; /* Collapse table borders */
+    }
+
+    th, td {
+      padding: 10px; /* Add padding to table cells */
+      border: 1px solid #ddd; /* Add a thin border to table cells */
+      text-align: left; /* Left-align table cell content */
+    }
+
+    th {
+      background-color: #f2f2f2; /* Add a light gray background to table headers */
+      font-weight: bold; /* Bold text for table headers */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Add a lighter background color to even rows */
+    }
+
+    /* Add styling for the amount due column */
+    .amount-due {
+      text-align: right; /* Right-align the amount due column */
+    }
+</style>
+</head>
+
 {% endblock %}
 {% endblock %}

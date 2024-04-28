@@ -4,7 +4,7 @@
 namespace App\Service;
 
 use Twilio\Rest\Client;
-use Symfony\Component\DependencyInjection\Attribute\AsService; // Use AsService attribute
+use Symfony\Component\DependencyInjection\Attribute\AsService;
 
 class TwilioService
 {

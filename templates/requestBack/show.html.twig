@@ -1,39 +1,98 @@
-{%extends 'baseback.html.twig'%}
-{%block gestion%}
-{% block title %}Requestdonation{% endblock %}
+{% extends 'baseback.html.twig' %}
 
-{% block body %}
-    <h1>Requestdonation</h1>
+{% block gestion %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Idrequest</th>
-                <td>{{ requestback.idrequest }}</td>
-            </tr>
-            <tr>
-                <th>FormationSouhaitée</th>
-                <td>{{ requestback.getFormationSouhaitee }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ requestback.email }}</td>
-            </tr>
-            <tr>
-                <th>DateLimite</th>
-                <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LieuDeRésidence</th>
-                <td>{{ requestback.getLieuDeResidence }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ requestback.description }}</td>
-            </tr>
-        </tbody>
+ {% block body %}
+<div class="card-container">
+
+<div class="card">
+  <div class="card-header">
+    Détails de la demande de donation ({{ requestback.idrequest }})
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">  <tbody>
+        <tr>
+          <th>Id Request</th>
+          <td>{{ requestback.idrequest }}</td>
+        </tr>
+        <tr>
+          <th>Formation Souhaitée</th>
+          <td>{{ requestback.getFormationSouhaitee }}</td>
+        </tr>
+        <tr>
+          <th>E-mail</th>
+          <td>{{ requestback.email }}</td>
+        </tr>
+        <tr>
+          <th>Date Limite</th>
+          <td>{{ requestback.dateLimite ? requestback.dateLimite|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+          <th>Lieu de Résidence</th>
+          <td>{{ requestback.getLieuDeResidence }}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td>{{ requestback.description }}</td>
+        </tr>
+      </tbody>
     </table>
+  </div>
+</div>
+</div>
 
+<head>
+
+<style>
+  /* Responsive card styles */
+  .card {
+    width: auto; /* Allow card to adjust width based on content */
+    max-width: 1500px; /* Set a maximum width */
+    margin: 0 auto; /* Center the card horizontally */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Add some padding inside the card */
+  }
+
+  /* Zoom effect (optional) */
+  .card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+  }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Optional: Set minimum height for full viewport centering */
+  }
+
+  table {
+      width: 100%; /* Make the table fill the card container */
+      border-collapse: collapse; /* Collapse table borders */
+    }
+
+    th, td {
+      padding: 10px; /* Add padding to table cells */
+      border: 1px solid #ddd; /* Add a thin border to table cells */
+      text-align: left; /* Left-align table cell content */
+    }
+
+    th {
+      background-color: #f2f2f2; /* Add a light gray background to table headers */
+      font-weight: bold; /* Bold text for table headers */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; /* Add a lighter background color to even rows */
+    }
+
+    /* Add styling for the amount due column */
+    .amount-due {
+      text-align: right; /* Right-align the amount due column */
+    }
+</style>
+</head>
 
 {% endblock %}
 {% endblock %}
