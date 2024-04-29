@@ -23,6 +23,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
@@ -193,18 +194,27 @@ public function Myprofile(): Response
     ]);
 }
 #[Route('/modifier-profil', name: 'app_edit_profile')]
-public function editProfile(Request $request,UtilisateurRepository $userRepository): Response
+public function editProfile(Request $request, UtilisateurRepository $userRepository, EntityManagerInterface $entityManager): Response
 {
     $user = $this->getUser();
     $form = $this->createForm(UserWithoutPasswordType::class, $user);
     $form->handleRequest($request);
 
-   
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Update the user entity with the form data
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Profile updated successfully.');
+        // Redirect to some route after successful update
+        return $this->redirectToRoute('app_myprofile');
+    }
 
     return $this->render('front/utilisateur/edit_profile.html.twig', [
         'profileForm' => $form->createView(),
     ]);
 }
+
 
 #[Route('/EditProfilePassword', name: 'app_edit_profile_password', methods: ['GET', 'POST'])]
 public function EditProfilePassword(Request $request,UserPasswordHasherInterface $userPasswordHasher,UtilisateurRepository $userRepository): Response
@@ -371,6 +381,22 @@ private function generateResetCode()
 
         return $this->render('front/utilisateur/verify_reset_code.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/user-role-statistics', name: 'user_role_statistics')]
+    public function userRoleStatistics(UtilisateurRepository $utilisateurRepository): Response
+    {
+        $usersByRole = $utilisateurRepository->getUsersByRole();
+    
+        // Prepare data for Google Chart
+        $data = [];
+        $data[] = ['Role', 'Number of Users'];
+        foreach ($usersByRole as $userData) {
+            $data[] = [$userData['role'], $userData['userCount']];
+        }
+    
+        return $this->render('back/utilisateur/user_role_statistics.html.twig', [
+            'chartData' => json_encode($data),
         ]);
     }
 }

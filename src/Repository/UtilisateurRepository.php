@@ -124,4 +124,12 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
 
         return $queryBuilder->getQuery()->getResult();
     }
+    public function getUsersByRole()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.role, COUNT(u.id) as userCount')
+            ->groupBy('u.role')
+            ->getQuery()
+            ->getResult();
+    }
 }

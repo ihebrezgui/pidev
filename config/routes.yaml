@@ -81,3 +81,6 @@ app_index_admin:
   path: /admin
   controller: App\Controller\Home::indexAdmin
   methods: GET
+user_role_statistics:
+    path: utilisateur/user-role-statistics
+    controller: App\Controller\UtilisateurController::userRoleStatistics
