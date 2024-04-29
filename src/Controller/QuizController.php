@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\Formation;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\FormationRepository;
 use App\Repository\QuizRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,117 +11,141 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Psr\Log\LoggerInterface;
+use Imagick;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class QuizController extends AbstractController
+
 {
     private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    private $session;
+    
+    public function __construct(EntityManagerInterface $entityManager,SessionInterface $session)
     {
         $this->entityManager = $entityManager;
+        $this->session = $session;
     }
-/*
-    #[Route('formation/generate/quiz/{id}', name: 'app_formation_generate_quiz', methods: ['GET'])]
-    public function generateQuizForType(int $id,FormationRepository $formationRepository,QuizRepository $quizRepository): Response
+    #[Route('/formation/quiz/{idFormation}', name: 'handle_quiz')]
+    public function handleQuiz(int $idFormation, Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger, SessionInterface $session, FormationRepository $formationRepository, QuizRepository $quizRepository): Response
     {
-        $formationRepository = $this->getDoctrine()->getRepository(Formation::class);
-        $formation = $formationRepository->find($id);
-
+        $formation = $formationRepository->find($idFormation);
         if (!$formation) {
-            $this->addFlash('warning', "No formation found with ID '{$id}'.");
+            $this->addFlash('warning', "No formation found with ID '{$idFormation}'.");
             return $this->redirectToRoute('app_formation_index');
         }
-
-        $quizzes = $quizRepository->findBy(
-            ['idFormation' => $id],       // Criteria
-            ['idFormation' => 'ASC'],       // Order by (change 'fieldName' to your actual field and 'ASC' to 'ASC' or 'DESC')
-        );
-        
-        // Optionally, render a view to display these quizzes
-        return $this->render('quiz/quiz.html.twig', [
-            'quizzes' => $quizzes, // Assuming only one quiz is generated
-            'type' => $formation->getTypeF()
-        ]);
-    }
-
-
-#[Route('formation/api/quiz', name: 'app_api_generate_quiz', methods: ['GET'])]
-public function getQuizzes(QuizRepository $quizRepository): JsonResponse
-{
-    $quizzes = $quizRepository->findAll();  // Or any other method to get specific quizzes
-    $quizData = [];
-
-    foreach ($quizzes as $quiz) {
-        $quizData[] = [
-            'question' => $quiz->getQuestions(),
-            'optionA' => $quiz->getAnswer1(),
-            'optionB' => $quiz->getAnswer2(),
-            'optionC' => $quiz->getAnswer3(),
-            'correctOption' => $quiz->getCorrectAnswer()
-        ];
-    }
-
-    return new JsonResponse($quizData);
-}
-*/
-
-#[Route('formation/quiz/{idFormation}', name: 'handle_quiz')]
-    public function handleQuiz(int $idFormation, Request $request, FormationRepository $formationRepository, QuizRepository $quizRepository): Response
-    {
-        if ($request->isMethod('GET')) {
-            $formation = $formationRepository->find($idFormation);
-            if (!$formation) {
-                $this->addFlash('warning', "No formation found with ID '{$idFormation}'.");
-                return $this->redirectToRoute('app_formation_index');
+    
+        $quizzes = $quizRepository->findBy(['idFormation' => $idFormation]);
+        if (empty($quizzes)) {
+            $this->addFlash('warning', 'No quizzes found for the selected formation.');
+            return $this->redirectToRoute('app_formation_index');
+        }
+    
+        $quizData = array_map(function ($quiz) {
+            return [
+                'question' => $quiz->getQuestions(),
+                'answer1' => $quiz->getAnswer1(),
+                'answer2' => $quiz->getAnswer2(),
+                'answer3' => $quiz->getAnswer3(),
+                'correctAnswer' => $quiz->getCorrectAnswer(),
+            ];
+        }, $quizzes);
+    
+        $session->start();
+        $index = $session->get('index', 0);
+        $score = $session->get('score', 0);
+        $displayedQuestions = $session->get('displayed_questions', []);
+    
+        if ($request->isMethod('POST')) {
+            $userAnswer = $request->request->get('answer');
+            $correctAnswer = $quizData[$index]['correctAnswer'] ?? null;
+    
+            if ($userAnswer === $correctAnswer) {
+                $score++;
+                $session->set('score', $score);
             }
-
-            $quizzes = $quizRepository->findBy(
-                ['idFormation' => $idFormation],       // Criteria
-                ['idFormation' => 'ASC'],       // Order by (change 'fieldName' to your actual field and 'ASC' to 'ASC' or 'DESC')
-            );
-             if (empty($quizzes)) {
-                $this->addFlash('warning', 'No quizzes found for the selected formation.');
-                return $this->redirectToRoute('app_formation_index');
+    
+            $index++;
+            $session->set('index', $index);
+            $displayedQuestions[] = $index;
+            $session->set('displayed_questions', $displayedQuestions);
+        }
+    
+        if ($index >= count($quizData)) {
+            $logger->info('Final score: ' . $score);
+            $certificatePath = null;
+            if ($score > 3) {
+                $studentName = "John Doe"; // Consider pulling this dynamically, e.g., from user profile
+                //$certificatePath = $this->generateCertificate($studentName);
+                //$certificatePath1 = $this->generateCertificate1($studentName);
             }
-
-            $this->session->start();
-            shuffle($quizzes);
-            $this->session->set('quizzes', $quizzes);
-            $this->session->set('index', 0);
-            $this->session->set('score', 0);
-
-            $index = $this->session->get('index');
-            $question = $quizzes[$index];
-            return $this->render('quiz/quiz.html.twig', [
-                'question' => $question,
-                'index' => $index,
+            $session->clear();
+            return $this->render('quiz/result.html.twig', [
+                'score' => $score
+                /*'certificatePath' => $certificatePath,
+                'certificatePath1' => $certificatePath1*/
             ]);
         }
-
-        if ($request->isMethod('POST')) {
-            $index = $this->session->get('index');
-            $quizzes = $this->session->get('quizzes');
-
-            if ($index >= count($quizzes)) {
-                $score = $this->session->get('score');
-                $this->session->clear();
-                return $this->render('quiz/result.html.twig', [
-                    'score' => $score,
-                ]);
-            }
-
-            $question = $quizzes[$index];
-            $userAnswer = $request->request->get('answer');
-            $correctAnswer = $question->getCorrectAnswer();
-
-            if ($userAnswer === $correctAnswer) {
-                $score = $this->session->get('score');
-                $score++;
-                $this->session->set('score', $score);
-            }
-
-            $this->session->set('index', $index + 1);
-            return $this->redirectToRoute('handle_quiz', ['idFormation' => $idFormation]);
-        }
+    
+        $nextQuestion = $quizData[$index] ?? null;
+        return $this->render('quiz/quiz.html.twig', [
+            'question' => $nextQuestion,
+            'index' => $index,
+            'idFormation' => $idFormation,
+            'score' => $score
+        ]);
     }
+    /*
+    private function generateCertificate1(string $studentName): string
+    {
+        $imagick = new Imagick('/formations_imgs/Certificate.png');
+        $draw = new ImagickDraw();
+        $draw->setFont('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf');
+        $draw->setFontSize(20);
+        $draw->setFillColor('black');
+        $draw->setGravity(Imagick::GRAVITY_CENTER);
+        $imagick->annotateImage($draw, 0, 0, 0, $studentName);
+        $certificateFilename = sprintf('/PaceLearning/%s_certificate.png', str_replace(' ', '_', $studentName));
+        $imagick->writeImage($certificateFilename);
+        $imagick->clear();
+        return $certificateFilename;
+    }
+    
+    private function generateCertificate(string $studentName): string
+{
+    // Load the certificate image
+    $certificate = imagecreatefrompng('/formations_imgs/certificate.png');
+    
+    // Set text color
+    $textColor = imagecolorallocate($certificate, 0, 0, 0); // Black
+    
+    // Set font path
+    $fontPath = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
+    
+    // Set font size
+    $fontSize = 20;
+    
+    // Calculate text position (centered)
+    $textWidth = imagettfbbox($fontSize, 0, $fontPath, $studentName);
+    $textWidth = $textWidth[2] - $textWidth[0];
+    $x = (imagesx($certificate) - $textWidth) / 2;
+    $y = imagesy($certificate) / 2;
+    
+    // Add text to the certificate
+    imagettftext($certificate, $fontSize, 0, $x, $y, $textColor, $fontPath, $studentName);
+    
+    // Save the generated certificate to a file
+    $certificateFilename = sprintf('/PaceLearning/%s_certificate.png', str_replace(' ', '_', $studentName));
+    imagepng($certificate, $certificateFilename);
+    
+    // Free up memory
+    imagedestroy($certificate);
+    
+    return $certificateFilename;
+}
+    */
+
+
+
 }
