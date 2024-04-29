@@ -65,7 +65,7 @@ class Utilisateur implements UserInterface
     private $password;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private $resttoken;
+    private $resttoken = null;
 
     public function getId(): ?int
     {
@@ -184,11 +184,6 @@ class Utilisateur implements UserInterface
         return $this->email;
     }
 
-    public function getRoles(): array
-    {
-        return [$this->role];
-    }
-
     public function getPassword(): string
     {
         return $this->password ?? '';;
@@ -197,9 +192,23 @@ class Utilisateur implements UserInterface
     public function getSalt()
     {
     }
-
+ 
     public function eraseCredentials()
     {
      
     }
+    public function getRoles(): array
+    {
+        $roles = [$this->role]; 
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+    
+    public function setRoles(array $roles): self
+    {
+        $this->role = $roles;
+    
+        return $this;
+    }
+    
 }

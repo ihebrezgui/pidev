@@ -2,10 +2,6 @@ app_utilisateur_index:
     path: /utilisateur
     controller: App\Controller\UtilisateurController::index
     methods: ['GET']
-app_index:
-    path: /
-    controller: App\Controller\UtilisateurController::index
-
 app_utilisateur_new:
     path: /utilisateur/new
     controller: App\Controller\UtilisateurController::new
@@ -76,3 +72,12 @@ reset_password_profil_admin:
     path: /utilisateur/admin/resetPassword/profil
     controller: App\Controller\UtilisateurController::resetPasswordProfileAdmin
     methods: ['GET', 'POST']
+app_index:
+  path: /
+  controller: App\Controller\Home::index
+  methods: GET
+
+app_index_admin:
+  path: /admin
+  controller: App\Controller\Home::indexAdmin
+  methods: GET

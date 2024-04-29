@@ -47,23 +47,18 @@ class UserWithoutPasswordType extends AbstractType
                 ],
                 'label' => 'Nom', // Label in French
             ])
-            ->add('address', null, [
+            ->add('numTel', null, [
                 'constraints' => [
-                    new NotBlank(['message' => 'L\'adresse ne peut pas être vide']),
+                    new NotBlank(['message' => 'Numéro de téléphone ne peut pas être vide']),
                     new Length([
-                        'min' => 5,
-                        'max' => 255,
-                        'minMessage' => 'L\'adresse doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'L\'adresse ne peut pas dépasser {{ limit }} caractères',
+                        'min' => 8,
+                        'max' => 8,
+                        'minMessage' => 'Le numéro de téléphone doit contenir au moins {{ limit }} numéro',
                     ]),
                 ],
-                'label' => 'Adresse', // Label in French
-            ])
-            ->add('image', FileType::class, [
-                'label' => false,
-                'mapped' => false,
-                'required' => false
+                'label' => 'Numéro de téléphone', 
             ]);
+         
     }
 
     public function configureOptions(OptionsResolver $resolver): void

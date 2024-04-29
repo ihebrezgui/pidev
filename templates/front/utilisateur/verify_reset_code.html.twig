@@ -25,12 +25,7 @@
                 </h5>
 
               </div>
-              <div class="sign__group">
-                {{ form_widget(form.ConfirmPassword,  {'attr': { placeholder:'confirmer mot de passe' }}) }}
-                  <h5 class="footer__tagline">
-                      {{ form_errors(form.ConfirmPassword) }}
-                  </h5>
-              </div>
+             
 
             <button class="btn btn-lg btn-primary">{{ button_label|default('Réinitialiser le mot de passe') }}</button>
         {{ form_end(form) }}

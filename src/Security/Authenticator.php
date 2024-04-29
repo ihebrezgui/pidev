@@ -24,15 +24,14 @@ class Authenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
-    private $urlGenerator;
-    private $entityManager;
-    
-    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager)
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(private UrlGeneratorInterface $urlGenerator,EntityManagerInterface $entityManager)
     {
-        $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
+
     }
-    
+
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
@@ -53,14 +52,15 @@ class Authenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        dump($token->getUser()->getRoles());
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
         $userRole = $token->getUser()->getRoles()[0];
 
-        if ($userRole=="ADMIN") {
-            return new RedirectResponse($this->urlGenerator->generate('app_index_admin'));
+        if ($userRole === 'Admin') {
+            return new RedirectResponse($this->urlGenerator->generate('app_utilisateur_index'));
         }
         else
         {

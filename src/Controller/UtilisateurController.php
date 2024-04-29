@@ -106,7 +106,6 @@ class UtilisateurController extends AbstractController
 {
     $form->remove('password');
 }
-// Controller action to fetch users by age range and display in a chart
 public function usersByAgeChart(UtilisateurRepository $utilisateurRepository)
 {
     $utilisateurs = $utilisateurRepository->findAll(); 
@@ -176,7 +175,7 @@ public function register(Request $request, UserPasswordHasherInterface $userPass
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_myprofile');
     }
 
     return $this->render('front/utilisateur/register.html.twig', [
@@ -267,19 +266,16 @@ public function resetPasswordSubmitted(Request $request, EntityManagerInterface 
     $user = $entityManager->getRepository(Utilisateur::class)->getUserByEmail($toemail);
 
     if ($user) {
-        // Generate and save the reset code
-        $resetCode = $this->generateResetCode();
-        $user->setResttoken($resetCode);
+        $restToken= $this->generateResetCode();
+        $user->setResttoken($restToken);
         $entityManager->flush();
 
-        // Send the reset code to the user's email (you need to implement this)
-        //create a html template for the email
         $html = '
                 <html>
                     <body>
                         <p>Bonjour utilisateur,</p>
                         <p>Quelqu\'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire via le lien ci-dessous.</p>
-                        <p><a href="http://127.0.0.1:8000/utilisateur/verify-reset-code/'.$resetCode.'">Changer mon mot de passe</a></p>
+                        <p><a href="http://127.0.0.1:8000/utilisateur/verify-reset-code/'.$restToken.'">Changer mon mot de passe</a></p>
                         <p>Si vous n\'avez pas effectué cette demande, veuillez ignorer cet e-mail.</p>
                         <p>Votre mot de passe ne sera pas modifié tant que vous n\'aurez pas accédé au lien ci-dessus et créé un nouveau.</p>
                     </body>
@@ -315,8 +311,7 @@ public function resetPassword(Request $request, EntityManagerInterface $entityMa
 #[Route('/verify-reset-code/{restToken}', name: 'verify_reset_code')]
 public function verifyResetCode(Request $request, $restToken, EntityManagerInterface $entityManager ,UserPasswordHasherInterface $userPasswordHasher)
 {
-    // Find the user by the reset code
-    $user = $entityManager->getRepository(Utilisateur::class)->getUserByResetCode(['resetCode' => $restToken]);
+    $user = $entityManager->getRepository(Utilisateur::class)->findOneBy(['resttoken' => $restToken]);
     if (!$user) {
         return $this->redirectToRoute('app_login');
     }
@@ -329,12 +324,12 @@ public function verifyResetCode(Request $request, $restToken, EntityManagerInter
     if ($form->isSubmitted() && $form->isValid()) {
         $hashedPassword = $userPasswordHasher->hashPassword($user, $data->getPassword());
         $user->setPassword($hashedPassword);
-        $user->setResetCode(null);
+        $user->setResttoken(null);
         $entityManager->flush();
 
         $this->addFlash(
             'success',
-            'Mot de passe changer avec succéss.'
+            'Mot de passe changer avec succès.'
         );
 
         // Redirect or render a success message
@@ -346,11 +341,36 @@ public function verifyResetCode(Request $request, $restToken, EntityManagerInter
     ]);
 }
 
-
 private function generateResetCode()
 {
-    // Generate a unique reset code (you can customize the logic)
     return uniqid();
 }
+#[Route('/resetPassword/profil', name: 'reset_password_profil')]
+    public function resetPasswordProfile(Request $request, EntityManagerInterface $entityManager ,UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $user = $this->getUser();
 
+        $form = $this->createForm(ChangePasswordType::class,$user);
+        $form->handleRequest($request);
+        $data = $form->getData();
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $data->getPassword());
+            $user->setPassword($hashedPassword);
+            $user->setResttoken(null);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Mot de passe changer avec succéss.'
+            );
+
+            return $this->redirectToRoute('app_myprofile');
+        }
+
+        return $this->render('front/utilisateur/verify_reset_code.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

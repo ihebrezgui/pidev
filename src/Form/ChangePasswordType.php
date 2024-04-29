@@ -30,15 +30,8 @@ class ChangePasswordType extends AbstractType
                         'message' => "Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre."
                     ]),
                 ],
-            ])
-            ->add('ConfirmPassword', PasswordType::class, [
-                'attr' => ['class' => 'form-control mb-3', 'type' => 'password'],
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Veuillez confirmer le mot de passe',
-                    ]),
-                ],
             ]);
+           
     }
 
     public function configureOptions(OptionsResolver $resolver): void

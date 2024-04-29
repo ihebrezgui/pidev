@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
 {% block title %}Home{% endblock %}
 
@@ -13,11 +13,11 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">The Best Online Learning Platform</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Meilleurs cours en ligne</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Pace Learning: Plate-forme d'apprentissage en ligne</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Rejoignez-nous dès maintenant ! </p>
+<a href="#" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft" id="openVideoButton">En savoir plus</a>
+                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Rejoignez-nous</a>
                             </div>
                         </div>
                     </div>
@@ -29,11 +29,12 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">Get Educated Online From Your Home</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Meilleurs cours en ligne</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Se former en ligne depuis chez soi </h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Rejoignez-nous dès maintenant !</p>
+<a href="https://www.youtube.com/watch?v=0wRCb52GeIg" target="_blank" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">En savoir plus</a>
+                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Rejoignez-nous</a>
+
                             </div>
                         </div>
                     </div>
@@ -42,8 +43,47 @@
         </div>
     </div>
     <!-- Carousel End -->
+<!-- Bootstrap Modal for Video -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Script to Open Video in Modal -->
+<script>
+    // Function to open the video modal
+    function openVideoModal() {
+        // YouTube video ID
+        var videoID = "0wRCb52GeIg"; // Replace with your YouTube video ID
 
+        // Generate YouTube video URL
+        var videoURL = "https://www.youtube.com/embed/" + videoID;
+
+        // Set the source of the iframe in the modal
+        var videoFrame = document.getElementById("videoFrame");
+        videoFrame.src = videoURL;
+
+        // Show the video modal
+        var videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        videoModal.show();
+    }
+
+    // Add click event listener to the button
+    document.getElementById("openVideoButton").addEventListener("click", function(event) {
+        // Prevent default behavior (e.g., following the link)
+        event.preventDefault();
+        // Open the video modal
+        openVideoModal();
+    });
+</script>
     <!-- Service Start -->
     <div class="container-xxl py-5">
         <div class="container">

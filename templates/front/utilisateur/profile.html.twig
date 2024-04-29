@@ -19,11 +19,15 @@
                             {{ message }}
                         </div>
                     {% endfor %}
-
+                 {% if user is not null %}
                     <p class="mb-4">{{ user.nom }} {{ user.prenom}}</p>
+                   
+
                     <p class="mb-4">Email: {{ user.email }}</p>
                     <p class="mb-4">Address: {{ user.numTel }}</p>
-                    <p class="mb-4">Status: {{ user.sexe }}</p>
+                    <p class="mb-4">Sexe: {{ user.sexe }}</p>
+                    
+ {% endif %}
                     <!-- Additional user details can be added here -->
                     <a class="btn btn-primary py-3 px-5 mt-2" href="{{ path('app_edit_profile') }}">Modifier informations</a>
                     <a class="btn btn-primary py-3 px-5 mt-2" href="{{ path('reset_password_profil') }}">Modifier mot de passe</a>
