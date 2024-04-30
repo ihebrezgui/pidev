@@ -1,38 +1,31 @@
 {% extends 'baseBack.html.twig' %}
+
 {% block gestion %}
     {% block body %}
         <link rel="stylesheet" href="{{ asset('back/css/styles.css') }}">
-        <h1>User Role Statistics</h1>
+        <h1>Statistiques sur les rôles d'utilisateurs</h1>
         <div id="piechart" style="width: 100%; height: 400px;"></div>
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-   google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Role');
-        data.addColumn('number', 'Number of Users');
-        data.addRows([
-            ['Admin', 1],
-            ['Etudiant', 3],
-            ['Formateur', 1],
-            ['RH', 2]
-        ]);
+            function drawChart() {
+                var jsonData = {{ chartData|raw }};
+                var data = google.visualization.arrayToDataTable(jsonData);
 
-        var options = {
-            title: 'User Statistics by Role',
-            is3D: true,
-            backgroundColor: 'transparent', 
-            legend: { position: 'right' }, 
-            pieSliceText: 'label', 
-            slices: { 0: { color: '#3366cc' }, 1: { color: '#dc3912' }, 2: { color: '#ff9900' }, 3: { color: '#109618' } }, // Custom slice colors
-        };
+                var options = {
+                    title: 'Statistiques sur les rôles',
+                    is3D: true,
+                    backgroundColor: 'transparent', 
+                    legend: { position: 'right' }, 
+                    pieSliceText: 'label'
+                };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-    }
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+            }
         </script>
     {% endblock %}
 {% endblock %}
