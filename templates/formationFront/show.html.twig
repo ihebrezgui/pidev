@@ -45,10 +45,58 @@
                         <td>{{ course.description }}</td>
                         <td>{{ course.categorie }}</td>
                        <td>
-                            <a href="{{ asset('formations_imgs/' ~ course.cours) }}" target="_blank">
-                               <img src="{{ asset('formations_imgs/pdf.png') }}" alt="PDF icon" style="width: 16px; height: 16px; vertical-align: middle;"> View PDF
-                            </a>
-                        </td>
+    <a href="{{ path('serve_pdf', {'id': course.idCours}) }}" target="_blank">
+        <img src="{{ asset('formations_imgs/pdf.png') }}" alt="PDF icon" style="width: 16px; height: 16px; vertical-align: middle;">
+        View PDF
+    </a>
+</td>
+                     <td><a href="#" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft" id="openVideoButton">Learn More</a></td>
+                       
+                        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script to Open Video in Modal -->
+<script>
+    // Function to open the video modal
+    function openVideoModal(videoURL) {
+        // Set the source of the iframe in the modal
+        var videoFrame = document.getElementById("videoFrame");
+        videoFrame.src = videoURL;
+
+        // Show the video modal
+        var videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        videoModal.show();
+    }
+
+    // Add click event listener to the button
+    document.getElementById("openVideoButton").addEventListener("click", function(event) {
+        // Prevent default behavior (e.g., following the link)
+        event.preventDefault();
+
+        // YouTube video URL
+        var videoURL = "{{ course.link }}"; // Replace with proper video URL or video ID extraction logic
+     
+    var embed_url = "https://www.youtube.com/embed/" + videoURL;
+
+        console.log("Attempting to open video modal with URL:", embed_url);  // Log the URL being used
+
+        openVideoModal(embed_url);
+    });
+</script>
+
+                   
+                   
+                   
                     </tr>
                 {% endfor %}
             </tbody>

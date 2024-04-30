@@ -35,6 +35,10 @@ class Cours
     #[Assert\Length(max: 255, maxMessage: "Le champ cours ne doit pas dépasser 255 caractères.")]
     private string $cours;
 
+    
+    #[ORM\Column(name: 'link', type: 'string', length: 255, nullable: false)]
+    private string $link;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'idFormation', referencedColumnName: 'idFormation', nullable: false)]
     private Formation $formation;
@@ -96,6 +100,18 @@ class Cours
     {
         $this->cours = $cours;
 
+        return $this;
+    }
+    
+    public function getLink(): string
+    {
+        return $this->link; // Ensure this matches the property name exactly, which should be all lowercase
+    }
+    
+    public function setLink(string $link): self
+    {
+        $this->link = $link;
+    
         return $this;
     }
 

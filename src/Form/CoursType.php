@@ -35,7 +35,11 @@ class CoursType extends AbstractType
             ->add('cours', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                ],])      
+                ],])
+                ->add('link', TextType::class, [
+                    'constraints' => [
+                        new NotBlank(),
+                    ],])      
             ->add('idFormation', EntityType::class, [
                 'class' => Formation::class,
                 'choice_label' => function (Formation $formation) {
