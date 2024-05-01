@@ -24,7 +24,8 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
-use Endroid\QrCode\QrCode;
+
+
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
@@ -400,17 +401,5 @@ private function generateResetCode()
             'chartData' => json_encode($data),
         ]);
     }
-    #[Route('/generate-qr-code', name: 'generate_qr_code')]
-    public function generateQRCode(): Response
-    {
-        $url = 'https://www.youtube.com/watch?v=0wRCb52GeIg';
-    
-        $qrCode = new QrCode($url);
-        $qrCode->setSize(200);
-      
-        $qrCodeString = $this->get('endroid_qr_code.generator')->generate($qrCode);
-    
-        // Return the QR code string as a response
-        return new Response($qrCodeString, Response::HTTP_OK, ['Content-Type' => 'image/png']);
-    }
+
 }

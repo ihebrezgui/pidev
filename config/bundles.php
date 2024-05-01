@@ -18,5 +18,4 @@ return [
     CMEN\GoogleChartsBundle\CMENGoogleChartsBundle::class => ['all' => true],
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class => ['all' => true],
     VictorPrdh\RecaptchaBundle\RecaptchaBundle::class => ['all' => true],
-
 ];

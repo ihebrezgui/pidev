@@ -84,6 +84,3 @@ app_index_admin:
 user_role_statistics:
     path: utilisateur/user-role-statistics
     controller: App\Controller\UtilisateurController::userRoleStatistics
-generate_qr_code:
-    path: /utilisateur/generate-qr-code
-    controller: App\Controller\UtilisateurController::generateQRCode

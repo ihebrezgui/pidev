@@ -6,6 +6,9 @@
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
 services:
+
+    Endroid\QrCodeBundle\Builder\BuilderInterface:
+        alias: endroid_qr_code.builder
     
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
