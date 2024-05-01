@@ -21,5 +21,5 @@ class Home extends AbstractController
         return $this->render('back/utilisateur/index.html.twig',[]);
     }
 
-
+   
 }

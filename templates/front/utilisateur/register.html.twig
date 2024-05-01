@@ -4,11 +4,28 @@
 
 {% block body %}
     <div class="container-xxl py-5">
+                 <p>Pour en savoir plus sur nous </p>
+                 
+                  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+                      <div class="qrcode-container text-center">
+
+    <div id="qrcode"></div>
+    <script>
+        var youtubeUrl = 'https://www.youtube.com/watch?v=0wRCb52GeIg'; 
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: youtubeUrl,
+            width: 90,
+            height: 90
+        });
+    </script>
+    </div>
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Inscription</h6>
                 <h1 class="mb-5">S'inscrire maintenant</h1>
             </div>
+            
+   </div>
             <div class="row g-4">
                 {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
                 <div class="row">

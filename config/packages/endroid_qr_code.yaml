@@ -1,10 +1,1 @@
 endroid_qr_code:
-    custom:
-        writer: Endroid\QrCode\Writer\SvgWriter
-        data: https://www.youtube.com/watch?v=0wRCb52GeIg
-        size: 300
-        errorCorrectionLevel: 'high'
-        roundBlockSizeMode: 'margin'
-        logoPath: '%kernel.project_dir%/public/logo.png'
-        logoResizeToWidth: 150
-        logoPunchoutBackground: true

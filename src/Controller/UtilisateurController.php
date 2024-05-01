@@ -24,15 +24,16 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
-
+use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCode\QrCode;
 
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
 
-    {
+   {
         #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
-        public function index(UtilisateurRepository $utilisateurRepository, Request $request)
+        public function index(UtilisateurRepository $utilisateurRepository, Request $request, PaginatorInterface $paginator) : Response
     {
         $searchQuery = $request->query->get('search');
 
@@ -42,7 +43,12 @@ class UtilisateurController extends AbstractController
             // If no search query is provided, fetch all users
             $utilisateurs = $utilisateurRepository->findAll();
         }
-
+        $query = $utilisateurRepository->createQueryBuilder('f')->getQuery();
+$utilisateurs = $paginator->paginate(
+    $query,
+    $request->query->getInt('page',1),
+    3
+);
         return $this->render('back/utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs,
         ]);
@@ -401,5 +407,31 @@ private function generateResetCode()
             'chartData' => json_encode($data),
         ]);
     }
+    #[Route('/home', name: 'youtube')]
+    public function youtubeVideo(): Response
+    {
+        $videoId = '0wRCb52GeIg';
 
+        return $this->render('home.html.twig', [
+            'videoId' => $videoId,
+        ]);
+    }
+    #[Route('/generate-gr-code', name: 'youtube')]
+    public function generateQrCodeForVideo($videoId): Response
+    {
+        // Construct the YouTube video URL
+        $videoUrl = 'https://www.youtube.com/watch?v=0wRCb52GeIg';
+
+        // Create a QR code instance
+        $qrCode = new QrCode($videoUrl);
+        $qrCode->setSize(200); // Set QR code size
+
+        // Render the QR code as SVG content
+        $qrCodeSvgContent = $qrCode->writeString();
+
+        // Return the SVG content as response
+        return new Response($qrCodeSvgContent, Response::HTTP_OK, [
+            'Content-Type' => 'image/svg+xml',
+        ]);
+    }
 }
