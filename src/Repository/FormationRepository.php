@@ -36,6 +36,16 @@ class FormationRepository extends ServiceEntityRepository
         ->getSingleScalarResult();
     }
     // src/Repository/FormationRepository.php
+   // Example of a custom repository method
+public function findFormationsWithDetails()
+{
+    return $this->createQueryBuilder('f')
+        ->select('f, c, q') // Select full entities
+        ->leftJoin('f.courses', 'c')
+        ->leftJoin('f.quizzes', 'q')
+        ->getQuery()
+        ->getResult(); // Ensure getResult() without getScalarResult() or getArrayResult()
+}
 
 public function search($keyword)
 {

@@ -8,10 +8,16 @@ parameters:
     pdf_directory: '%kernel.project_dir%/public/formations_imgs'
 
 # config/services.yaml
+
 services:
     _defaults:
-        autowire: true
-        autoconfigure: true
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\Controller\QuizControllerF:
+        class: App\Controller\QuizControllerF  # Ensure class is explicitly set if needed
+        arguments:
+            $pdfDirectory: '%kernel.project_dir%/public/formations_imgs'
 
 
     # makes classes in src/ available to be used as services

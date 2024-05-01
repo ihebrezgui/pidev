@@ -8,6 +8,8 @@ use App\Repository\FormationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Cours; 
+use App\Entity\Quiz;
+
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 #[ORM\Table(name: 'formation')]
 class Formation
@@ -157,5 +159,11 @@ public function getImg(): ?string
 
         return $this;
     }
+ public function hasQuiz(): bool
+{
+    return!empty($this->quizzes);
+}
+    
+
 
 }
