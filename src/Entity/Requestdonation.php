@@ -6,6 +6,9 @@ use App\Repository\RequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use DateTime;
+
 
 #[ORM\Entity(repositoryClass: RequestRepository::class)]
 #[ORM\Table(name: "requestdonation")]
@@ -27,6 +30,7 @@ class Requestdonation
 
     #[ORM\Column(name: "date_limite", type: "date", nullable: false)]
     #[Assert\NotBlank(message: "Insérer une date")]
+  //  #[Assert\Callback(callback: "validateDateLimite")]
     private \DateTime $dateLimite;
 
     #[ORM\Column(name: "lieu_de_résidence", type: "string", length: 255, nullable: false)]
@@ -125,6 +129,16 @@ class Requestdonation
     {
         if ($value < new \DateTime('today')) {
             throw new Assert\Exception\InvalidValueException('La date limite doit être supérieure à la date actuelle.');
+        }
+    }*/
+  /*  public function validateDateLimite(ExecutionContextInterface $context)
+    {
+        $currentDate = new \DateTime();
+
+        if ($this->dateLimite <= $currentDate) {
+            $context->buildViolation("La date limite doit être postérieure à la date actuelle.")
+                ->atPath('dateLimite')
+                ->addViolation();
         }
     }*/
 }

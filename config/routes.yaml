@@ -1,3 +1,15 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+search_requestback:
+  path: /requestback/search
+  controller: App\Controller\requestback::searchAction
+ajax_search:
+  path: /search
+  controller: App\Controller\RequestdonationController::search
+  methods: [ 'POST' ]
+
+app_giveback_pie_chart_data:
+  path: /giveBack/pie-chart-data
+  controller: App\Controller\giveback::pieChartData
+  methods: ['GET']

@@ -45,4 +45,13 @@ class GiveRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getProfessionsCount(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.profession as profession, COUNT(g.id) as count')
+            ->groupBy('g.profession')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/givedonation')]
 class GivedonationController extends AbstractController
@@ -77,6 +78,40 @@ class GivedonationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_givedonation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/search_donations', name: 'search_donations', methods: ['GET', 'POST'])]
+    public function searchByNomCategorie(Request $request, GiveRepository $giveRepository): Response
+    {
+        // Check if it's an AJAX request
+        if ($request->isXmlHttpRequest()) {
+            $searchTerm = $request->query->get('search');
+            $givedonations = $giveRepository->createQueryBuilder('c')
+                ->where('c.iddonateur LIKE :searchTerm')
+                ->setParameter('searchTerm', '%' . $searchTerm . '%')
+                ->getQuery()
+                ->getResult();
+
+            // Prepare the data to be sent back as JSON
+            $responseData = [];
+            foreach ($givedonations as $givedonation) {
+                $responseData[] = [
+                    'Iddonateur' => $givedonation->getIddonateur(),
+                    'Montant' => $givedonation->getMontant(),
+
+                    // Add more fields as needed
+                ];
+            }
+
+            // Return the search results as JSON response
+            return new JsonResponse($responseData);
+        }
+
+        // If it's not an AJAX request, retrieve the courses and render the template
+        $givedonations = $giveRepository->findAll();
+        return $this->render('givedonation/index.html.twig', [
+            'givedonations' => $givedonations,
+        ]);
     }
 
 }

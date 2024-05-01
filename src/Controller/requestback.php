@@ -30,7 +30,32 @@ class requestback extends AbstractController
             'requestback' => $requestdonation,
         ]);
     }
-public function recherche(){
 
-}
+    public function searchAction(Request $request)
+    {
+        $keyword = $request->query->get('keyword');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder
+            ->select('r')
+            ->from(Requestdonation::class, 'r')
+            ->where(
+                $queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->like('r.idrequest', ':keyword'),
+                    $queryBuilder->expr()->like('r.email', ':keyword')
+                // Add more fields as necessary
+                )
+            )
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+        $requestbacks = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('requestback/search.html.twig', [
+            'keyword' => $keyword,
+            'requestbacks' => $requestbacks,
+        ]);
+    }
+
 }

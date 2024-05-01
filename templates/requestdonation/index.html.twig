@@ -4,61 +4,84 @@
 
 {% block body %}
 
+
 <div class="card">
-  <div class="card-body">
-    <h1>Demande d'une donation</h1>
-    <table class="table" style="border: 1px solid;">
-      <thead>
-        <tr>
-          <th>Id request</th>
-          <th>Formation souhaitée</th>
-          <th>E-mail</th>
-          <th>Date limite</th>
-          <th>Lieu de résidence</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for requestdonation in requestdonations %}
-        <tr>
-          <td>{{ requestdonation.idrequest }}</td>
-          <td>{{ requestdonation.getFormationSouhaitee }}</td>
-          <td>{{ requestdonation.email }}</td>
-          <td>{{ requestdonation.dateLimite ? requestdonation.dateLimite|date('Y-m-d') : '' }}</td>
-          <td>{{ requestdonation.getLieuDeResidence }}</td>
-          <td>{{ requestdonation.description }}</td>
-           <td>
-        <div class="requestdonation-button" style="display: flex; gap: 10px; margin-top: 10px;">
-             <a href="{{ path('app_requestdonation_show', {'idrequest': requestdonation.idrequest}) }}" style="color: #2980B9; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
-               <i class="fas fa-eye" style="color: #2980B9;"></i>
-             </a>
-             <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}" style="color: #FE9900; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
-               <i class="fas fa-edit" style="color: #FE9900;"></i>
-             </a>
-             <form method="post" action="{{ path('app_requestdonation_delete', {'idrequest': requestdonation.idrequest}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ requestdonation.idrequest) }}">
-               <button type="submit" style="color: #D43727; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
-                 <i class="fas fa-trash" style="color: #D43727;"></i>
-               </button>
-             </form>
-           </div>
-</td>
-        </tr>
-        {% else %}
-        <tr>
-          <td colspan="7">no records found</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a href="{{ path('app_requestdonation_new') }}" style="background-color: #2980B9; color: white; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer; display: inline-block; width: fit-content;">Ajouter</a>
+    <div class="card-header">
+        <form id="searchForm">
+            <input type="text" id="searchInput" name="search" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="card-body">
+        <h1>Vos demandes de donation</h1>
+        <div style="margin-bottom: 40px;"></div>
+
+        <div class="card-container">
+            {% for requestdonation in pagination %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <img src="{{ asset('assets/images/anonymous_user.jpg') }}" class="user-picture">
+                        <h5 class="card-title">ID de la demande: {{ requestdonation.idrequest }}</h5>
+
+                        <div class="requestdonation-button" style="display: flex; gap: 10px; margin-top: 10px;">
+                            <a href="{{ path('app_requestdonation_show', {'idrequest': requestdonation.idrequest}) }}" style="color: #2980B9; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+                                <i class="fas fa-eye" style="color: #2980B9;"></i>
+                            </a>
+                            <a href="{{ path('app_requestdonation_edit', {'idrequest': requestdonation.idrequest}) }}" style="color: #FE9900; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+                                <i class="fas fa-edit" style="color: #FE9900;"></i>
+                            </a>
+                            <form method="post" action="{{ path('app_requestdonation_delete', {'idrequest': requestdonation.idrequest}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ requestdonation.idrequest) }}">
+                                <button type="submit" style="color: #D43727; padding: 5px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+                                    <i class="fas fa-trash" style="color: #D43727;"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+            <div style="margin-bottom: 40px;"></div>
+
+
+<a href="{{ path('app_requestdonation_new') }}" class="btn-ajouter" >Ajouter</a>
   </div>
 </div>
 
-<head>
+
+<div id="searchResults">
+    <!-- Search results will be inserted here -->
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.getElementById('searchForm');
+
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(searchForm);
+
+            fetch('{{ path('search_requestdonation') }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the JSON response data
+                console.log(data);
+                // Update the DOM with the search results
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 
 <style>
+
   /* Responsive card styles */
   .card {
     width: auto; /* Allow card to adjust width based on content */
@@ -68,6 +91,7 @@
     background-color: #f5f5f5; /* Light gray background */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
     padding: 20px; /* Add some padding inside the card */
+    flex-basis: calc(25% - 20px);
   }
 
   /* Zoom effect (optional) */
@@ -75,32 +99,88 @@
     transform: scale(1.02); /* Slight zoom on hover */
     transition: transform 0.2s ease-in-out; /* Smooth transition */
   }
-  table {
-      width: 100%; /* Make the table fill the card container */
-      border-collapse: collapse; /* Collapse table borders */
+ .mb-3{
+ width: 190px;
+     height: 254px;
+     border-radius: 50px;
+     background: #ffffff;
+     box-shadow: -16px -9px 60px #bebebe, -20px -20px 60px #ffffff;
+
+ }
+  .card-title {
+    margin-bottom: 10px;
+  }
+  .user-picture {
+     overflow: hidden;
+     object-fit: cover;
+     width: 8rem;
+     height: 8rem;
+     border: 4px solid #7c88da;
+     border-radius: 999px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: auto;
     }
 
-    th, td {
-      padding: 10px; /* Add padding to table cells */
-      border: 1px solid #ddd; /* Add a thin border to table cells */
-      text-align: left; /* Left-align table cell content */
+    .user-picture svg {
+      width: 2.5rem;
+      fill: currentColor;
     }
+  .card-container{
+  display: flex;
+     flex-wrap: wrap;
+     justify-content: center;}
 
-    th {
-      background-color: #f2f2f2; /* Add a light gray background to table headers */
-      font-weight: bold; /* Bold text for table headers */
-    }
+  .requestdonation-button {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
 
-    tr:nth-child(even) {
-      background-color: #f9f9f9; /* Add a lighter background color to even rows */
-    }
+  .requestdonation-button a,
+  .requestdonation-button button {
+    color: #2980B9;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-    /* Add styling for the amount due column */
-    .amount-due {
-      text-align: right; /* Right-align the amount due column */
-    }
+
+  .requestdonation-button a:hover,
+  .requestdonation-button button:hover {
+    opacity: 0.8;
+  }
+  .btn-ajouter {
+      /* Vos styles CSS ici */
+  }
+  .btn-ajouter {
+    padding: 12.5px 30px;
+    border: 0;
+    border-radius: 100px;
+    background-color: #2ba8fb;
+    color: #ffffff;
+    font-weight: Bold;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+  }
+
+ .btn-ajouter:hover {
+    background-color: #6fc5ff;
+    box-shadow: 0 0 20px #6fc5ff50;
+    transform: scale(1.1);
+  }
+
+  .btn-ajouter:active {
+    background-color: #3d94cf;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
+  }
 </style>
-</head>
 
 {% endblock %}
 {% endblock %}

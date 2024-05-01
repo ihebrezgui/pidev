@@ -4,7 +4,7 @@
     <div class="col-lg-6">
       {{ form_row(form.formation_souhaitee) }}
       {{ form_row(form.email) }}
-      {{ form_row(form.dateLimite) }}
+      {{ form_row(form.dateLimite, {'attr': {'id': 'dateLimite'}}) }}
       {{ form_row(form.lieu_de_residence) }}
     </div>
     <div class="col-lg-6">
@@ -55,6 +55,8 @@
   }
     </style>
   </head>
+
+
 
 {{ form_end(form) }}
 

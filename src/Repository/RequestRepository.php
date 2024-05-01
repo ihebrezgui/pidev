@@ -20,7 +20,14 @@ class RequestRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Requestdonation::class);
     }
-
+    public function getFormationStatistics(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.formation_souhaitee, COUNT(r) AS count')
+            ->groupBy('r.formation_souhaitee')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Requestdonation[] Returns an array of Requestdonation objects
 //     */
@@ -45,4 +52,15 @@ class RequestRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findBySearchTerm(string $searchTerm): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r');
+
+        // Example: search by a field named 'name'
+        $queryBuilder->andWhere('r.idrequest LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }

@@ -6,9 +6,17 @@
 
 <div class="card">
   <div class="card-header">
-  Les demandes de donation
+    <h1>Les demandes de donation</h1>
   </div>
   <div class="card-body">
+    <form action="{{ path('search_requestback') }}" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher..." name="keyword" value="{{ app.request.query.get('keyword') }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -41,8 +49,58 @@
         {% endfor %}
       </tbody>
     </table>
+
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the necessary elements
+    var searchInput = document.getElementById('searchInput');
+    var searchButton = document.getElementById('searchButton');
+    var requestTable = document.getElementById('requestTable');
+    var tableRows = requestTable.querySelectorAll('tbody tr');
+
+    // Function to filter the table rows
+    function filterTableRows(keyword) {
+      for (var i = 0; i < tableRows.length; i++) {
+        var row = tableRows[i];
+        var cells = row.getElementsByTagName('td');
+        var foundMatch = false;
+
+        // Check if any cell in the row contains the keyword
+        for (var j = 0; j < cells.length; j++) {
+          var cell = cells[j];
+          if (cell.textContent.toLowerCase().includes(keyword)) {
+            foundMatch = true;
+            break;
+          }
+        }
+
+        // Hide/show the row based on the match
+        if (foundMatch) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    }
+
+    // Function to handle the search button click event
+    function handleSearchButtonClick() {
+      var keyword = searchInput.value.toLowerCase();
+      filterTableRows(keyword);
+    }
+
+    // Add an event listener to the search input
+    searchInput.addEventListener('input', function() {
+      var keyword = searchInput.value.toLowerCase();
+      filterTableRows(keyword);
+    });
+
+    // Add an event listener to the search button
+    searchButton.addEventListener('click', handleSearchButtonClick);
+  });
+</script>
 <head>
 
 <style>

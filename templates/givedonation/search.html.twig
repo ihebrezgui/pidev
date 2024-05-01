@@ -1,0 +1,41 @@
+<form id="search-form">
+    <input type="text" id="search-input" placeholder="Search">
+    <button type="submit">Search</button>
+</form>
+
+<div id="search-results"></div>
+
+<script>
+    $(document).ready(function() {
+        $('#search-form').on('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            var searchTerm = $('#search-input').val();
+
+            $.ajax({
+                url: '{{ path('search_route') }}',
+                method: 'GET',
+                data: { term: searchTerm },
+                success: function(response) {
+                    // Handle the response and update the search results
+                    updateSearchResults(response);
+                }
+            });
+        });
+
+        function updateSearchResults(results) {
+            var searchResults = $('#search-results');
+            searchResults.empty();
+
+            if (results.length > 0) {
+                results.forEach(function(result) {
+                    // Update this with your desired HTML structure for displaying search results
+                    var resultItem = $('<div>').text(result);
+                    searchResults.append(resultItem);
+                });
+            } else {
+                searchResults.text('No results found');
+            }
+        }
+    });
+</script>
