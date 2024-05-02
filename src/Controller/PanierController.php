@@ -191,5 +191,50 @@ class PanierController extends AbstractController
             'panier' => $panier
         ]);
     }
-    
+
+    #[Route('/statistique_quantite_produits', name: 'statistique_quantite_produits')]
+    public function statistiqueQuantiteProduits(): JsonResponse
+{
+    // Récupérer tous les articles du panier
+    $panierItems = $this->getDoctrine()->getRepository(Panier::class)->findAll();
+
+    // Initialiser un tableau pour stocker la quantité totale de chaque produit
+    $quantiteParProduit = [];
+
+    // Parcourir les articles du panier pour accumuler les quantités par produit
+    foreach ($panierItems as $item) {
+        $produitId = $item->getProdId();
+        $quantite = $item->getQuantite();
+
+        // Vérifier si le produit ID existe dans le tableau $quantiteParProduit
+        if (isset($quantiteParProduit[$produitId])) {
+            // Si oui, ajouter la quantité actuelle à la quantité existante
+            $quantiteParProduit[$produitId] += $quantite;
+        } else {
+            // Sinon, initialiser la quantité pour ce produit
+            $quantiteParProduit[$produitId] = $quantite;
+        }
+    }
+
+    // Préparer les données finales à afficher
+    $data = [];
+    foreach ($quantiteParProduit as $idFormation => $quantiteTotale) {
+        // Récupérer l'objet Produit à partir de son identifiant
+        $produit = $this->getDoctrine()->getRepository(Formation::class)->find($idFormation);
+
+        if ($produit) {
+            $typeF = $produit-> getTypef();
+
+            // Ajouter le nom du produit et sa quantité totale au tableau de données
+            $data[] = [
+                'nom' => $typeF, // Utilisation de 'nomp' pour correspondre à l'usage dans le template JavaScript
+                'quantite' => $quantiteTotale,
+            ];
+        }
+    }
+
+    // Retourner les données au format JSON
+    return new JsonResponse($data);
+}
+
 }

@@ -1,0 +1,38 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block gestion %}
+    <div class="container">
+        <h1>Confirmation de commande</h1>
+        <table class="table">
+            <tr>
+                <th>Référence de commande</th>
+                <td>{{ commande.idc }}</td>
+            </tr>
+            <tr>
+                <th>Nom et prénom</th>
+                <td>{{ commande.nom }} {{ commande.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse email</th>
+                <td>{{ commande.mail }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ commande.tel }}</td>
+            </tr>
+            <tr>
+                <th>Adresse de livraison</th>
+                <td>{{ commande.address }}</td>
+            </tr>
+            <tr>
+                <th>Produits commandés</th>
+                <td>
+                    {{ commande.panier }}
+                </td>
+            </tr>
+        </table>
+        <a href="{{ path('app_cart') }}" class="btn btn-primary">Retour au panier</a>
+    </div>
+{% endblock %}

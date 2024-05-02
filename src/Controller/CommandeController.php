@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -18,6 +19,7 @@ class CommandeController extends AbstractController
     #[Route('/commande', name: 'app_commande')]
     public function affichageCommande(Request $request, PaginatorInterface $paginator): Response
     {
+        
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository(Commande::class)->createQueryBuilder('c')->getQuery();
     
@@ -194,6 +196,22 @@ public function generatePdf($idc): Response
     $response->headers->set('Content-Disposition', 'attachment; filename="Commande.pdf"');
 
     return $response;
+}
+
+#[Route('/order_confirmation/{idc}', name: 'order_confirmation')]
+public function orderConfirmation($idc, EntityManagerInterface $entityManager): Response
+{
+    // Récupérez la commande depuis la base de données en utilisant l'ID passé en paramètre
+    $commande = $entityManager->getRepository(Commande::class)->find($idc);
+
+    if (!$commande) {
+        throw $this->createNotFoundException('Commande non trouvée');
+    }
+
+    // Affichez les détails de la commande dans un template Twig dédié
+    return $this->render('cart/order_confirmation.html.twig', [
+        'commande' => $commande,
+    ]);
 }
 
 

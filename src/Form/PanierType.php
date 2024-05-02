@@ -25,4 +25,6 @@ class PanierType extends AbstractType
             'data_class' => Panier::class,
         ]);
     }
+
+
 }

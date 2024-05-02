@@ -152,7 +152,7 @@ class CartController extends AbstractController
 
 
                 //Appel du service
-        $smsGenerator->sendSms($number ,$name,$text);  
+      $smsGenerator->sendSms($number ,$name,$text);  
 
         $request->getSession()->set('cart', []);
         $request->getSession()->set('totalCart', 0);
@@ -160,4 +160,3 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 }
-

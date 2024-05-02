@@ -44,7 +44,7 @@
                                                     </div>
                                                 {% endfor %}
 
-                                                <h5 class="card-title"></h5>
+                                             <h5 class="card-title"></h5>
                                                 <div class="table-responsive">
 
                                                 <div class="btn-group">
@@ -56,6 +56,24 @@
                                                         <li><a class="dropdown-item" href="{{ path('tri_par_prix') }}">Prix</a></li>
                                                     </ul>
                                                 </div>
+                                                <script>
+const dropdownItems = document.querySelectorAll('.dropdown-content a');
+
+// Loop through each dropdown item
+dropdownItems.forEach(item => {
+    // Add click event listener to each item
+    item.addEventListener('click', function(event) {
+        // Prevent default behavior (e.g., page scroll)
+        event.preventDefault();
+
+        // Get the URL of the clicked item
+        const url = item.getAttribute('href');
+
+        // Navigate to the URL
+        window.location.href = url;
+    });
+});
+</script>
 
 
                                             <form action="{{ path('rechercher_panier') }}" method="GET">
@@ -139,6 +157,60 @@
                                                         });
                                                     });
                                                 </script>
+
+ <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Statistiques par produit
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour le graphique et la requête AJAX -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{{ path('statistique_quantite_produits') }}') // Endpoint Symfony pour récupérer les données
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.nom); // Utiliser la clé 'nom' pour les labels
+                const quantities = data.map(item => item.quantite); // Utiliser la clé 'quantite' pour les quantités
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Quantité par produit',
+                            data: quantities,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des données:', error);
+            });
+    });
+</script>
+
+
                                             </div>
                                     </div>
                                     
