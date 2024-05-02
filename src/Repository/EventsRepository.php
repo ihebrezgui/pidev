@@ -42,4 +42,13 @@ class EventsRepository extends ServiceEntityRepository
 
         return $events;
     }
+     // Custom method to search events by the "nom" field
+     public function findByNom(string $nom): array
+     {
+         return $this->createQueryBuilder('e')
+             ->andWhere('e.nom LIKE :nom')
+             ->setParameter('nom', '%'.$nom.'%')
+             ->getQuery()
+             ->getResult();
+     }
 }

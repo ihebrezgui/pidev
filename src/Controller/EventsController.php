@@ -27,20 +27,20 @@ class EventsController extends AbstractController
     public function index(Request $request, EventsRepository $eventsRepository, PaginatorInterface $paginator): Response
     {
         $searchQuery = $request->query->get('search');
-
+    
         if ($searchQuery !== null) {
             $events = $eventsRepository->Searchevent($searchQuery);
         } else {
             $events = $eventsRepository->findAllOrderedByDate();
         }
-        
-        $query = $eventsRepository->createQueryBuilder('f')->getQuery();
-        $events =$paginator->paginate(
-            $query,
-            $request->query->getInt('page',1),
-            3
+    
+        // Paginate the search results
+        $events = $paginator->paginate(
+            $events,
+            $request->query->getInt('page', 1), // page number
+            3 // limit per page
         );
-
+    
         return $this->render('back/events/index.html.twig', [
             'events' => $events,
         ]);
@@ -151,5 +151,22 @@ public function getVideoUrl(): JsonResponse
             'events' => $events,
         ]);
     }
-  
+    #[Route('/search', name: 'search_events_by_nom')]
+    public function searchByNom(Request $request, EventsRepository $eventsRepository): Response
+    {
+        // Get the search query from the request
+        $searchQuery = $request->query->get('nom');
+
+        // Call the custom repository method to search by "nom"
+        $events = [];
+        if ($searchQuery) {
+            $events = $eventsRepository->findByNom($searchQuery);
+        }
+
+        // Render the template with the search results
+        return $this->render('baseBack.html.twig', [
+            'events' => $events,
+            'searchQuery' => $searchQuery, // Pass the search query to the template
+        ]);
+    }
 }
