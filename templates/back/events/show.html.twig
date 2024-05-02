@@ -31,12 +31,11 @@
         </tbody>
     </table>
 
-    <img src="{{ qrCodePath }}" alt="QR Code">
 
     <a href="{{ path('app_events_index') }}">back to list</a>
 
     <a href="{{ path('app_events_edit', {'id': event.id_event}) }}">edit</a>
 
-    {{ include('events/_delete_form.html.twig') }}
+    {{ include('back/events/_delete_form.html.twig') }}
 {% endblock %}
 {% endblock %}

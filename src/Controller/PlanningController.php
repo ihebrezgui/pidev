@@ -17,7 +17,7 @@ class PlanningController extends AbstractController
     #[Route('/', name: 'app_planning_index', methods: ['GET'])]
     public function index(PlanningRepository $planningRepository): Response
     {
-        return $this->render('planning/index.html.twig', [
+        return $this->render('back/planning/index.html.twig', [
             'plannings' => $planningRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class PlanningController extends AbstractController
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/new.html.twig', [
+        return $this->renderForm('back/planning/new.html.twig', [
             'planning' => $planning,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class PlanningController extends AbstractController
     #[Route('/{idPlanning}', name: 'app_planning_show', methods: ['GET'])]
     public function show(Planning $planning): Response
     {
-        return $this->render('planning/show.html.twig', [
+        return $this->render('back/planning/show.html.twig', [
             'planning' => $planning,
         ]);
     }
@@ -62,7 +62,7 @@ class PlanningController extends AbstractController
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/edit.html.twig', [
+        return $this->renderForm('back/planning/edit.html.twig', [
             'planning' => $planning,
             'form' => $form,
         ]);

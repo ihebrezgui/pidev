@@ -1,7 +1,7 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block event %}
-    {% block title %}Edit Events{% endblock %}
+    {% block title %}New Events{% endblock %}
 
     {% block body %}
         <div class="container">
@@ -9,21 +9,13 @@
                 <div class="col-md-8 offset-md-2">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Events</h3>
+                            <h3 class="card-title">Create New Events</h3>
                         </div>
                         <div class="card-body">
-                            {{ include('events/_form.html.twig', {'button_label': 'Update'}) }}
+                            {{ include('back/events/_form.html.twig') }}
                         </div>
                         <div class="card-footer">
                             <a href="{{ path('app_events_index') }}" class="btn btn-secondary">Back to List</a>
-                        </div>
-                    </div>
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Delete Events</h3>
-                        </div>
-                        <div class="card-body">
-                            {{ include('events/_delete_form.html.twig') }}
                         </div>
                     </div>
                 </div>

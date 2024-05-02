@@ -1,0 +1,76 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}All Events{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5 mb-4">All Events</h1>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>NbrPlace</th>
+                        <th>QR Code</th>
+                        <th>Video</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.nom }}</td>
+                            <td>{{ event.dateEvent|date('Y-m-d') }}</td>
+                            <td>{{ event.description }}</td>
+                            <td>{{ event.nbrPlace }}</td>
+                            <td><div id="qrcode{{ loop.index }}"></div></td>
+                            <td>
+                                <a href="https://www.youtube.com/watch?v=3OUdeW4HmgE" target="_blank" class="btn btn-primary">Watch Video</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                            {{ knp_pagination_render(events) }}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        #qrcode-container {
+            text-align: center;
+        }
+        .qrcode {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+    </style>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <p>QR Code Generator</p>
+
+    <script>
+        // Function to generate the Google Calendar URL with event name and date
+        function generateGoogleCalendarUrl(eventName, eventDate) {
+            var baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=';
+            var encodedName = encodeURIComponent(eventName);
+            var encodedDate = encodeURIComponent(eventDate);
+            var url = baseUrl + encodedName + '&dates=' + encodedDate + '/' + encodedDate;
+            return url;
+        }
+
+        // Loop through all events and generate QR codes
+        {% for event in events %}
+            var eventName{{ loop.index }} = "{{ event.nom }}";
+            var eventDate{{ loop.index }} = "{{ event.dateEvent|date('Ymd') }}";
+            var calendarUrl{{ loop.index }} = generateGoogleCalendarUrl(eventName{{ loop.index }}, eventDate{{ loop.index }});
+            var qrcode{{ loop.index }} = new QRCode(document.getElementById("qrcode{{ loop.index }}"), {
+                text: calendarUrl{{ loop.index }},
+                width: 50,
+                height: 50
+            });
+        {% endfor %}
+    </script>
+{% endblock %}

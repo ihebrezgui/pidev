@@ -46,4 +46,8 @@ app_planning_delete:
     path: /planning/{idPlanning}
     controller: App\Controller\PlanningController::delete
     methods: ['POST']
-   
+
+app_events_details:
+    path: '/events/{id}'
+    controller: 'App\Controller\EventsController::show'
+ 

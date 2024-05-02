@@ -12,14 +12,17 @@ class EventsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Events::class);
     }
-    public function findBySearchQuery($searchQuery)
+    public function Searchevent($searchQuery)
     {
         return $this->createQueryBuilder('e')
             ->where('e.nom LIKE :searchQuery')
+            ->orWhere('e.nbrPlace = :nbrPlace')
             ->setParameter('searchQuery', '%'.$searchQuery.'%')
+            ->setParameter('nbrPlace', $searchQuery)
             ->getQuery()
             ->getResult();
     }
+    
     public function findAllOrderedByDate()
     {
         return $this->createQueryBuilder('e')

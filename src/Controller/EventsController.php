@@ -13,24 +13,35 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use BaconQrCode\Writer;
+use Endroid\QrCode\QrCode;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\Image\Png;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/events')]
 class EventsController extends AbstractController
 {
     #[Route('/', name: 'app_events_index', methods: ['GET'])]
-    public function index(Request $request, EventsRepository $eventsRepository): Response
+    public function index(Request $request, EventsRepository $eventsRepository, PaginatorInterface $paginator): Response
     {
         $searchQuery = $request->query->get('search');
 
         if ($searchQuery !== null) {
-            $events = $eventsRepository->findBySearchQuery($searchQuery);
+            $events = $eventsRepository->Searchevent($searchQuery);
         } else {
             $events = $eventsRepository->findAllOrderedByDate();
         }
+        
+        $query = $eventsRepository->createQueryBuilder('f')->getQuery();
+        $events =$paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            3
+        );
 
-        return $this->render('events/index.html.twig', [
+        return $this->render('back/events/index.html.twig', [
             'events' => $events,
         ]);
     }
@@ -49,22 +60,13 @@ class EventsController extends AbstractController
             return $this->redirectToRoute('app_events_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('events/new.html.twig', [
+        return $this->renderForm('back/events/new.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_events_show', methods: ['GET'])]
-    public function show(Events $event): Response
-    {
-        $qrCodePath = $this->generateQrCode($event->getDescription());
-
-        return $this->render('events/show.html.twig', [
-            'event' => $event,
-            'qrCodePath' => $qrCodePath,
-        ]);
-    }
+   
 
     #[Route('/{id}/edit', name: 'app_events_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Events $event, EntityManagerInterface $entityManager): Response
@@ -78,7 +80,7 @@ class EventsController extends AbstractController
             return $this->redirectToRoute('app_events_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('events/edit.html.twig', [
+        return $this->renderForm('back/events/edit.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
@@ -100,19 +102,54 @@ class EventsController extends AbstractController
     {
         $eventsByMonth = $eventsRepository->countEventsByMonth();
     
-        return $this->render('events/statistics.html.twig', [
+        return $this->render('back/events/statistics.html.twig', [
             'eventsByMonth' => $eventsByMonth,
         ]);
     }
-    private function generateQrCode(string $description): string
+   
+   
+    #[Route('/show_front', name: 'app_events_index_front', methods: ['GET'])]
+    public function search(Request $request, EventsRepository $eventsRepository, PaginatorInterface $paginator): Response
     {
-        $renderer = new ImageRenderer(new Png());
-        $writer = new Writer($renderer);
-        $qrCode = $writer->writeString($description);
+        $searchQuery = $request->query->get('search');
 
-        $tempFile = tempnam(sys_get_temp_dir(), 'qr_code');
-        file_put_contents($tempFile, $qrCode);
+        if ($searchQuery !== null) {
+            $events = $eventsRepository->findBySearchQuery($searchQuery);
+        } else {
+            $events = $eventsRepository->findAllOrderedByDate();
+        }
 
-        return '/qr_codes/' . basename($tempFile);
+        // Pagination
+        $query = $eventsRepository->createQueryBuilder('f')->getQuery();
+        $events = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            3
+        );
+
+
+        return $this->render('front/show_events.html.twig', [
+            'events' => $events,
+        ]);
+   
+}
+#[Route('/video-url', name: 'app_video_url', methods: ['GET'])]
+public function getVideoUrl(): JsonResponse
+{
+    // Replace 'your-video-url' with the actual URL of your video
+    $videoUrl = 'https://www.youtube.com/watch?v=3OUdeW4HmgE';
+
+    return new JsonResponse(['url' => $videoUrl]);
+}
+
+#[Route('/calendar', name: 'app_calendar')]
+    public function calendar  (EventsRepository $eventRepository): Response
+    {
+        $events = $eventRepository->findAllOrderedByDate();
+
+        return $this->render('front/calendar.html.twig', [
+            'events' => $events,
+        ]);
     }
+  
 }

@@ -17,6 +17,7 @@
             </tr>
         </thead>
         <tbody>
+        {% if events is not empty %}
         {% for event in events %}
             <tr>
 <td>{{ event.getId_event }}</td>
@@ -29,11 +30,13 @@
                     <a href="{{ path('app_events_edit', {'id': event.id_event}) }}">edit</a>
                 </td>
             </tr>
+             {% endfor %}
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
             </tr>
-        {% endfor %}
+        {% endif %}
+        {{ knp_pagination_render(events) }}
         </tbody>
     </table>
 

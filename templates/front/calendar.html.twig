@@ -1,0 +1,24 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block body %}
+<h1>Calendar</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+            <tr>
+                      <td>{{ event.nom }}</td>
+                            <td>{{ event.dateEvent|date('Y-m-d') }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
