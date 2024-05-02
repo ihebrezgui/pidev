@@ -32,23 +32,25 @@ use Endroid\QrCode\QrCode;
 class UtilisateurController extends AbstractController
 
    {
-        #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
-        public function index(UtilisateurRepository $utilisateurRepository, Request $request, PaginatorInterface $paginator) : Response
+    #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
+    public function index(UtilisateurRepository $utilisateurRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $searchQuery = $request->query->get('search');
 
         if ($searchQuery !== null) {
-            $utilisateurs = $utilisateurRepository->findBySearchQuery($searchQuery);
+            $utilisateurs = $utilisateurRepository->searchUtilisateurs($searchQuery);
         } else {
             // If no search query is provided, fetch all users
             $utilisateurs = $utilisateurRepository->findAll();
         }
-        $query = $utilisateurRepository->createQueryBuilder('f')->getQuery();
-$utilisateurs = $paginator->paginate(
-    $query,
-    $request->query->getInt('page',1),
-    3
-);
+
+        // Pagination
+        $utilisateurs = $paginator->paginate(
+            $utilisateurs,
+            $request->query->getInt('page', 1),
+            3
+        );
+
         return $this->render('back/utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs,
         ]);

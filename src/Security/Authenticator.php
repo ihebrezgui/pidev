@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class Authenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;

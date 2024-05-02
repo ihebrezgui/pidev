@@ -17,6 +17,7 @@ class Home extends AbstractController
     #[Route('/admin', name: 'app_index_admin')]
     public function indexAdmin(UtilisateurRepository $userRepository): Response
     {
+        
 
         return $this->render('back/utilisateur/index.html.twig',[]);
     }

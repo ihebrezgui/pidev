@@ -111,19 +111,16 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
                 ->getQuery()
                 ->getOneOrNullResult();
         }
-    public function findBySearchQuery(string $searchQuery): array
-    {
-        $queryBuilder = $this->createQueryBuilder('u');
-
-        // Search by nom, prenom, or email
-        $queryBuilder->where('u.nom LIKE :search')
-            ->orWhere('u.prenom LIKE :search')
-            ->orWhere('u.email LIKE :search')
-            ->setParameter('search', '%' . $searchQuery . '%')
-            ->orderBy('u.nom', 'ASC');
-
-        return $queryBuilder->getQuery()->getResult();
-    }
+        public function searchUtilisateurs($searchQuery)
+        {
+            return $this->createQueryBuilder('u')
+                ->where('u.email LIKE :searchQuery')
+                ->orWhere('u.nom LIKE :searchQuery')
+                ->orWhere('u.prenom LIKE :searchQuery')
+                ->setParameter('searchQuery', '%' . $searchQuery . '%')
+                ->getQuery()
+                ->getResult();
+        }
     public function getUsersByRole()
     {
         return $this->createQueryBuilder('u')
