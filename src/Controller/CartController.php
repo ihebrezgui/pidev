@@ -121,8 +121,8 @@ class CartController extends AbstractController
        
         
         // Récupérer les informations de l'utilisateur depuis le formulaire (nom, prénom, email)
-        $nom =('iheb');
-        $prenom = ('rezgui');
+        $nom =('rezguiii');
+        $prenom = ('ihebb');
         $email =('iheb@gmail.com');
         // $panier= $cart;
         $tel =21069300; 

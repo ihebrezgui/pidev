@@ -176,38 +176,62 @@ dropdownItems.forEach(item => {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    <script>
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('{{ path('statistique_quantite_produits') }}') // Endpoint Symfony pour récupérer les données
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.nom); // Utiliser la clé 'nom' pour les labels
-                const quantities = data.map(item => item.quantite); // Utiliser la clé 'quantite' pour les quantités
+    fetch('{{ path('statistique_quantite_produits') }}') // Endpoint Symfony pour récupérer les données
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.nom); // Utiliser la clé 'nom' pour les labels
+            const quantities = data.map(item => item.quantite); // Utiliser la clé 'quantite' pour les quantités
 
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Quantité par produit',
-                            data: quantities,
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantité par produit',
+                        data: quantities,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 0.4, // Pas de 0.4 sur l'axe Y
+                                font: {
+                                    size: 14 // Ajuster la taille de la police de l'axe Y
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    
+                                    size: 14 // Ajuster la taille de la police de l'axe X
+                                }
+                            }
+                        }
                     },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 16 // Ajuster la taille de la police de la légende
+                                }
                             }
                         }
                     }
-                });
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération des données:', error);
+                }
             });
-    });
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des données:', error);
+        });
+});
+
 </script>
 
 
