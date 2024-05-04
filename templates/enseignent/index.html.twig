@@ -41,6 +41,8 @@
                 <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
+        {{ knp_pagination_render(enseignents) }}
+
         </tbody>
     </table>
 
@@ -51,6 +53,7 @@
 
     <input class="form-control" type="text" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
     <button class="btn btn-primary" type="submit">Search</button>
+    
                     </div>
 
 </form>

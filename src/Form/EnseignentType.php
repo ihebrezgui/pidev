@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 
+
 class EnseignentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -66,4 +67,5 @@ class EnseignentType extends AbstractType
             'data_class' => Enseignent::class,
         ]);
     }
+    
 }
