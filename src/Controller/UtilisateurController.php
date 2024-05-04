@@ -40,11 +40,9 @@ class UtilisateurController extends AbstractController
         if ($searchQuery !== null) {
             $utilisateurs = $utilisateurRepository->searchUtilisateurs($searchQuery);
         } else {
-            // If no search query is provided, fetch all users
             $utilisateurs = $utilisateurRepository->findAll();
         }
 
-        // Pagination
         $utilisateurs = $paginator->paginate(
             $utilisateurs,
             $request->query->getInt('page', 1),
@@ -121,7 +119,6 @@ public function usersByAgeChart(UtilisateurRepository $utilisateurRepository)
 {
     $utilisateurs = $utilisateurRepository->findAll(); 
 
-    // Define age groups
     $ageGroups = [
         '11-20' => 0,
         '21-30' => 0,
@@ -211,12 +208,10 @@ public function editProfile(Request $request, UtilisateurRepository $userReposit
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        // Update the user entity with the form data
         $entityManager->persist($user);
         $entityManager->flush();
 
         $this->addFlash('success', 'Profile updated successfully.');
-        // Redirect to some route after successful update
         return $this->redirectToRoute('app_myprofile');
     }
 
@@ -352,7 +347,6 @@ public function verifyResetCode(Request $request, $restToken, EntityManagerInter
             'Mot de passe changer avec succès.'
         );
 
-        // Redirect or render a success message
         return $this->redirectToRoute('app_login');
     }
 
@@ -398,7 +392,6 @@ private function generateResetCode()
     {
         $usersByRole = $utilisateurRepository->getUsersByRole();
     
-        // Prepare data for Google Chart
         $data = [];
         $data[] = ['Role', 'Number of Users'];
         foreach ($usersByRole as $userData) {
@@ -421,17 +414,13 @@ private function generateResetCode()
     #[Route('/generate-gr-code', name: 'youtube')]
     public function generateQrCodeForVideo($videoId): Response
     {
-        // Construct the YouTube video URL
         $videoUrl = 'https://www.youtube.com/watch?v=0wRCb52GeIg';
 
-        // Create a QR code instance
         $qrCode = new QrCode($videoUrl);
-        $qrCode->setSize(200); // Set QR code size
+        $qrCode->setSize(200); 
 
-        // Render the QR code as SVG content
         $qrCodeSvgContent = $qrCode->writeString();
 
-        // Return the SVG content as response
         return new Response($qrCodeSvgContent, Response::HTTP_OK, [
             'Content-Type' => 'image/svg+xml',
         ]);

@@ -70,7 +70,6 @@ class Authenticator extends AbstractLoginFormAuthenticator
         }
 
 
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string

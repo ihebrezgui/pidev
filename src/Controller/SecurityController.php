@@ -17,18 +17,13 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Get the last authentication error
         $error = $authenticationUtils->getLastAuthenticationError();
     
-        // Get the last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
     
-        // Check if the error is due to bad credentials (invalid email or password)
         if ($error instanceof BadCredentialsException) {
-            // If it is, display the custom error message
             $errorMessage = 'Invalid email or password.';
         } else {
-            // Otherwise, use the default error message
             $errorMessage = $error ? $error->getMessage() : null;
         }
     
