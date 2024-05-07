@@ -1,0 +1,18 @@
+{% extends 'baseFront.html.twig' %} {% block ENS %}
+
+{% block title %}New partnership{% endblock %}
+
+{% block body %}
+
+<style> .partnership-form { max-width: 600px; margin: 0 auto; padding: 2rem; background-color: #f5f5f5; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); } .partnership-form h1 { margin-top: 0; } .partnership-form label { display: block; margin-bottom: 0.5rem; font-weight: bold; } .partnership-form input[type="text"], .partnership-form input[type="email"], .partnership-form textarea { width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; margin-bottom: 1rem; } .partnership-form input[type="submit"] { background-color: #4CAF50; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; } .partnership-form input[type="submit"]:hover { background-color: #3e8e41; } </style> <div class="partnership-form"> <h1>Create new partnership</h1>
+{{ include('partnership/_form.html.twig') }}
+
+{% if app.flashes('success') %}
+
+<script> document.addEventListener('DOMContentLoaded', function() { if (Notification.permission !== "granted") Notification.requestPermission(); const successMessages = {{ app.flashes('success')|json_encode|raw }}; successMessages.forEach(message => { if (Notification.permission === "granted") { new Notification('Notification', { body: message, icon: '/path_to_some_icon_if_needed.png' // Optional icon }); } }); }); </script>
+{% endif %}
+
+</div>
+{% endblock %} 
+{% endblock %}
+

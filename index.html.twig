@@ -1,0 +1,41 @@
+{% extends 'baseBack.html.twig' %}
+{% block Par %}
+
+{% block title %}Partnership index{% endblock %}
+
+{% block body %}
+    <h1>Partnership index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idp</th>
+                <th>NomP</th>
+                <th>Domaine</th>
+                <th>Choix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partnership in partnerships %}
+            <tr>
+                <td>{{ partnership.idp }}</td>
+                <td>{{ partnership.nomP }}</td>
+                <td>{{ partnership.domaine }}</td>
+                <td>{{ partnership.choix }}</td>
+                <td>
+                    <a href="{{ path('app_partnership_show', {'idp': partnership.idp}) }}">show</a>
+                    <a href="{{ path('app_partnership_edit', {'idp': partnership.idp}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_partnership_new') }}">Create new</a>
+{% endblock %}
+{% endblock %}

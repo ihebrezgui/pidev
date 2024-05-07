@@ -1,0 +1,76 @@
+
+Maram
+Maram Njahi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contrat Print</title>
+    <link rel="stylesheet" href="/style.css" media="all" />
+</head>
+<body>
+<header class="clearfix">
+    <h1 class="logo me-auto" style="color:green">scholar</h1>
+    <h1 align="center"> Enseignents</h1>
+    <hr></hr>
+   
+    <table class="table table-bordered" style="border-color:black;width:70%;margin-left:15%">
+        <thead>
+            <tr>
+                <th style="background-color:green;color :white">Nom</th>
+                <th style="background-color:green;color :white">Prenom</th>
+                <th style="background-color:green;color :white">Email</th>
+                <th style="background-color:green;color :white">matiere</th>
+                <th style="background-color:green;color :white">Comptence</th>
+                <th style="background-color:green;color :white">Age</th>
+                <th style="background-color:green;color :white">Langue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+               
+                <td>{{ enseignent.nome }}</td>
+                <td>{{ enseignent.prenome }}</td>
+                <td>{{ enseignent.email }}</td>
+                <td>{{ enseignent.matier }}</td>
+                <td>{{ enseignent.comptence }}</td>
+                <td>{{ enseignent.agee }}</td>
+                <td>{{ enseignent.langue }}</td>
+            </tr>
+        </tbody>
+    </table>
+</header>
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <h3>scholar</h3>
+                    <p>
+                        Ghazela, Ariana, Tunisia <br>
+                        <strong>Phone:</strong> +216 7854241<br>
+                        <strong>Email:</strong> scholar@esprit.tn<br>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-6 footer-links">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container d-md-flex py-4">
+        <div class="me-md-auto text-center text-md-start">
+            <div class="copyright">
+                &copy; Copyright <strong><span>scholar</span></strong>. All Rights Reserved
+            </div>
+        </div>
+        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+    </div>
+</footer><!-- End F -->
+</body>
+</html>
