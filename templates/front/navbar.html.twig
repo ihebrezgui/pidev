@@ -17,17 +17,16 @@
 {% endif %}
 
             </div>
-            {% if app.user %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                    Logout
-                    <i class="fa fa-arrow-right ms-3"></i>
-                </a>
-
-            {% else  %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                    Sign Up/Login
-                    <i class="fa fa-arrow-right ms-3"></i>
-                </a>
-            {% endif %}
+           {% if app.user %}
+    <a href="{{ path('app_logout') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+        Logout
+        <i class="fa fa-arrow-right ms-3"></i>
+    </a>
+{% else %}
+    <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+        Sign Up/Login
+        <i class="fa fa-arrow-right ms-3"></i>
+    </a>
+{% endif %}
         </div>
     </nav>
