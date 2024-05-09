@@ -13,21 +13,26 @@
         <a href="{{ path('app_myprofile') }}" class="nav-item nav-link">Mon compte</a>
     {% elseif app.user.role == "Admin" %}
         <a href="{{ path('app_utilisateur_index') }}" class="nav-item nav-link">Gérer les utilisateurs</a>
+         {% elseif app.user.role == "Formateur" %}
+               <a href="{{ path('app_formation_index_back') }}" class="nav-item nav-link">Gérer les cours</a>
+
+    {% elseif app.user.role == "RH" %}
+             <a href="{{ path('app_partnership_index') }}" class="nav-item nav-link">Gérer récrutement</a>
+
     {% endif %}
 {% endif %}
 
             </div>
-            {% if app.user %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                    Logout
-                    <i class="fa fa-arrow-right ms-3"></i>
-                </a>
-
-            {% else  %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                    Sign Up/Login
-                    <i class="fa fa-arrow-right ms-3"></i>
-                </a>
-            {% endif %}
+           {% if app.user %}
+    <a href="{{ path('app_logout') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+        Logout
+        <i class="fa fa-arrow-right ms-3"></i>
+    </a>
+{% else %}
+    <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+        Sign Up/Login
+        <i class="fa fa-arrow-right ms-3"></i>
+    </a>
+{% endif %}
         </div>
     </nav>
